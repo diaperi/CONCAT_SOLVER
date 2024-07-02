@@ -1,0 +1,30 @@
+/* .loginbtn button{ background-color: blue; color: aliceblue; border: none; width: 150px; ;}
+.login{background-color: antiquewhite; width: 400px; height: 600px; } */
+a {text-decoration-line: none; color: white;}
+* { margin: 0;
+    padding: 0;
+
+
+    
+}
+hr{height: 70px;}
+body {
+    display: flex; 
+    flex-direction: column; 
+    /* justify-content: center; */
+    /* background-color: skyblue; */
+    color: white;
+    height: 100vh;
+    background: linear-gradient(to bottom,#03BED6,#10B3DA, #1DA4E1,#249CE5,#2D8EED,#3084F4);
+
+}
+
+img { height: 30px;}
+
+.login{background-color: rgb(59, 57, 57); width: 450px; height: 550px; top: 50px; 
+    position: fixed;  /*이건 좀 더 */
+    top: 80px; /* 위치조정 */
+    left: 900px; 
+}
+
+header>img{ width: 20px;}
