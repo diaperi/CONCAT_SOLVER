@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}  
+
+body {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(137.29deg, 
+    #03BED6 20.13%, 
+    #10B3DA 33.05%, 
+    #1DA4E1 45.02%, 
+    #249CE5 58.56%, 
+    #2D8EED 72.11%, 
+    #3084F4 83.13%);
+    margin: 0;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+    
+main {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* width: 100%;max-width: 1200px; */
+}
+
+section {
+    width: 100%;
+    margin-top: 30px;
+    /* align-items: center; */
+}
+
+.trash_sectionTitle {
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.trash_itemContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+}
+
+.trash_notice {
+    background: #00000059;
+    padding: 12px 40px 12px 60px;
+    align-items: center;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.trash_noticeContent {
+    float: left;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+}
+
+#trash_EmptyTrashBtn {
+    float: right;
+    font-size: 0.8em;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: #FFFFFFE5;
+}
+
+#trash_EmptyTrashBtn:hover {
+    color: #000000E5;
+
+}
+
+.trash_itemBox {
+    display: flex;
+    flex-direction: column;
+    /* width: 315px; */
+    width: 100%; 
+    height: 342px;
+    box-sizing: border-box;
+    
+}
+
+.trash_itemHead {
+    background: #98F9FF;
+    width: 315px;
+    height: 42px;
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.trash_itemHead img {
+    width: 25px;
+    height: 22px;
+}
+
+.trash_itemHead p {
+    margin-left: 15px; /* 필요에 따라 조정 */
+    flex-grow: 1; 
+    /* 가능한 공간 차지 */
+}
+
+.trash_itemClick img {
+    filter: invert(25%) sepia(90%) saturate(3080%) hue-rotate(235deg) brightness(60%) contrast(60%);
+    width: 6px;
+    height: 23px;
+    margin-left: auto;
+}
+
+.trash_itemBody {
+    background: #98F9FFB2;
+    width: 315px;
+    height: 300px;
+    border-radius: 6px;
+    position: relative;
+    bottom: 42px;
+    z-index: 0;
+}
+
+.trash_itemBody img {
+    /* background-color: rgb(66, 47, 144); */
+    filter: invert(25%) sepia(90%) saturate(3080%) hue-rotate(235deg) brightness(50%) contrast(60%);
+    width: 122px;
+    height: 97px;
+    position: absolute;
+    top: calc(50% + 12px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
