@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myPagePop</title>
+    <link rel="stylesheet" href="/seoyun/css/myPagePop.css">
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="myPagePop_container">
+        <div class="myPagePop_top">
+            <span>영상을 최신 업로드 순으로 볼 수 있습니다. (캘린더에서 특정 날짜의 영상을 확인할 수 있습니다.)</span>
+            <i class="fa-regular fa-calendar-days"></i>
+        </div>
+        <div class="myPagePop_container2">
+            <div class="myPagePop_main">
+                <div class="myPagePop_list">
+                    <div class="myPagePop_videoBox3">
+                        <img src="/seoyun/img/cha.png" alt="">
+                        <div class="myPagePop_videoBox4">
+                            <span>영상길이: 00:33:06</span>
+                            <span>생성시간: 3034.04.36</span>
+                        </div>
+                    </div>
+                    <div class="myPagePop_videoBox3">
+                        <img src="/seoyun/img/cha.png" alt="">
+                        <div class="myPagePop_videoBox4">
+                            <span>영상길이: 00:33:06</span>
+                            <span>생성시간: 3034.04.36</span>
+                        </div>
+                    </div>
+                    <div class="myPagePop_videoBox3">
+                        <img src="/seoyun/img/cha.png" alt="">
+                        <div class="myPagePop_videoBox4">
+                            <span>영상길이: 00:33:06</span>
+                            <span>생성시간: 3034.04.36</span>
+                        </div>
+                    </div>
+                    <div class="myPagePop_videoBox3">
+                        <img src="/seoyun/img/cha.png" alt="">
+                        <div class="myPagePop_videoBox4">
+                            <span>영상길이: 00:33:06</span>
+                            <span>생성시간: 3034.04.36</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="calendar-box">
+                    <div class="calendar-box_top">
+                        <span>보고 싶은 영상의 날짜를 클릭하세요.</span>
+                    </div>
+                    <div id="calendar">
+                        <div id="calendar-header">
+                            <span id="month-year"></span>
+                        </div>
+                        <table id="calendar-body">
+                            <thead>
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="calendar_foot">
+                        <button id="prev"><i class="fa-solid fa-angles-left"></i></button>
+                        <button id="next"><i class="fa-solid fa-angles-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="myPagePop_foot">
+                <span>이미지를 마우스 위/아래로 드래그 해주세요.</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 달력 클릭 시 나오는 팝업 -->
+    <div id="overlay" ></div>
+    <div id="popup">
+        <div class="popupBox">
+            <div id="popup-date"></div>
+            <video controls>
+                <source src="video.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div id="close-popup"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+
+
+
+    <script src="/seoyun/js/myPagePop.js"></script>
+</body>
+</html>
