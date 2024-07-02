@@ -1,0 +1,64 @@
+* { margin: 0;
+    padding: 0;
+   
+}
+
+hr{height: 70px;}
+
+body {
+    display: flex; 
+    flex-direction: column; 
+    /* justify-content: center; */
+    /* background-color: skyblue; */
+    color: black;
+    height: 100vh;
+    background: linear-gradient(to bottom,#03BED6,#10B3DA, #1DA4E1,#249CE5,#2D8EED,#3084F4);
+
+}
+.sign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 550px;
+    height: 650px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    background: #ffffff;
+    border: 1px solid #aacdff;
+    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    border-radius: 15px;
+  }
+  .agreement-form {margin-top: 40px;}
+
+  .btn {
+    /* display: flex;
+    flex-direction: column; */
+    margin-top: 60px;
+    width: 470px;
+    height: 106px;
+   
+  }
+  
+  button {
+    margin-top: 30px;
+    width: 400px;
+    height: 40px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+    color: white;
+    background: #0068ff;
+    border: 1px solid #0068ff;
+    border-radius: 10px;
+ }
+
+ ul>li{list-style: none} /*li . 지우기 */
+
+ .agreement-form .select-all {  /*약관전체 동의 체크 박스 크기 조정 */
+    width: 24px; /* 너비 조정 */
+    height: 24px; /* 높이 조정 */
+}
+.txt1{font-size: 20px; color: black;}
+.txt{color: grey;}
+.checkbox{color: gray;}
