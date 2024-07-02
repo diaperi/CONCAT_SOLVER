@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #007BFF; /* 파란색 배경 */
+}
+
+.mypage_change_container {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(
+                to bottom,
+                #03BED6 0%,
+                #10B3DA 25%,
+                #1DA4E1 50%,
+                #249CE5 75%,
+                #2D8EED 100%,
+                #3084F4 100%
+            );
+    height: 100vh; /* 화면 전체 높이로 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* 글자색을 흰색으로 설정 */
+}
+
+.mypage_change_form-container {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.35); /* 검은색 배경, 투명도 35% */
+    padding: 70px;
+    border-radius: 5px;
+    max-width: 90%; /* 화면의 90% 너비 */
+    width: 90%; /* 화면의 90% 너비로 수정 */
+    color: white; /* 글씨색을 흰색으로 변경 */
+}
+
+.mypage_change_form-container h2 {
+    text-align: left;
+}
+
+.mypage_change_form-container label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.mypage_change_form-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.mypage_change_form-container button {
+    width: 48%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.mypage_change_form-container .btn-cancel {
+    background-color: #007BFF;
+}
+
+.mypage_change_form-container .mypage_change_btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mypage_change_form-container button:hover {
+    opacity: 0.8;
+}

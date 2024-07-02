@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>헤더</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .header_navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 1px 30px; 
+        }
+        .header_navbar img {
+            height: 100px; 
+            width: 120px; 
+            max-width: 200px;
+        }
+        .header_navbar .header_menu {
+            display: flex;
+            gap: 20px;
+        }
+        .header_navbar .header_menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header_navbar">
+        <img src="img/solver_logo.png">
+        <div class="header_menu">
+            <a href="#realtime">실시간 화면</a>
+            <a href="#mypage">마이페이지</a>
+            <a href="#logout">로그아웃</a>
+        </div>
+    </div>
+</body>
+</html>
