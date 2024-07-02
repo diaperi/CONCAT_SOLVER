@@ -3,6 +3,7 @@
     padding: 0;
     flex-wrap: nowrap;
     text-wrap: nowrap;
+    font-family: Arial, sans-serif;
 }
 
 .myPageMain_container{
@@ -37,21 +38,27 @@
     height: 50px;
     width: 450px;
     border-radius: 10px;
-    border: 1px solid rgb(206, 206, 206);
+    border: 2px solid rgb(65, 154, 255);
     padding-left: 40px; /* 아이콘과 텍스트 간의 간격 */
     box-sizing: border-box;
+    transition: border 0.2s; 
+}
+
+.myPageMain_input> input:focus {
+    border: 2px solid rgb(0, 0, 0); /* Change this to your desired border style */
+    outline: none; /* Remove default outline */
 }
 
 .myPageMain_input > input::placeholder {
     color: rgb(173, 173, 173);
     font-size: 14px;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .myPageMain_input > span {
     position: absolute;
     left: 10px;
-    top: 53%;
+    top: 60%;
     transform: translateY(-50%);
 }
 
@@ -74,6 +81,7 @@
     font-weight: bold;
     align-items: center;
     width: 100%;
+    /* color: rgb(65, 154, 255); */
 }
 
 .myPageMain_videoBox1>span:nth-child(2){
@@ -134,12 +142,36 @@
 
 .myPageMain_downBar {
     font-size: 40px; /* 아이콘 크기 조정 */
-    background: linear-gradient(to bottom, #6c6cff, #000000); /* 위쪽은 파란색, 아래쪽은 검은색 */
+    background: linear-gradient(to bottom, rgb(0, 112, 240), #000000); /* 위쪽은 파란색, 아래쪽은 검은색 */
     -webkit-background-clip: text; /* 텍스트에만 그라데이션 적용 */
     color: transparent; /* 텍스트 색상을 투명하게 설정 */
     display: inline-block;
     cursor: pointer;
     margin-bottom: 40px;
+    animation: bounce 2s infinite;
+}
+
+.myPageMain_UpBar {
+    font-size: 40px; /* 아이콘 크기 조정 */
+    background: linear-gradient(to bottom, rgb(0, 112, 240), #000000); /* 위쪽은 파란색, 아래쪽은 검은색 */
+    -webkit-background-clip: text; /* 텍스트에만 그라데이션 적용 */
+    color: transparent; /* 텍스트 색상을 투명하게 설정 */
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 40px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(10px);
+    }
+    60% {
+        transform: translateY(5px);
+    }
 }
 
 .myPageMain_downBar > i {
