@@ -9,3 +9,4 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'sign.html'; // 이동할 HTML 파일 경로
     });
 });
+//
