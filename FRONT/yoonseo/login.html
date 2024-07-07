@@ -7,38 +7,44 @@
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <div class="header">
-     <img src="img/solver_head.png">
+    <div class="login-header-img"><img src="img/solver_head.png"></div>
+    <hr>
+    <div class="login_side">
+        <span class="login_intro1">
+            사회적 문제인 가족 갈등 조정을 위한<br>
+            <span class="indent">똑똑한 우리집 퍼실레이터</span>
+        </span><br>
+        <span class="login_intro2"><b>솔버(SOLVER)로 갈등 해결하고<br>가정에서 행복한 대화를 나눠보세요!</b></span>
+        <div class="login-body-img"><img src="img/solver_login.png"></div>
     </div>
-    <hr/>
     <div class = "login">
-        <h2>여기 솔버로고</h2>
-        <div class = "input-box">
-            <input type="text" placeholder="아이디" required>
+        <div class="login-img"><img src="img/SOLVER_login_body.png"></div>
+        <div class = "login-input-idbox">
+            <input type="text" id="username" placeholder=" 아이디" required>
         </div>
-        <div class = "input-box">
-            <input type="password" placeholder="비밀번호" required>
+        <div class = "login-input-pwbox">
+            <input type="password" id="password" placeholder="비밀번호" required>
         </div>
-        <div class = "check">
-            <input type ="checkbox"><span>로그인 상태 유지</span>
+        <div class = "login-check">
+            <input type ="checkbox"><span> 로그인 상태 유지</span>
         <!-- <a href = "#">Forgot Password?</a> -->
         </div>
-        <button type="submit" class="btn">로그인</button>
-
+        <button type="submit" id="btn"><p>로그인</p></button>
+        
         <div class ="register">
             <a href = "find.html"> 아이디 찾기 </a>|<a href = "find.html"> 비밀번호 찾기 </a>|<a href = "register.html"> 회원가입 </a>
         </div>
-
+    
         <div class="login_type">
-            <span class="or-text">간편 로그인</span> <br>
-            <a href="#none"><img src="img/naver.jpg"></a> <!--이미지 크기는 15px 글씨는 나중에 없애기-->
-            <a href="#none"><img src="img/google.png"></a>
-            <a href="#none"><img src="img/kakaotalk.png"></a>
-            <a href="#none"><img src="img/apple.png"></a>
+            <span class="or-text">- 간편 로그인 -</span>
+            <button class="login-button" onclick="goToNaverLogin()"><img src="img/naver.jpg"></button>
+            <button class="login-button"onclick="goToGoogleLogin()"><img src="img/google.png"></button>
+            <button class="login-button" onclick="goToKakaoLogin()"><img src="img/kakaotalk.png"></button>
+            <button class="login-button" onclick="goToAppleLogin()"><img src="img/apple.png"></button>
         </div>
     
    
     </div>
-
+    <script src="js/login.js"></script>
 </body>
 </html>
