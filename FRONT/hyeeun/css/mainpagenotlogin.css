@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    flex-wrap: nowrap;
+    font-family: Arial, sans-serif;
+}
+
+.mainpagenotlogin_container {
+    background: linear-gradient(
+        to bottom,
+        #03BED6 0%,
+        #10B3DA 25%,
+        #1DA4E1 50%,
+        #249CE5 75%,
+        #2D8EED 100%,
+        #3084F4 100%
+    );
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.mainpagenotlogin_container2 {
+    margin-top: 40px;
+    width: 90%;
+    height: 85%;
+}
+
+.mainpagenotlogin_main {
+    height: 100%;
+    display: flex;
+}
+
+.mainpagenotlogin_videoBox {
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(23, 23, 23, 0.9)
+}
+
+.mainpagenotlogin_videoBox > video {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.mainpagenotlogin_rightBox {
+    width: 30%;
+}
+
+.mainpagenotlogin_rightTop {
+    background-color: rgb(0, 0, 0);
+    justify-content: space-between;
+    display: flex;
+    height: 6%;
+    align-items: center;
+    font-size: 17px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.mainpagenotlogin_rightTop > span:nth-child(2) {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.mainpagenotlogin_rightMain {
+    background-color: #2F2F2F;
+    height: 83.5%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    color: rgb(223, 223, 223);
+    padding-bottom: 60px;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mainpagenotlogin_rightMain p {
+    font-size: 25px;
+}
+
+.mainpagenotlogin_rightMain::-webkit-scrollbar {
+    display: none;
+}
+
+.fullscreen-video {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: #000;
+    transition: transform 0.5s ease;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    z-index: 1001;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.mainpagenotlogin_error-message {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    z-index: 2;
+}
+
+.mainpagenotlogin_error-message img {
+    width: 150px; /* 원하는 크기로 조정 */
+    margin-top: 20px; /* 이미지 위에 공간 추가 */
+}
+
+.mainpagenotlogin_error-message p {
+    font-size: 25px;
+}
