@@ -3,11 +3,29 @@
    
 }
 
-hr{height: 70px;}
+.one > img {
+  position: absolute;
+  width: 100px;
+  height: 60px;
+  left: 20px; 
+  top: 0px; 
+  z-index: 10;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  background-color: white; 
+  border: none;
+  margin: 50px 0; /* 수평선 위아래 여백*/
+}
 
 body {
     display: flex; 
     flex-direction: column; 
+    align-items: center;
+    /* text-align: center; */
+    justify-content: center;
     /* justify-content: center; */
     /* background-color: skyblue; */
     color: black;
@@ -19,46 +37,157 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 550px;
+    width: 530px;
     height: 650px;
-    margin-top: 40px;
-    margin-bottom: 60px;
+    margin-top: -20px;
+    margin-bottom: 20px;
     background: #ffffff;
     border: 1px solid #aacdff;
     box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
     border-radius: 15px;
   }
-  .agreement-form {margin-top: 40px;}
-
+  .agreement-form {margin-top: 40px; }
+  .sign-title{ /*SOLVER 홈캠 이용약관*/
+    text-align: center;
+    font-size: 27px;
+  }
+  .sign-img>.sign-1 img{
+    width: 40px;
+    margin-top: 15px;
+    margin-left: 140px;
+  }
+  .sign-2 img{
+    width: 40px;
+    margin-top: 15px;
+    margin-left: -185px;
+  }
+  .sign-img {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -60px;
+  }
+  .sign-line {
+    width: 40px;
+    height: 2px;
+    background-color: #83D4EB;
+    margin-top: 10px; /* 이미지 사이에 선을 추가하고 간격을 조정 */
+    margin-right: 185px;
+  }
+  .all-check{
+    margin-top: 80px;
+  }
+  
   .btn {
     /* display: flex;
     flex-direction: column; */
     margin-top: 60px;
-    width: 470px;
+    text-align: center;
+  
     height: 106px;
    
   }
   
-  button {
+  .submit-button {
     margin-top: 30px;
     width: 400px;
     height: 40px;
     font-weight: 400;
     font-size: 18px;
-    line-height: 27px;
+    /*line-height: 27px;*/
     text-align: center;
     color: white;
     background: #0068ff;
     border: 1px solid #0068ff;
     border-radius: 10px;
  }
-
+ .close-button { /*X버튼 */
+  position: absolute;
+  margin-top: 10px;
+  left: 65%;
+   background-color:rgb(255, 255, 255,0);; 
+  color: gray;
+  border: none;
+  padding: 1px;
+  cursor: pointer;
+  font-size: 25px;
+}
+.close-button2 { /*X버튼 */
+  position: absolute;
+  margin-top: 10px;
+  right: 65%;
+  background-color: rgb(255, 255, 255,0);
+  color: gray;
+  border: none;
+  padding: 1px;
+  cursor: pointer;
+  font-size: 25px;
+}
  ul>li{list-style: none} /*li . 지우기 */
 
- .agreement-form .select-all {  /*약관전체 동의 체크 박스 크기 조정 */
-    width: 24px; /* 너비 조정 */
-    height: 24px; /* 높이 조정 */
+ .all-check .select-all {  /*약관전체 동의 체크 박스 크기 조정 */
+    width: 22px; /* 너비 조정 */
+    height: 22px; /* 높이 조정 */
+    margin-bottom: 20px;
 }
-.txt1{font-size: 20px; color: black;}
+.txt1{font-size: 19px; color: black;}
 .txt{color: grey;}
 .checkbox{color: gray;}
+
+.item, .item-inner{ margin: 8px 0;}
+
+.list{
+   font-size: 14px; list-style: none;
+  padding: 0;
+}
+.sign-disagree, .sign-agree {
+  display: block;
+  margin: 10px 0;
+  
+}
+
+.sign-disagree {
+  margin-top: 30px;
+}
+
+/* 미동시 모달 부분 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: auto;
+  margin-top: 280px; /*박스 위치 */
+  padding: 25px;
+  border: 1px solid #888;
+  width: 400px;
+  height: 150px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 14px;/*이메일을 전송했습니다. */
+  color: #717171; 
+}
+
+.ok_btn { /*확인버튼 */
+  width: 300px;
+  height: 45px;
+  font-size: 16px;
+  /* cursor: pointer; */
+  background-color: #4461F2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin-top:25px;
+  /* align-items: center; */
+  }
+
+  .menu_msg{margin-top:35px; font-size: 17px;}
