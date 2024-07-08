@@ -7,29 +7,27 @@
     <link rel="stylesheet" href="../css/cs.css">
 </head>
 <body>
-    <main>
-        <div class="container">
-            <section class="search-section">
-                <h1>무엇을 도와드릴까요?</h1>
-                <div class="search-bar">
-                    <img src="../img/cs_search.png" alt="검색-아이콘" class="search-icon">
-                    <input type="text" placeholder="검색어를 입력해주세요.">
+    <div class="cs_csContainer">
+        <div class="cs_mainContainer">
+            <div class="cs_searchContainer">
+                <div class="cs_searchSection">
+                    <h1>무엇을 도와드릴까요?</h1>
+                    <div class="cs_searchBar">
+                        <img src="../img/cs_search.png" alt="검색-아이콘" class="cs_searchIcon">
+                        <input type="text" placeholder="검색어를 입력해주세요.">
+                    </div>
                 </div>
-            </section>
-            
-            <aside>
-                <img src="../img/cs_homecam.png" alt="홈캠-아이콘3">
-            </aside>
+                <div class="cs_honeCam">
+                    <img src="../img/cs_homecam.png" alt="홈캠-아이콘3">
+                </div>
+            </div>
+            <div class="cs_infoSectionHead">
+                <h1>자주하는 질문</h1>
+                <h2><a href="#"></a>전체</h2>
+            </div>
         </div>
-        
-
-        <section class="info-txt">
-            <h2>자주하는 질문</h2>
-            <h5><a href="#"></a>전체</h5>
-        </section>
-        
-        <section class="info-section">
-            <div class="info faq">  
+        <div class="cs_infoContainer">
+            <div class="cs_infoFaq">  
                 <ul>
                     <li><img src="../img/cs_qna.png" alt="cs_qna"><a href="#"></a>회원가입 시 입력한 이메일을 변경할 수 있습니까?</li>
                     <li><img src="../img/cs_qna.png" alt="cs_qna"><a href="#"></a>휴지통에 있는 영상을 복원하고 싶어요.</li>
@@ -38,19 +36,23 @@
                     <li><img src="../img/cs_qna.png" alt="cs_qna"><a href="#"></a>대화내용에 오류가 떠요.</li>
                 </ul>
             </div>
-            <div class="info-box contact">
-                <h3>전화 문의</h3>
-                <p>평일, 주말, 공휴일 관계없이 24시간 운영합니다.</p>
-                <p class="phone-number">0000-0000</p>
+            <div class="cs_infoBoxContainer">
+                <div class="cs_infoBox">
+                    <div class="cs_infoBoxContent">
+                        <h1>전화 문의</h1>
+                        <p>평일, 주말, 공휴일 관계없이<br> 24시간 운영합니다.</p>
+                        <p id="cs_phoneNumber">0000-0000</p>
+                    </div>
+                </div>
+                <div class="cs_infoBox">
+                    <div class="cs_infoBoxContent">
+                        <h1>1:1 온라인 문의</h1>
+                        <p>평일, 주말, 공휴일 관계없이<br> 24시간 운영합니다.</p>
+                        <button>문의글 남기기</button>
+                    </div>
+                </div>
             </div>
-            <div class="info-box contact">
-                <h3>1:1 온라인 문의</h3>
-                <p>평일, 주말, 공휴일 관계없이 24시간 운영합니다.</p>
-                <button>문의글 남기기</button>
-            </div>
-        </section>
-
-
-    </main>
+        </div>
+    </div>
 </body>
 </html>
