@@ -1,13 +1,10 @@
-/* .loginbtn button{ background-color: blue; color: aliceblue; border: none; width: 150px; ;}
-.login{background-color: antiquewhite; width: 400px; height: 600px; } */
+/* 공통부분 */
 a {text-decoration-line: none; color: white;}
 * { margin: 0;
     padding: 0;
-
-
-    
 }
-hr{height: 70px;}
+.login-header-img> img{width: 100px;  height:60px; margin-left: 10px;} /*흰색 솔버 로고 이미지 */
+hr{margin-top: -15px; color: white;}
 body {
     display: flex; 
     flex-direction: column; 
@@ -19,12 +16,114 @@ body {
 
 }
 
-img { height: 30px;}
+/*화면 왼쪽 부분 */
+.login-body-img> img{width: 250px; margin-top: 60px;} /*솔버 완성 이미지 */
 
-.login{background-color: rgb(59, 57, 57); width: 450px; height: 550px; top: 50px; 
+.login_side{ /*login 왼쪽 웹 화면 소개 */
+    margin-top: 100px;
+    margin-left: 300px;
+}
+
+.login_intro1 {
+    display: block; 
+    font-size: 18px; 
+    margin-bottom: 10px; /* 아래 여백 추가 */
+}
+.login_intro1 .indent {
+    display: inline-block;
+    padding-left: 40px; /* 두 번째 줄 들여쓰기 */
+}
+.login_intro2 {
+    text-indent: 20px; /* 첫 줄 들여쓰기 */
+    display: block; 
+    font-size: 18px; 
+    margin-bottom: 10px; 
+}
+
+.login-img>img{width: 120px; height: auto; margin-top: 20px; }
+
+.login{background-color: rgb(59, 57, 57); width: 450px; height: 600px; top: 50px; 
     position: fixed;  /*이건 좀 더 */
     top: 80px; /* 위치조정 */
     left: 900px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+
 }
 
-header>img{ width: 20px;}
+.login-input-idbox input{ /*아이디 입력란*/
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 24px;
+    color: #090909;
+    border: 1px solid rgb(175, 175, 175);
+    width: 380px;
+    height: 40px;
+    margin-top: 0px; /* 간격 */
+    border-radius: 8px;
+}
+
+.login-input-pwbox input{
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 24px;
+    color: #000000;
+    border: 1px solid rgb(175, 175, 175);
+    width: 380px;
+    height: 40px;
+    margin-top: 15px; /* 간격 */
+    border-radius: 8px;
+}
+.login-check{
+    margin-left: -250px;
+    font-weight: 300;
+    margin-top: 15px; /* 간격 */
+    font-size: 14px;
+}
+.login>button{ 
+    margin-top: 20px;
+    width: 300px;
+    height: 45px;
+    font-weight: 400;
+    font-size: 16px;
+    /*line-height: 27px;*/
+    text-align: center;
+    color: white;
+    background: #4461F2;
+    border: 1px solid #4461F2;
+    border-radius: 10px;
+}
+
+.register{
+    font-weight: 250;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+/*간편로그인 부분 */
+.login_type {
+    text-align: center; 
+}
+.or-text {
+    margin-top: 55px; /* 간편 로그인 텍스트 아래 마진 설정 */
+    margin-bottom: 10px;
+    display: block; /* 블록 요소로 변경하여 줄 바꿈 처리 */
+    font-size: 14px;
+}
+.login_type .login-button {
+    display: inline-block; 
+    background-color: white; 
+    border: none; 
+    padding: 8px; 
+    margin: 10px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+.login_type .login-button img {
+    width: 30px; 
+    height: auto; 
+    vertical-align: middle; 
+}

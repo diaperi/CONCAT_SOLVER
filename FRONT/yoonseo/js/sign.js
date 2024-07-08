@@ -1,8 +1,20 @@
+function goToLogin() {
+    // login.html로 이동
+    window.location.href = 'login.html';
+}
+
+function goToRegister() {
+    // register.html로 이동
+    window.location.href = 'register.html';
+}
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
     const $agreementForm = document.querySelector('.agreement-form');
     const $selectAll = $agreementForm.querySelector('.select-all');
     const $listInput = $agreementForm.querySelectorAll('.list input');
-    const $selectAllMkt = $agreementForm.querySelector('.select-all-mkt');
+    const $selectAllMkt = $agreementForm.querySelector('.select-all-marketing');
     const $mandatoryInputs = $agreementForm.querySelectorAll('.item:not(.inner) input');
     const $optionalInputs = $agreementForm.querySelectorAll('.item.inner input');
     const $submitButton = $agreementForm.querySelector('.submit-button');
@@ -38,7 +50,16 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = 'login.html'; 
         } else {
             // 필수 항목 체크 안 된 경우 경고창 표시
-            alert("모든 필수 항목에 동의해야 합니다.");
+            // alert("모든 필수 항목에 동의해야 합니다.");
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'block';
+
+            // 모달 닫기 버튼 이벤트 처리
+            document.querySelector('.modal_close').addEventListener('click', function() {
+                // 모달 닫기
+                document.querySelector('.modal').style.display = 'none';
+            });
         }
     });
 });
+

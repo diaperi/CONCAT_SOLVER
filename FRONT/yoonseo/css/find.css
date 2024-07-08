@@ -5,27 +5,209 @@ a {text-decoration-line: none; color: white;}
 
     
 }
-hr{height: 70px;}
-body {
-    display: flex; 
-    flex-direction: column; 
-    /* justify-content: center; */
-    /* background-color: skyblue; */
-    color: white;
-    height: 100vh;
-    background: linear-gradient(to bottom,#03BED6,#10B3DA, #1DA4E1,#249CE5,#2D8EED,#3084F4);
+/* .one > img{ position:absolute; 
+    width: 100px; 
+    left: 0;
+    top: 0;
+    height:60px;
+    z-index: 10;  } 흰색 솔버 로고 이미지 */
 
-}
-.find {
+/* hr{ width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    border: none;
+    margin: 50px;}  */
+
+/* body {
+    display: flex; 
+    flex-direction: column;
+     align-items: center;  */
+    /*text-align: center; */ /*d*/
+    /* justify-content: center;  */
+    /* background-color: skyblue; */ /*f*/
+    /* color: red;
+    height: 100vh; */
+    /* background: linear-gradient(to bottom,#03BED6,#10B3DA, #1DA4E1,#249CE5,#2D8EED,#3084F4); */
+
+
+/* .find {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 550px;
+    width: 530px;
     height: 650px;
-    margin-top: 40px;
-    margin-bottom: 60px;
+    margin-top: -20px;
+    margin-bottom: 20px;
     background: #ffffff;
     border: 1px solid #aacdff;
     box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
     border-radius: 15px;
+  }  */
+/* 상단 로고 이미지*/
+.one > img {
+    position: absolute;
+    width: 100px;
+    height: 60px;
+    left: 20px; 
+    top: 0px; 
+    z-index: 10;
+}
+
+hr {
+    width: 100%;
+    height: 1px;
+    background-color: white; 
+    border: none;
+    margin: 50px 0; /* 수평선 위아래 여백*/
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #03BED6, #10B3DA, #1DA4E1, #249CE5, #2D8EED, #3084F4);
+    color: black; /
+}
+
+/* find 박스 스타일 */
+.find {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 530px;
+    height: 650px;
+    margin-top: -15px; /* 로고와 수평선 사이 여백 조정 */
+    margin-bottom: 20px;
+    background: #ffffff;
+    border: 1px solid #aacdff;
+    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    border-radius: 15px;
+}
+
+  .btn {
+    /* display: flex;
+    flex-direction: column; */
+    margin-top: 60px;
+    /* width: 470px; */
+    height: 106px;
+   
   }
+  
+  .btn>button {
+    margin-top: 0px;
+    width: 400px;
+    height: 45px;
+    font-weight: 400;
+    font-size: 17px;
+    /*line-height: 27px;*/
+    text-align: center;
+    color: white;
+    background: #4461F2;
+    border: 1px solid #4461F2;
+    border-radius: 10px;
+ }
+ .close-button { /*X버튼 */
+    position: absolute;
+    margin-top: 10px;
+    left: 65%;
+    background-color: rgb(255, 255, 255,0);
+    color: gray;
+    border: none;
+    padding: 1px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.find-img>img{width: 120px; margin-top: 35px;} /*솔버이미지 크기 */
+
+.find-input-box input{  /*이메일 입력란 */
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    border: 1px solid rgb(175, 175, 175);
+    width: 400px;
+    height: 45px;
+    margin-top: 10px; /* 간격 */
+    border-radius: 10px;
+ }
+/*이메일 전송완료 모달 부분 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0,0.4);
+    display: flex; /* 추가: flexbox 사용 */
+    justify-content: center; /* 추가: 가로 중앙 정렬 */
+    align-items: center; /* 추가: 세로 중앙 정렬 */
+}
+.modal-section {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.enroll_box {
+    background-color: white;
+    margin: auto;
+    margin-top: 350px; /*박스 위치 */
+    padding: 25px;
+    border: 1px solid #888;
+    width: 400px;
+    height: 150px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 14px;/*이메일을 전송했습니다. */
+    color: #717171; 
+    
+}
+.menu_msg2{margin-top: 25px;}
+.enroll_box>button {
+    text-align: center;
+    /* margin-top: 20px; */
+}
+.ok_btn { /*확인버튼 */
+    width: 300px;
+    height: 45px;
+    font-size: 16px;
+    /* cursor: pointer; */
+    background-color: #4461F2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin:40px;
+    }
+
+.find-content {display: flex; 
+   
+    align-items: center; 
+    color: black; 
+    font-size: 16px; 
+    margin: 30px ;
+    justify-content: center;
+}
+
+.find-content::before, 
+.find-content::after 
+{content: ""; 
+    flex-grow: 1; 
+    background: #0068ff; 
+    height: 1px; 
+    font-size: 0px; 
+    line-height: 0px; 
+    margin: 0px -65px;
+    width: 90%;
+}
+
+.find-content> span{width: 100%; width: 600px; text-align: center;} /*아이디/비밀번호 찾기 */
+.find>span{
+    color: #2D8EED; 
+    font-size: 12px;
+margin-top: 30px;}
