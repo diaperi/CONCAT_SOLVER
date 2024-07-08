@@ -7,9 +7,18 @@
     <link rel="stylesheet" href="css/sign.css">
 </head>
 <body>
+    <div class="one"><img src="img/solver_head.png"></div>
     <hr>
 <div class="sign">
+    <button class="close-button2" onclick="goToRegister()"><<</button>
+    <button class="close-button" onclick="goToLogin()">X</button>
     <div class="agreement-form">
+        <div class="sign-title"><span>SOLVER 홈캠 이용약관</span></div>
+        <div class="sign-img">
+            <div class="sign-1"><img src="img/number1.png"></div>
+            <div class="sign-line"></div>
+            <div class="sign-2"><img src="img/number2.png"></div>
+        </div>
         <!-- <p class="title">약관동의</p> -->
         <div class="all-check">
             <label class="checkbox">
@@ -17,7 +26,8 @@
                 <span class="txt1"> <strong>&nbsp;약관 전체 동의</strong></span>
             </label>
         </div>
-        <ul class="list">	
+        <ul class="list">   
+            <span class="sign-agree"><b>필수 동의 항목</b></span>
             <li class="item">
                 <label class="checkbox">
                     <input type="checkbox">
@@ -37,6 +47,7 @@
                     <span class="txt">[필수] 안전한 서비스 이용을 위한 보안 정책 동의</span>
                 </label>
             </li>
+            <span class="sign-disagree"><b>선택 동의 항목</b></span>
             <li class="item inner">
                 <label class="checkbox">
                     <input type="checkbox">
@@ -56,7 +67,15 @@
                 </label>
             </li>
         </ul>
-        <button class="submit-button">가입</button>
+        
+       <button class="submit-button">가입</button>
+       <div id="myModal" class="modal">
+        <div class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <p class="menu_msg"><b>약관 동의를 눌러주세요!</b></p>
+            <button class="btn ok_btn modal_close">확인</button>
+        </div>
+    </div>
     </div>
 </div>
 </body>
