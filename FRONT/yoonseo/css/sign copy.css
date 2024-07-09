@@ -54,6 +54,24 @@ body {
   border-radius: 15px;
 }
 
+.sign_BtnBox2{
+  /* background-color: yellowgreen; */
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.sign_BtnBox2 > button{
+  border: none;
+  background-color: white;
+  font-size: 20px;
+  color: #7c7c7c;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .agreement-form {
   margin-top: 5vh; /* 40px -> 4vh */
   font-size: 1.6vh; /* 14px -> 1.4vh */
@@ -129,7 +147,19 @@ body {
   margin-top: 10px;
 }
 
-.close-button {
+/* .close-button {
+  position: absolute;
+  background-color: rgb(255, 255, 255, 0);
+  color: gray;
+  border: none;
+  padding: 1px; /* 1px -> 0.1vh */
+  /* cursor: pointer;
+  font-size: 25px; /* 25px -> 2.5vh */
+ /* */ 
+
+
+
+/* .close-button2 {
   position: absolute;
   background-color: rgb(255, 255, 255, 0);
   color: gray;
@@ -137,19 +167,7 @@ body {
   padding: 1px; /* 1px -> 0.1vh */
   cursor: pointer;
   font-size: 25px; /* 25px -> 2.5vh */
-}
-
-
-
-.close-button2 {
-  position: absolute;
-  background-color: rgb(255, 255, 255, 0);
-  color: gray;
-  border: none;
-  padding: 1px; /* 1px -> 0.1vh */
-  cursor: pointer;
-  font-size: 25px; /* 25px -> 2.5vh */
-}
+/* } */ 
 
 ul > li {
   list-style: none;
