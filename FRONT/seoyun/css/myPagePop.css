@@ -63,7 +63,7 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: calc(100% - 11vh); /* Adjust height for responsiveness */
+    height: calc(100% -11vh); /* Adjust height for responsiveness */
 }
 
 .myPagePop_list {
