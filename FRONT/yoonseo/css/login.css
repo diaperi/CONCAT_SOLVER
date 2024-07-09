@@ -127,3 +127,8 @@ body {
     height: auto; 
     vertical-align: middle; 
 }
+
+.kakao-login-btn p {
+    margin: 0;
+    display: none; /* p 요소가 차지하는 공간 없애기 */
+}
