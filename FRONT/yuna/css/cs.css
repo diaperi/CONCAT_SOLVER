@@ -42,13 +42,14 @@ body {
 
 .cs_searchSection {
     flex: 0 0 calc(60% - 20px);
-    padding: 6vw;
+    padding: 6vh;
+    margin-left: 2vh;
 }
 
 .cs_searchSection h1 {
     font-size: clamp(2em, 10vw, 4.6em);
     color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
 }
 
 .cs_searchBar {
@@ -62,7 +63,7 @@ body {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 12px;
-    padding: 15px;
+    padding: 1.5vh;
 }
 
 .cs_searchIcon {
@@ -76,7 +77,7 @@ body {
     outline: none;
     font-size: 22px;
     width: 100%;
-    margin: 10px;
+    margin: 1vh;
 }
 
 .cs_honeCam {
@@ -96,8 +97,8 @@ body {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: auto;
-    padding-bottom: 18px;
+    margin-left: 31vh;
+    padding-bottom: 1.8vh;
     flex: 1;
 }
 
@@ -106,12 +107,12 @@ body {
 }
 
 .cs_infoSectionHead h2 {
-    margin-left: 17vw;
+    margin-left: 30vh;
 }
 
 .cs_infoContainer {
     width: 90%;
-    padding: 10px 20px;
+    padding: 1vh 2vh;
     margin-left: auto;
     font-size: clamp(16px, 2vw, 24px);
     font-weight: bold;
@@ -122,8 +123,8 @@ body {
 }
 
 .cs_infoFaq {
-    margin-top: 14px;
-    margin-right: 110px;
+    margin-top: 1.4vh;
+    margin-right: 14vh;
 }
 
 .cs_infoFaq ul li {
@@ -140,23 +141,28 @@ body {
 .cs_infoBoxContainer {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 4vh;
 }
 
 .cs_infoBox {
     background: #98F9FFB2;
-    padding: 0 4vw;
-    margin-top: 36px;
-    margin-right: 26px;
+    padding: 0 4vh;
+    margin-top: 3.6vh;
+    margin-right: 2.6vh;
     display: flex;
     justify-content: center;
     border-radius: 24px;
     flex-direction: column;
 }
 
+.cs_infoBoxContent {
+    text-align: center;
+}
+
 .cs_infoBoxContent h1 {
     color: #000000CC;
     font-size: clamp(1.2em, 4vw, 1.5em);
+    padding-top: 2.5vh;
 }
 
 .cs_infoBoxContent p {
@@ -164,27 +170,11 @@ body {
     font-size: clamp(0.8em, 2vw, 1em);
     font-weight: bold;
     line-height: 1.5;
-    margin: 26px;
+    margin: 2.6vh;
 }
 
-#cs_phoneNumber {
+#cs_num {
     color: #0021C3;
     font-size: clamp(1.2em, 3vw, 1.6em);
     font-weight: bold;
-}
-
-button {
-    padding: 12px 24px;
-    font-size: clamp(0.8em, 2vw, 1em);
-    background-color: #fff;
-    color: #363636CC;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #2D8EED;
-    color: #fff;
 }

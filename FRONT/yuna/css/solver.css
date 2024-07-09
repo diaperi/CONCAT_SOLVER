@@ -6,6 +6,7 @@
 
 body{
     width: 100%;
+    height: 100vh;
     font-family: Arial, sans-serif;
     background: linear-gradient(137.29deg, 
     #03BED6 20.13%, 
@@ -26,7 +27,11 @@ body{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 40px;
+    padding: 3.75vh 5vh;
+    top: 0;
+    position: fixed;
+    z-index: 100;
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
     /* white-space: nowrap; */
 }
 
@@ -42,11 +47,11 @@ body{
 }
 
 .solver_navMenu ul li {
-    margin: 0 8px;
+    margin: 0 1vh;
     text-decoration: none;
     color: #fff;
     font-size: 20px;
-    padding: 8px 16px;  
+    padding: 0.6vh 1.4vh;
     font-weight: 300; 
 }
 
@@ -71,11 +76,13 @@ body{
 #solver_loginBtn {
     color: #3084F4; 
     background-color: #fff;
+    margin-right: -3vh;
 }
 
 #solver_registerBtn {
     color: #000;
     background-color: #fff;
+    margin-right: -3vh;
 }
 
 #solver_loginBtn:hover, 
@@ -87,19 +94,18 @@ main {
     color: #fff;
     align-items: center;
     text-align: center;
-    margin: 60px;
+    margin: 7.5vh;
     
 }
 
 .solver_mainContent h3 {
-    padding-top: 60px;
-    padding-bottom: 10px;
+    padding-top: 22.5vh;
+    padding-bottom: 1vh;
     font-size: 26px;
 }   
 
 .solver_mainContent h1 {
-    /* font-size: 3.6em; */
-    padding-bottom: 10px;
+    padding-bottom: 1vh;;
     font-size: 130px;
 }
 
@@ -118,14 +124,7 @@ main {
     margin-top: 35px;
 }
 
-hr {
-    border: none; 
-    height: 0.5px;
-    background-color: #fff; 
-}
-
 section {
-    /* background-color: #000; */
     margin: 0;
     padding: 0;
     border-radius: 40px 40px 0 0;
@@ -135,7 +134,7 @@ section {
 .solver_bk {
     background-color: #000;
     border-radius: 40px 40px 0 0;
-    padding: 20px;
+    padding: 2vh;
 } 
 
 .solver_about {
@@ -148,33 +147,33 @@ section {
 .solver_about h6 {
     color: #3084F4;
     font-size: 22px;
-    margin: 100px 0 20px 0;
+    margin-top: 18vh; 
 }
 
 .solver_about p {
     font-size: 64px;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 3vh 0;
 }
 
 .solver_about span {
     font-size: 20px;
     font-weight: 300;
-    color: rgba(200, 200, 200, 0.8);
-    margin-bottom: 80px;
+    color: #8d8d93;
+    margin-bottom: 8vh;
 }
 
 .solver_aboutBox {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 160px; 
+    margin: 0 16vh;
 }
 
 .solver_count {
     background-color: #171717;
-    margin: 0 14px;
-    padding: 60px 40px;
+    margin: 0 1.4vh;
+    padding: 6vh 4vh; 
     border-radius: 26px;
     flex: 1;
 }
@@ -182,7 +181,7 @@ section {
 .countBox h3 {
     color: rgba(200, 200, 200, 0.5);
     font-size: 24px;
-    margin-bottom: 50px;
+    margin-bottom: 5vh;
 }
 
 .countBox p {
@@ -203,7 +202,7 @@ section {
     border: 0.5px solid #fff;
     border-radius: 100px;  
     padding: 18px 30px;
-    margin: 50px 50px 300px 50px;
+    margin: 50px;
 }
 
 .solver_bk2 {
@@ -211,7 +210,7 @@ section {
 } 
 
 .solver_mainServiceContainer {
-    padding: 100px 40px;
+    padding: 24vh 9vh 6vh 9vh;
 }
 
 .solver_mainService {
@@ -224,15 +223,15 @@ section {
 .solver_mainService h6 {
     color: #3084F4;
     font-size: 22px;
-    margin-top: 100px;
-    margin-bottom: 20px;
+    margin-top: 20vh;
 }
 
 .solver_mainService p {
     font-size: 78px;
     font-weight: bold;
     line-height: 1.2;
-    margin: 20px 0;
+    margin-top: 3vh;
+    margin-bottom: 10vh;
 }
 
 .solver_onboardingContainer {
@@ -242,31 +241,36 @@ section {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 80px;
 }
 
 .solver_onboardingBox1 {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 260px;
-    margin-left: 40px;
-    padding: 30px 0px 50px 30px;
+    gap: 20vh; 
+    padding: 0vh 0 12.5vh 10vh;
 }
 
 .solver_onboardingBox2 {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 260px;
-    margin-right: 40px;
-    padding: 30px 30px 50px 0;
+    gap: 20vh; 
+    padding: 0vh 10vh 12.5vh 0; 
+}
+
+.solver_onboardingBox3 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 20vh; 
+    padding: 0vh 0 12.5vh 10vh;
 }
 
 .solver_onboarding {
     flex: 1; 
     width: 600px;
-    padding-bottom: 30px;
+    padding-bottom: 7.5vh; 
 }
 
 .solver_onboarding h6{
@@ -277,30 +281,24 @@ section {
 .solver_onboarding p {
     font-size: 48px;
     font-weight: bold;
-    margin: 30px 0;
+    margin: 2vh 0;
 }
 
 .solver_onboarding span {
     font-size: 22px;
     font-weight: 300;
-    color: #8b95a1;
-    margin: 20px 0;
+    color: #8d8d93;
+    margin: 5vh 0;
+    line-height: 1.5;
 }
 
 #solver_onboardingContent {
     font-size: 62px;
     font-weight: bold;
-    margin: 30px 0;
+    margin: 7.5vh 0;
 }
 
-.solver_onboardingBox1 img {
-    max-width: 100%;
-    width: 620px;
-    height: auto;
-    border-radius: 20px;
-}
-
-.solver_onboardingBox2 img {
+.solver_onboardingContainer img {
     max-width: 100%;
     width: 620px;
     height: auto;
@@ -310,42 +308,43 @@ section {
 .solver_wh {
     background-color: #f7f7f7;
     margin: 0;
-    padding: 130px 200px 100px 200px;
+    padding: 10vh 19vh;
     border-radius: 40px 40px 0 0;
     color: #000;
     position: relative;
     box-sizing: border-box;
+    border-bottom: 0.1vh solid #8d8d9330;
 }
 
 .solver_review {
     display: flex;
     flex-direction: column;
-    margin-left: 40px;
+    margin-left: 3vh; 
 }
 
 .solver_review h6 {
     color: #3084F4;
     font-size: 22px;
-    margin-top: 60px;
-    margin-bottom: 20px;
+    margin-top: 9vh;
 }
 
 .solver_review p {
     font-size: 78px;
     font-weight: bold;
     line-height: 1.2;
-    margin: 20px 0 110px;
+    margin-top: 3vh;
+    margin-bottom: 10vh;
 }
 
 .swiper-slide {
-    padding: 0 6px; 
+    padding: 0 0.6vh;
 }
 
 .profileslider h3 {
     font-size: 24px;
     font-weight: 300;
-    margin-top: -6px;
-    margin-bottom: 8px;
+    margin-top: -0.6vh;
+    margin-bottom: 0.8vh; 
 }
 .profileslider p {
     font-size: 20px;
@@ -356,19 +355,25 @@ section {
 .profileslider img {
     max-width: 100%; 
     height: auto; 
-    margin-bottom: 10px; 
+    margin-bottom: 1vh; 
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    color: white;
 }
 
 footer {
     background-color: #f8f8f8;
     margin: 0;
-    padding: 50px;
+    padding: 5vh;
     color: #8b95a1;
     text-align: center;
+    padding: 8vh 0 5vh;
 }
 
 .solver_concatLogo img {
-    width: 240px;
+    width: 250px;
     height: auto;
 }
 
@@ -376,7 +381,8 @@ footer {
     font-size: 22px;
     font-weight: 300;
     line-height: 1.6;
-    margin: 50px 0;
+    margin: 5vh 0;
+
 }
 
 .solver_info {
