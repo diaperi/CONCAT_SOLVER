@@ -1,0 +1,176 @@
+a {
+    text-decoration-line: none;
+    color: white;
+    text-decoration: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    text-wrap: nowrap;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(137.29deg,
+            #03BED6 20.13%,
+            #10B3DA 33.05%,
+            #1DA4E1 45.02%,
+            #249CE5 58.56%,
+            #2D8EED 72.11%,
+            #3084F4 83.13%);
+}
+
+.login-header-img {
+    height: 9vh;
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
+    display: flex;
+    align-items: center;
+}
+
+.login-header-img > a > img {
+    height: 5.5vh;
+    margin-left: 3vh;
+}
+
+/* find 박스 스타일 */
+.find {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+    width: 73vh;
+    height: 85vh;
+    margin: auto; /* Center horizontally */
+    margin-top: 2vh; /* Adjust as needed */
+    background: #ffffff;
+    border: 1px solid #aacdff;
+    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    border-radius: 15px;
+}
+
+.btn {
+    margin-top: 6vh;
+    height: 1.6vh;
+}
+
+.btn > button {
+    margin-top: 0;
+    width: 60vh;
+    height: 6.5vh;
+    font-weight: 400;
+    font-size: 17px;
+    text-align: center;
+    color: white;
+    background: #4461F2;
+    border: 1px solid #4461F2;
+    border-radius: 10px;
+}
+
+.close-button { /* X버튼 */
+    position: absolute;
+    margin-top: -80vh; /* Adjust as needed */
+    left: 65%;
+    background-color: rgba(255, 255, 255, 0);
+    color: gray;
+    border: none;
+    padding: 1px;
+    cursor: pointer;
+    font-size: 25px;
+}
+
+.find-img > img {
+    width: 16vh; /* Converted from 120px */
+    margin-top: 4.5vh; /* Converted from 4.5 35px */
+}
+
+.find-input-box input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    border: 1px solid rgb(175, 175, 175);
+    width: 53vh; /* Converted from 400px */
+    height: 6vh; /* Converted from 45px */
+    margin-top: 2.5vh; /* Converted from 10px */
+    border-radius: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-section {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.enroll_box {
+    background-color: white;
+    margin: auto;
+    margin-top: 47vh; /* Converted from 350px */
+    padding: 25px;
+    border: 1px solid #888;
+    width: 53vh; /* Converted from 400px */
+    height: 20vh; /* Converted from 150px */
+    text-align: center;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #717171;
+}
+
+.enroll_box > button {
+    width: 37.5vh; /* Converted from 300px */
+    height: 6vh; /* Converted from 45px */
+    font-size: 16px;
+    background-color: #4461F2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 10vh 0 4vh; /* Adjusted margin */
+}
+
+.find-content {
+    display: flex;
+    align-items: center;
+    color: black;
+    font-size: 16px;
+    margin: 7.5vh 0; /* Adjusted margin */
+    justify-content: center;
+}
+
+.find-content::before,
+.find-content::after {
+    content: "";
+    flex-grow: 1;
+    background: #0068ff;
+    height: 1px;
+    font-size: 0;
+    line-height: 0;
+    margin: 0 -4.5vh; /* Converted from 65px */
+    width: 90%;
+}
+
+.find-content > span {
+    width: 80vh; /* Converted from 600px */
+    text-align: center;
+}
+
+.find > span {
+    color: #2D8EED;
+    font-size: 1.75vh; /* Converted from 12px */
+    margin-top: 2.5vh; /* Adjust as needed */
+}
