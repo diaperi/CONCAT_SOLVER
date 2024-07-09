@@ -11,13 +11,7 @@ a {
     text-wrap: nowrap;
 }
 
-
 body {
-    /* display: flex; 
-    flex-direction: column;  */
-    /* justify-content: center; */
-    /* background-color: skyblue; */
-    /* color: white; */
     height: 100vh;
     background: linear-gradient(137.29deg,
             #03BED6 20.13%,
@@ -29,18 +23,16 @@ body {
 }
 
 .login-header-img {
-    /* background-color: yellowgreen; */
-    height: 90px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.356);
+    height: 9vh;
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
     display: flex;
     align-items: center;
 }
 
-.login-header-img>a>img {
-    height: 55px;
-    margin-left: 30px;
+.login-header-img > a > img {
+    height: 5.5vh;
+    margin-left: 3vh;
 }
-
 
 /* **************************************************************************** */
 .login_container {
@@ -49,41 +41,37 @@ body {
 }
 
 .login_container2 {
-    /* background-color: rgb(0, 255, 55); */
-    margin-top: 50px;
+    margin-top: 5vh;
     width: 80%;
     display: flex;
 }
 
 /* **************************왼쪽**************************** */
 .login_side {
-    /* background-color: tan; */
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 45%;
     color: white;
-    font-size: 25px;
-    margin-top: 50px;
-    margin-left: 70px;
+    font-size: 2.5vh;
+    margin-top: 5vh;
+    margin-left: 7vh;
 }
 
-.login_intro1{
+.login_intro1 {
     font-weight: 400;
 }
 
 .login-body-img {
-    margin-top: 40px;
+    margin-top: 4vh;
 }
 
-.login-body-img>img{
-    width: 450px;
+.login-body-img > img {
+    width: 45vh;
 }
-
 
 /* *******************************오른쪽**************************** */
 .login_formBox {
-    /* background-color: rgb(109, 66, 66); */
     display: flex;
     justify-content: flex-end;
     width: 63%;
@@ -92,11 +80,11 @@ body {
 .login_formBox2 {
     background-color: black;
     width: 65%;
-    border-radius: 10px;
+    border-radius: 1vh;
     display: flex;
     justify-content: flex-end;
     color: #c9c9c9;
-    font-size: 15px;
+    font-size: 1.5vh;
 }
 
 .login_form {
@@ -105,115 +93,104 @@ body {
     align-items: center;
     background-color: rgb(0, 0, 0);
     width: 100%;
-    border-radius: 10px;
+    border-radius: 1vh;
 }
 
-.login-img>img {
-    width: 140px;
-    margin-top: 10px;
+.login-img > img {
+    width: 14vh;
+    margin-top: 1vh;
 }
 
-
-
-.login-input-idbox{
+.login-input-idbox {
     width: 80%;
-    /* background-color: #03BED6; */
-    margin-top: 30px;
+    margin-top: 3vh;
 }
 
-.login-input-pwbox{
+.login-input-pwbox {
     width: 80%;
-    /* background-color: #03BED6; */
-    margin-bottom: 25px;
+    margin-bottom: 2.5vh;
 }
 
-.login-input-idbox > input{
+.login-input-idbox > input {
     width: 98%;
-    height: 50px;
-    border-radius: 8px;
+    height: 5vh;
+    border-radius: 0.8vh;
     border: none;
-    padding-left: 10px;
-    font-size: 18px;
+    padding-left: 1vh;
+    font-size: 1.8vh;
 }
 
-.login-input-idbox> input:focus {
+.login-input-idbox > input:focus {
     outline: none; /* Remove default outline */
 }
 
-.login-input-pwbox> input:focus {
+.login-input-pwbox > input:focus {
     outline: none; /* Remove default outline */
 }
 
-.login-input-idbox > input::placeholder{
-    font-size: 14px;
+.login-input-idbox > input::placeholder {
+    font-size: 1.4vh;
     color: #383838;
 }
 
-.login-input-pwbox > input::placeholder{
+.login-input-pwbox > input::placeholder {
     color: #383838;
-    font-size: 14px;
+    font-size: 1.4vh;
 }
 
-
-.login-input-pwbox > input{
+.login-input-pwbox > input {
     width: 98%;
-    height: 50px;
-    border-radius: 8px;
+    height: 5vh;
+    border-radius: 0.8vh;
     border: none;
-    padding-left: 10px;
-    font-size: 18px;
-    margin-top: 20px;
+    padding-left: 1vh;
+    font-size: 1.8vh;
+    margin-top: 2vh;
 }
 
-
-.login-check{
+.login-check {
     width: 78%;
 }
 
-#login_btn{
-    margin-top: 60px;
+#login_btn {
+    margin-top: 6vh;
     width: 60%;
-    height: 50px;
-    border-radius: 8px;
+    height: 5vh;
+    border-radius: 0.8vh;
     background-color: #4461F2;
     border: none;
     color: white;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1.6vh;
     cursor: pointer;
-    margin-bottom: 25px;
+    margin-bottom: 2.5vh;
 }
 
-.login_register{
-    /* background-color: yellowgreen; */
+.login_register {
     width: 53%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.login_register > a{
+.login_register > a {
     color: #c9c9c9;
 }
 
-
 /* ******************************************* */
-.login_type{
-    margin-top: 80px;
+.login_type {
+    margin-top: 8vh;
     width: 75%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-
-
-
 .login_typeLine {
     display: flex;
     align-items: center;
     text-align: center;
-    margin: 20px 0;
+    margin: 2vh 0;
     position: relative;
     width: 100%;    
     justify-content: center; 
@@ -222,7 +199,7 @@ body {
 .login_typeLine hr {
     width: 100%;
     border: none;
-    border-top: 1px solid #d6d9dc;
+    border-top: 0.1vh solid #d6d9dc;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -231,35 +208,34 @@ body {
 
 .or-text {
     color: #d6d9dc;
-    font-size: 14px;
+    font-size: 1.4vh;
     background-color: #000000;
-    padding: 0 30px;
+    padding: 0 3vh;
     position: relative;
     z-index: 1;
     line-height: 1; /* 텍스트가 중앙에 오도록 */
 }
 
-.login_typeIcon{
-    margin-top: 15px;
-    /* background-color: yellowgreen; */
+.login_typeIcon {
+    margin-top: 1.5vh;
     width: 80%;
     display: flex;
     justify-content: space-between;
-    padding-bottom: 40px;
+    padding-bottom: 4vh;
 }
 
 .login_typeIcon > button {
-    height: 55px;
-    width: 58px;
+    height: 5.5vh;
+    width: 5.8vh;
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
-    border-radius: 8px;
+    border-radius: 0.8vh;
     cursor: pointer;
 }
 
-.login_typeIcon>button>img {
-    width: 35px;
-    border-radius: 10px;
+.login_typeIcon > button > img {
+    width: 3.5vh;
+    border-radius: 1vh;
 }
