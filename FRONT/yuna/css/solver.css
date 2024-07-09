@@ -1,0 +1,385 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}  
+
+body{
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(137.29deg, 
+    #03BED6 20.13%, 
+    #10B3DA 33.05%, 
+    #1DA4E1 45.02%, 
+    #249CE5 58.56%, 
+    #2D8EED 72.11%, 
+    #3084F4 83.13%);
+    background-attachment: fixed;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.solver_headerContainer {
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+    /* white-space: nowrap; */
+}
+
+.solver_logo img {
+    width: 190px;
+    height: auto;
+}
+
+.solver_navMenu ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.solver_navMenu ul li {
+    margin: 0 8px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    padding: 8px 16px;  
+    font-weight: 300; 
+}
+
+.solver_navMenu ul .navAbout {
+    color: #3084F4;
+}
+
+.solver_navMenu ul li:hover {
+    color: #8b95a1;
+}
+
+#solver_loginBtn, 
+#solver_registerBtn {
+    cursor: pointer;
+    border-radius: 100px;
+    border: none;
+    font-size: 20px;
+    font-weight: 300; 
+    padding: 18px 30px;
+}
+
+#solver_loginBtn {
+    color: #3084F4; 
+    background-color: #fff;
+}
+
+#solver_registerBtn {
+    color: #000;
+    background-color: #fff;
+}
+
+#solver_loginBtn:hover, 
+#solver_registerBtn:hover{
+    background-color: #ebeef1;
+}
+
+main {
+    color: #fff;
+    align-items: center;
+    text-align: center;
+    margin: 60px;
+    
+}
+
+.solver_mainContent h3 {
+    padding-top: 60px;
+    padding-bottom: 10px;
+    font-size: 26px;
+}   
+
+.solver_mainContent h1 {
+    /* font-size: 3.6em; */
+    padding-bottom: 10px;
+    font-size: 130px;
+}
+
+.solver_registerBtn button {
+    background-color: transparent;
+    border: 0.5px solid #fff;
+    color: #fff;
+    border-radius: 100px;  
+    padding: 18px 30px;
+    font-size: 18px;
+}
+
+.solver_homecam img{
+    width: 75%;
+    height: auto;
+    margin-top: 35px;
+}
+
+hr {
+    border: none; 
+    height: 0.5px;
+    background-color: #fff; 
+}
+
+section {
+    /* background-color: #000; */
+    margin: 0;
+    padding: 0;
+    border-radius: 40px 40px 0 0;
+    color: #fff;
+}
+
+.solver_bk {
+    background-color: #000;
+    border-radius: 40px 40px 0 0;
+    padding: 20px;
+} 
+
+.solver_about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.solver_about h6 {
+    color: #3084F4;
+    font-size: 22px;
+    margin: 100px 0 20px 0;
+}
+
+.solver_about p {
+    font-size: 64px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.solver_about span {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(200, 200, 200, 0.8);
+    margin-bottom: 80px;
+}
+
+.solver_aboutBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 160px; 
+}
+
+.solver_count {
+    background-color: #171717;
+    margin: 0 14px;
+    padding: 60px 40px;
+    border-radius: 26px;
+    flex: 1;
+}
+
+.countBox h3 {
+    color: rgba(200, 200, 200, 0.5);
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+.countBox p {
+    font-size: 64px;
+    font-weight: bold;
+}
+
+.solver_etcBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.solver_etcBtn button {
+    background-color: transparent;
+    color: #fff;
+    font-size: 18px;
+    border: 0.5px solid #fff;
+    border-radius: 100px;  
+    padding: 18px 30px;
+    margin: 50px 50px 300px 50px;
+}
+
+.solver_bk2 {
+    background-color: #000;
+} 
+
+.solver_mainServiceContainer {
+    padding: 100px 40px;
+}
+
+.solver_mainService {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.solver_mainService h6 {
+    color: #3084F4;
+    font-size: 22px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+
+.solver_mainService p {
+    font-size: 78px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 20px 0;
+}
+
+.solver_onboardingContainer {
+    margin: 0 auto;
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 80px;
+}
+
+.solver_onboardingBox1 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 260px;
+    margin-left: 40px;
+    padding: 30px 0px 50px 30px;
+}
+
+.solver_onboardingBox2 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 260px;
+    margin-right: 40px;
+    padding: 30px 30px 50px 0;
+}
+
+.solver_onboarding {
+    flex: 1; 
+    width: 600px;
+    padding-bottom: 30px;
+}
+
+.solver_onboarding h6{
+    color: #3084F4; 
+    font-size: 22px;
+}
+
+.solver_onboarding p {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+.solver_onboarding span {
+    font-size: 22px;
+    font-weight: 300;
+    color: #8b95a1;
+    margin: 20px 0;
+}
+
+#solver_onboardingContent {
+    font-size: 62px;
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+.solver_onboardingBox1 img {
+    max-width: 100%;
+    width: 620px;
+    height: auto;
+    border-radius: 20px;
+}
+
+.solver_onboardingBox2 img {
+    max-width: 100%;
+    width: 620px;
+    height: auto;
+    border-radius: 20px;
+}
+
+.solver_wh {
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 130px 200px 100px 200px;
+    border-radius: 40px 40px 0 0;
+    color: #000;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.solver_review {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+
+.solver_review h6 {
+    color: #3084F4;
+    font-size: 22px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.solver_review p {
+    font-size: 78px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 20px 0 110px;
+}
+
+.swiper-slide {
+    padding: 0 6px; 
+}
+
+.profileslider h3 {
+    font-size: 24px;
+    font-weight: 300;
+    margin-top: -6px;
+    margin-bottom: 8px;
+}
+.profileslider p {
+    font-size: 20px;
+    font-weight: 100;
+    line-height: 1.5;
+}
+
+.profileslider img {
+    max-width: 100%; 
+    height: auto; 
+    margin-bottom: 10px; 
+}
+
+footer {
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 50px;
+    color: #8b95a1;
+    text-align: center;
+}
+
+.solver_concatLogo img {
+    width: 240px;
+    height: auto;
+}
+
+.solver_member {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 50px 0;
+}
+
+.solver_info {
+    font-size: 24px;
+    font-weight: bold;
+}
