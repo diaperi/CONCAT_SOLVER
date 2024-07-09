@@ -53,8 +53,9 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 80%;
     padding: 0;
+    background-color: yellowgreen;
 }
 
 .icons {
@@ -101,6 +102,16 @@ html, body {
     margin-bottom: 0.5vh;
 }
 
+#mypage_change_updateForm{
+    background-color: tomato;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#mypage_change_updateForm > input{
+    width: 80%;
+}
 .input-icon-container input {
     width: 100%; /* input 요소의 너비를 100%로 설정 */
     padding-right: 3vh; /* 오른쪽 패딩을 추가하여 아이콘 공간 확보 */
