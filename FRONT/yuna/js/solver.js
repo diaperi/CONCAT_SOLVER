@@ -1,11 +1,10 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     const navAbout = document.querySelector('.navAbout');
     const solvernavAbout = document.querySelector('.solver_about');
     const navService = document.querySelector('.navService');
     const solverService = document.querySelector('.solver_mainService');
     const navReview = document.querySelector('.navReview');
-    const solverReview = document.querySelector('.solver_review');
+    const solverReview = document.querySelector('.solver_wh');
 
     navAbout.addEventListener('click', function() {
         solvernavAbout.scrollIntoView({ behavior: 'smooth' });
@@ -20,15 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('solver_loginBtn').addEventListener('click', function() {
-        window.location.href = 'login.html';
+        window.location.href = '../../yoonseo/login.html';
     });
 
     document.getElementById('solver_registerBtn').addEventListener('click', function() {
-        window.location.href = 'register.html';
+        window.location.href = '../../yoonseo/register.html';
     });
 
     document.getElementById('solver_registerBtn2').addEventListener('click', function() {
-        window.location.href = 'register.html';
+        window.location.href = '../../yoonseo/register.html';
     });
 });
 
@@ -62,9 +61,21 @@ window.addEventListener('scroll', function() {
 document.addEventListener('DOMContentLoaded', function() {
     var swiper = new Swiper(".mySwiper", {
         slidesPerView: 3,
-        spaceBetween: 2,
+        spaceBetween: 14,
         loop: false,
         freeMode: true,
         freeModeMomentum: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    document.querySelector('.swiper-button-next').addEventListener('click', function() {
+        swiper.slideTo(swiper.slides.length - 1, 22000); 
+    });
+
+    document.querySelector('.swiper-button-prev').addEventListener('click', function() {
+        swiper.slideTo(0, 22000);
     });
 });
