@@ -38,13 +38,14 @@
         <div class="login_type">
             <span class="or-text">- 간편 로그인 -</span>
             <button class="login-button" onclick="goToNaverLogin()"><img src="img/naver.jpg"></button>
-            <button class="login-button"onclick="goToGoogleLogin()"><img src="img/google.png"></button>
-            <button class="login-button" onclick="goToKakaoLogin()"><img src="img/kakaotalk.png"></button>
+            <button class="login-button" onclick="goToGoogleLogin()"><img src="img/google.png"></button>
+            <button class="login-button" id="kakao-login-btn" onclick="goTokakaoLogin()"><img src="img/kakaotalk.png"><p id="token-result"></p></button>
             <button class="login-button" onclick="goToAppleLogin()"><img src="img/apple.png"></button>
         </div>
     
    
     </div>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous"></script>
     <script src="js/login.js"></script>
 </body>
 </html>
