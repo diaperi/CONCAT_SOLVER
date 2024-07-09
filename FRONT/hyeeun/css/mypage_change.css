@@ -24,21 +24,19 @@ html, body {
 }
 
 .mypage_change_form-container {
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.35); /* 검은색 배경, 투명도 35% */
     padding: 3vh 5vh; /* 위아래 패딩 30px, 좌우 패딩 50px */
     border-radius: 0.5vh;
-    height: 80vh;
-    width: 90%; /* 화면의 90% 너비로 수정 */
+    /* height: 80vh; */
+    width: 50%; /* 화면의 90% 너비로 수정 */
     color: white; /* 글씨색을 흰색으로 변경 */
 
     /* 폼을 가운데로 정렬하기 */
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 
 .mypage_change_header-container {
@@ -51,16 +49,24 @@ html, body {
 
 .mypage_change_title-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 80%;
+    width: 75%;
     padding: 0;
-    background-color: yellowgreen;
+    /* background-color: yellowgreen; */
+    height: 8vh;
+    margin-bottom: 6vh;
+}
+
+.mypage_change_title-container>img{
+    width: 8vh;
+    height: 8vh;
 }
 
 .icons {
     display: flex;
     gap: 2vh;
+    cursor: pointer;
 }
 
 .icon {
@@ -69,18 +75,16 @@ html, body {
     border-radius: 50%;
 }
 
-.profile-large {
+/* .profile-large {
     width: 9vh;
     height: 9vh;
     border-radius: 50%;
     padding: 0 44vh; /* 왼쪽과 오른쪽에 공백 추가 */
-}
 
-.mypage_change_form-container h2 {
-    flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
-    margin-left: 45vh; /* h2 오른쪽 마진 추가 */
-    margin-bottom: 9vh;
-}
+
+
+
+/* ******************************************************************** */
 
 .mypage_change_form-container label {
     display: block;
@@ -94,6 +98,8 @@ html, body {
     border: 0.1vh solid #ccc;
     border-radius: 0.5vh;
     box-sizing: border-box;
+    height: 5vh;
+    font-size: 15px;
 }
 
 .input-icon-container {
@@ -103,19 +109,39 @@ html, body {
 }
 
 #mypage_change_updateForm{
-    background-color: tomato;
+    /* background-color: tomato; */
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    /* width: 100%; */
+}
+
+.mypage_change_formBox{
+    /* background-color: violet; */
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mypage_change_inputBox  > input:focus {
+    outline: none;
 }
 
 #mypage_change_updateForm > input{
     width: 80%;
+    font-size: 15px;
 }
 .input-icon-container input {
-    width: 100%; /* input 요소의 너비를 100%로 설정 */
+    /* width: 80%; input 요소의 너비를 100%로 설정 */
     padding-right: 3vh; /* 오른쪽 패딩을 추가하여 아이콘 공간 확보 */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
+}
+
+.input-icon-container  > input:focus {
+    outline: none;
 }
 
 .check-icon {
@@ -144,7 +170,7 @@ html, body {
 }
     
 .mypage_change_form-container button {
-    width: 15%; /* 버튼의 전체 너비 설정 */
+    /* width: 15%; 버튼의 전체 너비 설정 */
     padding: 1vh;
     border: none;
     border-radius: 0.5vh;
@@ -153,23 +179,26 @@ html, body {
     margin-top: 1vh; /* 버튼 간격을 위해 상단 여백 추가 */
 }
 
-.mypage_change_form-container .btn-cancel {
+.btn-cancel {
+    width: 100px;
     background-color: white; /* 배경색을 하얀색으로 설정 */
     color: #98F9FF; /* 글씨색을 연한 파란색으로 설정 */
     text-shadow: -1px -1px 0 #007BFF, 1px -1px 0 #007BFF, -1px 1px 0 #007BFF, 1px 1px 0 #007BFF; /* 글씨 테두리 색상 설정 */
 }
 
-.mypage_change_form-container .btn-cancel:hover {
+.btn-cancel:hover {
     opacity: 0.8;
     background-color: #e0e0e0; /* 배경색을 연한 회색으로 변경 */
 }
 
-.mypage_change_form-container .btn-save {
+.btn-save {
     background-color: #007BFF; /* 배경색을 파란색으로 설정 */
     color: white;
+    width: 100px;
+    margin-left: 10px;
 }
 
-.mypage_change_form-container .btn-save:hover {
+.btn-save:hover {
     opacity: 0.8;
 }
 
@@ -179,7 +208,7 @@ html, body {
     cursor: pointer;
     font-size: 1.6vh;
     margin-top: 1vh;
-    margin-left: 38vh;
+    /* margin-left: 38vh; */
 }
 
 .confirmation-popup {
@@ -201,6 +230,18 @@ html, body {
     border-radius: 0.5vh;
     text-align: center;
     position: relative; /* 상대 위치 설정 */
+}
+
+
+
+/* ******************************************************** */
+.mypage_change_Btn{
+    /* background-color: yellow; */
+    width: 64%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5vh;
+    align-items: center;
 }
 
 .close-btn {
