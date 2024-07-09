@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     flex-wrap: nowrap;
@@ -6,24 +6,27 @@
     font-family: Arial, sans-serif;
 }
 
-.myPageMain_container{
-    background-color: rgb(98, 180, 235);
-    display: flex;
+.myPageMain_container {
+    background: linear-gradient(137.29deg,
+            #03BED6 20.13%,
+            #10B3DA 33.05%,
+            #1DA4E1 45.02%,
+            #249CE5 58.56%,
+            #2D8EED 72.11%,
+            #3084F4 83.13%);    display: flex;
     justify-content: center;
 }
 
-.myPageMain_container2{
-    /* background-color: rgb(78, 95, 109); */
-    margin-top: 40px;
+.myPageMain_container2 {
+    margin-top: 4vh;
     width: 50%;
 }
 
-.myPageMain_top{
-    /* background-color: yellowgreen; */
+.myPageMain_top {
     display: flex;
     flex-direction: column;
     color: white;
-    font-size: 28px;
+    font-size: 2.8vh;
     font-weight: bold;
     align-items: center;
 }
@@ -34,131 +37,123 @@
 }
 
 .myPageMain_input > input {
-    margin-top: 20px;
-    height: 50px;
-    width: 450px;
-    border-radius: 10px;
-    border: 2px solid rgb(65, 154, 255);
-    padding-left: 40px; /* 아이콘과 텍스트 간의 간격 */
+    margin-top: 2vh;
+    height: 5vh;
+    width: 45vh;
+    border-radius: 1vh;
+    border: 0.2vh solid rgb(65, 154, 255);
+    padding-left: 4vh;
     box-sizing: border-box;
-    transition: border 0.2s; 
+    transition: border 0.2s;
 }
 
-.myPageMain_input> input:focus {
-    border: 2px solid rgb(0, 0, 0); /* Change this to your desired border style */
-    outline: none; /* Remove default outline */
+.myPageMain_input > input:focus {
+    border: 0.2vh solid rgb(0, 0, 0);
+    outline: none;
 }
 
 .myPageMain_input > input::placeholder {
     color: rgb(173, 173, 173);
-    font-size: 14px;
-    /* font-weight: bold; */
+    font-size: 1.4vh;
 }
 
 .myPageMain_input > span {
     position: absolute;
-    left: 10px;
-    top: 60%;
+    left: 1vh;
+    top: 50%;
     transform: translateY(-50%);
 }
 
 .myPageMain_input > span > i {
-    font-size: 17px;
+    font-size: 1.7vh;
     color: rgb(202, 202, 202);
 }
 
-
 /* **************************************** */
-.myPageMain_lastVideoBox{
-    /* background-color: rgb(116, 116, 0); */
-    margin-top: 70px;
+.myPageMain_lastVideoBox {
+    margin-top: 7vh;
 }
 
-.myPageMain_videoBox1{
+.myPageMain_videoBox1 {
     display: flex;
     justify-content: space-between;
-    font-size: 18px;
+    font-size: 1.8vh;
     font-weight: bold;
     align-items: center;
     width: 100%;
-    /* color: rgb(65, 154, 255); */
 }
 
-.myPageMain_videoBox1>span:nth-child(2){
-    font-size: 14px;
+.myPageMain_videoBox1 > span:nth-child(2) {
+    font-size: 1.4vh;
     color: white;
     cursor: pointer;
 }
 
-.myPageMain_videoBox2{
-    /* background-color: tomato; */
-    margin-top: 20px;
+.myPageMain_videoBox2 {
+    margin-top: 2vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 3vh;
 }
 
 .myPageMain_videoBox3 {
     width: 46%;
-    /* background-color: yellowgreen; */
-    border: 2px solid black;
-    border-radius: 7px;
-    margin-bottom: 20px;
+    border: 0.2vh solid black;
+    border-radius: 0.7vh;
+    margin-bottom: 2vh;
     overflow: hidden;
-    height: 250px;
-    position: relative; /* 자식 요소의 절대 위치를 설정할 수 있게 함 */
+    height: 25vh;
+    position: relative;
     cursor: pointer;
 }
 
 .myPageMain_videoBox3 > img {
     width: 100%;
-    height: 100%; /* 이미지가 박스를 꽉 채우도록 설정 */
-    object-fit: cover; /* 이미지 비율을 유지하면서 박스를 채움 */
+    height: 100%;
+    object-fit: cover;
 }
 
 .myPageMain_videoBox4 {
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경색 */
-    color: white; /* 글씨 색상을 흰색으로 설정 */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 10px;
+    padding: 1vh;
     box-sizing: border-box;
     text-align: center;
     display: flex;
     flex-direction: column;
-    font-size: 14px;
+    font-size: 1.4vh;
 }
 
-
-.myPageMain_lastVideoBox{
+.myPageMain_lastVideoBox {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background-color: yellowgreen; */
 }
 
 .myPageMain_downBar {
-    font-size: 40px; /* 아이콘 크기 조정 */
-    background: linear-gradient(to bottom, rgb(0, 112, 240), #000000); /* 위쪽은 파란색, 아래쪽은 검은색 */
-    -webkit-background-clip: text; /* 텍스트에만 그라데이션 적용 */
-    color: transparent; /* 텍스트 색상을 투명하게 설정 */
+    font-size: 4vh;
+    background: linear-gradient(to bottom, rgb(0, 112, 240), #000000);
+    -webkit-background-clip: text;
+    color: transparent;
     display: inline-block;
     cursor: pointer;
-    margin-bottom: 40px;
+    margin-bottom: 4vh;
     animation: bounce 2s infinite;
 }
 
 .myPageMain_UpBar {
-    font-size: 40px; /* 아이콘 크기 조정 */
-    background: linear-gradient(to bottom, rgb(0, 112, 240), #000000); /* 위쪽은 파란색, 아래쪽은 검은색 */
-    -webkit-background-clip: text; /* 텍스트에만 그라데이션 적용 */
-    color: transparent; /* 텍스트 색상을 투명하게 설정 */
+    font-size: 4vh;
+    background: linear-gradient(to bottom, rgb(0, 112, 240), #000000);
+    -webkit-background-clip: text;
+    color: transparent;
     display: inline-block;
     cursor: pointer;
-    margin-bottom: 40px;
+    margin-bottom: 4vh;
     animation: bounce 2s infinite;
 }
 
@@ -167,10 +162,10 @@
         transform: translateY(0);
     }
     40% {
-        transform: translateY(10px);
+        transform: translateY(1vh);
     }
     60% {
-        transform: translateY(5px);
+        transform: translateY(0.5vh);
     }
 }
 
@@ -179,6 +174,3 @@
     background-clip: text;
     color: transparent;
 }
-
-
-/* ***************************************************** */
