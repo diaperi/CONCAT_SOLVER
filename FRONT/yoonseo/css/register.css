@@ -1,127 +1,154 @@
-* { margin: 0;
+a {
+    text-decoration-line: none;
+    color: white;
+    text-decoration: none;
+}
+
+* {
+    margin: 0;
     padding: 0;
-   
-}
-
-.one > img {
-  position: absolute;
-  width: 100px;
-  height: 60px;
-  left: 20px; 
-  top: 0px; 
-  z-index: 10;
-}
-
-hr {
-  width: 100%;
-  height: 1px;
-  background-color: white; 
-  border: none;
-  margin: 50px 0; /* 수평선 위아래 여백*/
+    text-wrap: nowrap;
 }
 
 body {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    /* text-align: center; */
-    justify-content: center;
-    /* justify-content: center; */
-    /* background-color: skyblue; */
-    color: black;
     height: 100vh;
-    background: linear-gradient(to bottom,#03BED6,#10B3DA, #1DA4E1,#249CE5,#2D8EED,#3084F4);
+    background: linear-gradient(137.29deg,
+            #03BED6 20.13%,
+            #10B3DA 33.05%,
+            #1DA4E1 45.02%,
+            #249CE5 58.56%,
+            #2D8EED 72.11%,
+            #3084F4 83.13%);
 
 }
-.user-info{
-  margin-top: 80px;
+.register-header-img {
+    height: 9vh;
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
+    display: flex;
+    align-items: center;
 }
+
+.register-header-img > a > img {
+    height: 5.5vh;
+    margin-left: 3vh;
+}
+
+
+
+.user-info {
+    margin-top: 8vh; /* 80px -> 8vh */
+    font-size: 1.8vh;
+}
+
 .user-info input {
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 2.8vh; /* 16px -> 1.6vh */
+    line-height: 4.4vh; /* 24px -> 2.4vh */
     color: #797979;
     border: none;
     border-bottom: 1px solid #cfcfcf;
-    width: 350px;
-    margin-top: 20px;
-  }
+    width: 50vh; /* 350px -> 35vh */
+    margin-top: 2vh; /* 20px -> 2vh */
+}
 
-  .register {
+/* register 박스 스타일 */
+.register_box{
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+}
+
+.register {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 530px;
-    height: 650px;
-    margin-top: -20px;
-    margin-bottom: 20px;
+    width: 73vh;
+    height: 85vh;
+    /* margin: auto; Center horizontally */
+    margin-top: 2vh; /* Adjust as needed */
     background: #ffffff;
     border: 1px solid #aacdff;
     box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
     border-radius: 15px;
-  }
-p { font-size: 9px; color: red; }
+}
+
+
+p {
+    font-size: 1.2vh; /* 9px -> 0.9vh */
+    color: red;
+}
 
 .btn {
-    /* display: flex;
-    flex-direction: column; */
-    margin-top: 60px;
+    margin-top: 6vh; /* 60px -> 6vh */
     text-align: center;
-    /* width: 470px; */
-    height: 106px;
-   
-  }
-  
-  .btn>button {
-    /*margin-top: ; /*다음버튼 위로 */
-    width: 400px;
-    height: 40px;
+    height: 10.6vh; /* 106px -> 10.6vh */
+}
+
+.btn > button {
+    width: 60vh; /* 400px -> 40vh */
+    height: 6.5vh; /* 40px -> 4vh */
     font-weight: 400;
-    font-size: 18px;
-    /*line-height: 27px;*/
+    font-size: 2.8vh; /* 18px -> 1.8vh */
     text-align: center;
     color: white;
     background: #4461F2;
     border: 1px solid #4461F2;
     border-radius: 10px;
- }
- .close-button { /*X버튼 */
-  position: absolute;
-  margin-top: 10px;
-  left: 65%;
-  background-color: rgb(255, 255, 255,0);
-  color: gray;
-  border: none;
-  padding: 1px;
-  cursor: pointer;
-  font-size: 25px;
 }
-.sign-content{margin-top: 40px; font-size: 14px; text-align: center;}
-.register-title{ /*회원가입*/
-  text-align: center;
-  font-size: 27px;
+.register_clostBtnBox{
+    /* background-color: rgb(170, 255, 0); */
+    width: 100%;
+    height: 3vh;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 40px;
+    margin-top: 10px;
 }
-.register-1 img{
-  width: 40px;
-  margin-top: 15px;
-  margin-right: -340px;
+.close-button {
+    position: absolute;
+    background-color: rgb(255, 255, 255, 0);
+    color: gray;
+    border: none;
+    padding: 1px; /* 1px -> 0.1vh */
+    cursor: pointer;
+    font-size: 25px; /* 25px -> 2.5vh */
 }
-.register-2 img{
-  width: 40px;
-  margin-top: 15px;
-  margin-left: -340px;
+
+.sign-content {
+    margin-top: 5vh; /* 40px -> 4vh */
+    font-size: 1.6vh; /* 14px -> 1.4vh */
+    text-align: center;
 }
+
+.register-title {
+    text-align: center;
+    font-size: 4.0vh; /* 27px -> 2.7vh */
+}
+
+.register-1 img {
+    width: 6vh; /* 40px -> 4vh */
+    margin-top: 1.8vh; /* 15px -> 1.5vh */
+    margin-right: -50vh; /* -340px -> -34vh */
+}
+
+.register-2 img {
+    width: 6vh; /* 40px -> 4vh */
+    margin-top: 1.8vh; /* 15px -> 1.5vh */
+    margin-left: -50vh; /* -340px -> -34vh */
+}
+
 .register-img {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: -60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: -6vh; /* -60px -> -6vh */
 }
+
 .register-line {
-  width: 40px;
-  height: 2px;
-  background-color: #83D4EB;
-  margin-top: 10px; /* 이미지 사이에 선을 추가하고 간격을 조정 */
+    width: 5vh; /* 40px -> 4vh */
+    height: 0.2vh; /* 2px -> 0.2vh */
+    background-color: #83D4EB;
+    margin-top: 1vh; /* 10px -> 1vh */
 }
 
 .user-info-name::before,
@@ -132,17 +159,16 @@ p { font-size: 9px; color: red; }
     content: "* ";
     color: red;
 }
-/*아이디 중복*/
+
 .link-button {
-  /* display: line-block; */
-  background-color: rgb(255, 255, 255);
-  width: 120px;
-  color: rgb(255, 0, 0);
-  text-decoration: none;
-  /* cursor: pointer; */
-  font-size: 9px;
-  /* text-align: center; */
-  /* transition: background-color 0.3s ease; */
-  
+    background-color: rgb(255, 255, 255);
+    width: 12vh; /* 120px -> 12vh */
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    font-size: 1.2vh; /* 9px -> 0.9vh */
 }
-.validation-message{ display: inline; margin-top: -13px;} 
+
+.validation-message {
+    display: inline;
+    margin-top: -1.3vh; /* -13px -> -1.3vh */
+}
