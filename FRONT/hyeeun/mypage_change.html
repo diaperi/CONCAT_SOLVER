@@ -7,6 +7,7 @@
     <title>회원정보수정 페이지</title>
     <link rel="stylesheet" href="css/mypage_change.css"> <!-- CSS 파일 링크 -->
 </head>
+<div id="header-container"></div>
 
 <body>
     <div class="mypage_change_container">
@@ -77,6 +78,16 @@
         </div>
     </div>
     <script src="js/mypage_change.js"></script> <!-- JavaScript 파일 링크 -->
+
+    <script>
+        // JavaScript to load the header
+        fetch('/hyeeun/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+
 </body>
 
 </html>

@@ -3,13 +3,13 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    text-wrap: nowrap;
 }
 
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    flex-direction: column;
+    height: 100vh;
     background: linear-gradient(137.29deg,
             #03BED6 20.13%,
             #10B3DA 33.05%,
@@ -17,17 +17,9 @@ body {
             #249CE5 58.56%,
             #2D8EED 72.11%,
             #3084F4 83.13%);    
-    padding: 2vh; /* Adjust padding for responsiveness */
 }
 
-.myPagePop_container {
-    background: linear-gradient(137.29deg,
-            #03BED6 20.13%,
-            #10B3DA 33.05%,
-            #1DA4E1 45.02%,
-            #249CE5 58.56%,
-            #2D8EED 72.11%,
-            #3084F4 83.13%);    
+.myPagePop_container {  
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -38,7 +30,7 @@ body {
 }
 
 .myPagePop_container2 {
-    margin-top: 4vh; /* Adjust margin for responsiveness */
+    margin-top: 8vh; /* Adjust margin for responsiveness */
     width: 70%;
 }
 
