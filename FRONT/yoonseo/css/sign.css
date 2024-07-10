@@ -1,156 +1,220 @@
-* { margin: 0;
-    padding: 0;
-   
+a {
+  text-decoration-line: none;
+  color: white;
+  text-decoration: none;
 }
 
-.one > img {
-  position: absolute;
-  width: 100px;
-  height: 60px;
-  left: 20px; 
-  top: 0px; 
-  z-index: 10;
-}
-
-hr {
-  width: 100%;
-  height: 1px;
-  background-color: white; 
-  border: none;
-  margin: 50px 0; /* 수평선 위아래 여백*/
+* {
+  margin: 0;
+  padding: 0;
+  text-wrap: nowrap;
 }
 
 body {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    /* text-align: center; */
-    justify-content: center;
-    /* justify-content: center; */
-    /* background-color: skyblue; */
-    color: black;
-    height: 100vh;
-    background: linear-gradient(to bottom,#03BED6,#10B3DA, #1DA4E1,#249CE5,#2D8EED,#3084F4);
+  height: 100vh;
+  background: linear-gradient(137.29deg,
+          #03BED6 20.13%,
+          #10B3DA 33.05%,
+          #1DA4E1 45.02%,
+          #249CE5 58.56%,
+          #2D8EED 72.11%,
+          #3084F4 83.13%);
 
 }
+.sign-header-img{
+  height: 10.5vh;
+  border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
+  display: flex;
+  align-items: center;
+}
+
+.sign-header-img > a > img {
+  height: 5.9vh;
+  margin-left: 4.6vh;
+    margin-top: 0.6vh;
+    width: 16.3vh;
+}
+
+/* sign 박스 스타일 */
+.sign_box{
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+}
+
 .sign {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 530px;
-    height: 650px;
-    margin-top: -20px;
-    margin-bottom: 20px;
-    background: #ffffff;
-    border: 1px solid #aacdff;
-    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
-    border-radius: 15px;
-  }
-  .agreement-form {margin-top: 40px; }
-  .sign-title{ /*SOLVER 홈캠 이용약관*/
-    text-align: center;
-    font-size: 27px;
-  }
-  .sign-img>.sign-1 img{
-    width: 40px;
-    margin-top: 15px;
-    margin-left: 140px;
-  }
-  .sign-2 img{
-    width: 40px;
-    margin-top: 15px;
-    margin-left: -185px;
-  }
-  .sign-img {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: -60px;
-  }
-  .sign-line {
-    width: 40px;
-    height: 2px;
-    background-color: #83D4EB;
-    margin-top: 10px; /* 이미지 사이에 선을 추가하고 간격을 조정 */
-    margin-right: 185px;
-  }
-  .all-check{
-    margin-top: 80px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 73vh;
+  height: 85vh;
+  /* margin: auto; Center horizontally */
+  margin-top: 2vh; /* Adjust as needed */
+  background: #ffffff;
+  border: 1px solid #aacdff;
+  box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+  border-radius: 15px;
+}
+
+.sign_BtnBox2{
+  /* background-color: yellowgreen; */
+  width: 93.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.sign_BtnBox2 > button{
+  border: none;
+  background-color: white;
+  font-size: 25px; /* 25px -> 2.5vh */
+  color: gray;
+  cursor: pointer;
   
-  .btn {
-    /* display: flex;
-    flex-direction: column; */
-    margin-top: 60px;
-    text-align: center;
-  
-    height: 106px;
-   
-  }
-  
-  .submit-button {
-    margin-top: 30px;
-    width: 400px;
-    height: 40px;
-    font-weight: 400;
-    font-size: 18px;
-    /*line-height: 27px;*/
-    text-align: center;
-    color: white;
-    background: #0068ff;
-    border: 1px solid #0068ff;
-    border-radius: 10px;
- }
- .close-button { /*X버튼 */
-  position: absolute;
+}
+
+.agreement-form {
+  margin-top: 5vh; /* 40px -> 4vh */
+  font-size: 1.6vh; /* 14px -> 1.4vh */
+  text-align: center;
+ 
+}
+.agreement-form2 {
+  font-size: 1.6vh; /* 14px -> 1.4vh */
+ 
+}
+
+.sign-title {
+  text-align: center;
+  font-size: 4.0vh; 
+}
+
+.sign-1 img {
+  width: 6vh; /* 40px -> 4vh */
+  margin-top: 1.8vh; /* 15px -> 1.5vh */
+  margin-right: -51vh; /* -340px -> -34vh */
+}
+
+.sign-2 img {
+  width: 6vh; /* 40px -> 4vh */
+  margin-top: 1.8vh; /* 15px -> 1.5vh */
+  margin-left: -51vh; /* -340px -> -34vh */
+}
+
+.sign-img {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -6vh; /* -60px -> -6vh */
+}
+
+.sign-line {
+  width: 5vh; /* 40px -> 4vh */
+  height: 0.2vh; /* 2px -> 0.2vh */
+  background-color: #83D4EB;
+  margin-top: 1vh; /* 10px -> 1vh */
+}
+
+
+.all-check {
+  margin-top: 10.67vh; /* Converted from 80px */
+}
+
+.btn {
+  margin-top: 16vh; /* Converted from 60px */
+  text-align: center;
+  height: 14.13vh; /* Converted from 106px */
+}
+
+.submit-button {
+  width: 60vh; /* 400px -> 40vh */
+  height: 6.5vh; /* 40px -> 4vh */
+  font-weight: 400;
+  font-size: 2.8vh; /* 18px -> 1.8vh */
+  text-align: center;
+  color: white;
+  background: #4461F2;
+  border: 1px solid #4461F2;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.sign_clostBtnBox{
+  /* background-color: rgb(170, 255, 0); */
+  width: 100%;
+  height: 3vh;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 40px;
   margin-top: 10px;
-  left: 65%;
-   background-color:rgb(255, 255, 255,0);; 
+}
+
+/* .close-button {
+  position: absolute;
+  background-color: rgb(255, 255, 255, 0);
   color: gray;
   border: none;
-  padding: 1px;
-  cursor: pointer;
-  font-size: 25px;
-}
-.close-button2 { /*X버튼 */
+  padding: 1px; /* 1px -> 0.1vh */
+  /* cursor: pointer;
+  font-size: 25px; /* 25px -> 2.5vh */
+ /* */ 
+
+
+
+/* .close-button2 {
   position: absolute;
-  margin-top: 10px;
-  right: 65%;
-  background-color: rgb(255, 255, 255,0);
+  background-color: rgb(255, 255, 255, 0);
   color: gray;
   border: none;
-  padding: 1px;
-  cursor: pointer;
-  font-size: 25px;
+  padding: 1px; /* 1px -> 0.1vh */
+  /* cursor: pointer;
+  font-size: 25px; 25px -> 2.5vh */
+/* } */ 
+
+ul > li {
+  list-style: none;
 }
- ul>li{list-style: none} /*li . 지우기 */
 
- .all-check .select-all {  /*약관전체 동의 체크 박스 크기 조정 */
-    width: 22px; /* 너비 조정 */
-    height: 22px; /* 높이 조정 */
-    margin-bottom: 20px;
+.all-check .select-all {
+  width: 2.4vh; /* Converted from 22px */
+  height: 2.4vh; /* Converted from 22px */
+  margin-bottom: 2vh; /* Converted from 20px */
 }
-.txt1{font-size: 19px; color: black;}
-.txt{color: grey;}
-.checkbox{color: gray;}
 
-.item, .item-inner{ margin: 8px 0;}
+.txt1 {
+  font-size: 2.5vh; /* Converted from 19px */
+  color: black;
+}
 
-.list{
-   font-size: 14px; list-style: none;
+.txt {
+  color: grey;
+}
+
+.checkbox {
+  color: gray;
+}
+
+.item,
+.item-inner {
+  margin: 1vh 0; /* Converted from 8px */
+}
+
+.list {
+  font-size: 2vh; /* Converted from 14px */
+  list-style: none;
   padding: 0;
 }
-.sign-disagree, .sign-agree {
+
+.sign-disagree,
+.sign-agree {
   display: block;
-  margin: 10px 0;
-  
+  margin: 2vh 0; /* Converted from 10px */
 }
 
 .sign-disagree {
-  margin-top: 30px;
+  margin-top: 3vh; /* Converted from 30px */
 }
 
-/* 미동시 모달 부분 */
 .modal {
   display: none;
   position: fixed;
@@ -160,34 +224,34 @@ body {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
   background-color: white;
   margin: auto;
-  margin-top: 280px; /*박스 위치 */
-  padding: 25px;
-  border: 1px solid #888;
-  width: 400px;
-  height: 150px;
+  margin-top: 18.67vh; /* Converted from 280px */
+  padding: 1.67vh; /* Converted from 25px */
+  border: 0.133vh solid #888; /* Converted from 1px */
+  width: 59.33vh; /* Converted from 400px */
+  height: 20vh; /* Converted from 150px */
   text-align: center;
-  border-radius: 10px;
-  font-size: 14px;/*이메일을 전송했습니다. */
-  color: #717171; 
+  border-radius: 0.67vh; /* Converted from 10px */
+  font-size: 1.8vh; /* Converted from 14px */
+  color: #717171;
 }
 
-.ok_btn { /*확인버튼 */
-  width: 300px;
-  height: 45px;
-  font-size: 16px;
-  /* cursor: pointer; */
+.ok_btn {
+  width: 22.67vh; /* Converted from 300px */
+  height: 5.33vh; /* Converted from 45px */
+  font-size: 2vh; /* Converted from 16px */
   background-color: #4461F2;
   color: white;
   border: none;
-  border-radius: 10px;
-  margin-top:25px;
-  /* align-items: center; */
-  }
-
-  .menu_msg{margin-top:35px; font-size: 17px;}
+  border-radius: 0.67vh; /* Converted from 10px */
+  margin-top: 3.33vh; /* Converted from 25px */
+}
+.menu_msg {
+  margin-top: 8.33vh; /* Converted from 35px */
+  font-size: 2.33vh; /* Converted from 17px */
+}

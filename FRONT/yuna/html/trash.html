@@ -9,6 +9,8 @@
     <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div id="header-container"></div>
+
     <main>
         <div class="trash_notice">
             <span class="trash_noticeContent">휴지통에 있는 항목은 30일 후 완전히 삭제됩니다.</span>
@@ -234,4 +236,13 @@
         </div>
     </div>    
 </body>
+
+<script>
+    // JavaScript to load the header
+    fetch('/hyeeun/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        });
+</script>
 </html>
