@@ -23,15 +23,17 @@ body {
 }
 
 .login-header-img {
-    height: 9vh;
+    height: 10.5vh;
     border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
     display: flex;
     align-items: center;
 }
 
 .login-header-img > a > img {
-    height: 5.5vh;
-    margin-left: 3vh;
+    height: 5.9vh;
+    margin-left: 4.6vh;
+    width: 16.3vh;
+    margin-top: 0.6vh;
 }
 
 /* **************************************************************************** */
@@ -164,6 +166,11 @@ body {
     font-size: 1.6vh;
     cursor: pointer;
     margin-bottom: 2.5vh;
+}
+
+#login_btn:hover{
+    background-color: #2d46c2;    
+    transition: ease-in 0.2s
 }
 
 .login_register {

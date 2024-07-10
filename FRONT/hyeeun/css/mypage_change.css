@@ -32,6 +32,7 @@ html, body {
     width: 50%; /* 화면의 90% 너비로 수정 */
     color: white; /* 글씨색을 흰색으로 변경 */
 
+    min-width: 100vh;
     /* 폼을 가운데로 정렬하기 */
     /* display: flex;
     flex-direction: column;

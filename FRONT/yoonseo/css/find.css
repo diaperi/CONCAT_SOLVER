@@ -23,15 +23,17 @@ body {
 }
 
 .login-header-img {
-    height: 9vh;
+    height: 10.5vh;
     border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
     display: flex;
     align-items: center;
 }
 
 .login-header-img > a > img {
-    height: 5.5vh;
-    margin-left: 3vh;
+    height: 5.9vh;
+    margin-left: 4.6vh;
+    width: 16.3vh;
+    margin-top: 0.6vh;
 }
 
 /* find 박스 스타일 */
@@ -102,15 +104,19 @@ body {
 }
 
 .find-input-box input {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #000000;
     border: 1px solid rgb(175, 175, 175);
     width: 53vh; /* Converted from 400px */
     height: 6vh; /* Converted from 45px */
     margin-top: 2.5vh; /* Converted from 10px */
     border-radius: 10px;
+    padding-left: 10px;
+    font-weight: 400;
+    font-size: 2.8vh; /* 16px -> 1.6vh */
+    color: #797979;
+}
+
+.find-input-box input:focus{
+    outline: none;
 }
 
 .modal {
