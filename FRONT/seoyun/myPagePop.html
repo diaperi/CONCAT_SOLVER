@@ -8,6 +8,8 @@
     <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div id="header-container"></div>
+
     <div class="myPagePop_container">
         <div class="myPagePop_top">
             <span>영상을 최신 업로드 순으로 볼 수 있습니다. (캘린더에서 특정 날짜의 영상을 확인할 수 있습니다.)</span>
@@ -99,5 +101,14 @@
 
 
     <script src="/seoyun/js/myPagePop.js"></script>
+    
+    <script>
+        // JavaScript to load the header
+        fetch('/hyeeun/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
 </body>
 </html>
