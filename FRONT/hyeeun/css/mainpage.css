@@ -54,7 +54,7 @@ body{
     height: 100%;
 }
 
-/* ****************************************************** */
+/* ********************************************** */
 .myPageDetail_rightBox {
     width: 30%;
     /* background-color: tomato; */
@@ -93,7 +93,7 @@ body{
     display: none; /* Safari and Chrome */
 }
 
-/* *************************************************** */
+/* ************************************* */
 .fullscreen-video {
     position: relative;
     width: 100%;
