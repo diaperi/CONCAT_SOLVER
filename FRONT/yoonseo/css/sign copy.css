@@ -165,8 +165,8 @@ body {
   color: gray;
   border: none;
   padding: 1px; /* 1px -> 0.1vh */
-  cursor: pointer;
-  font-size: 25px; /* 25px -> 2.5vh */
+  /* cursor: pointer;
+  font-size: 25px;  */
 /* } */ 
 
 ul > li {
