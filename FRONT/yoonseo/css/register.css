@@ -22,15 +22,17 @@ body {
 
 }
 .register-header-img {
-    height: 9vh;
+    height: 10.5vh;
     border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
     display: flex;
     align-items: center;
 }
 
 .register-header-img > a > img {
-    height: 5.5vh;
-    margin-left: 3vh;
+    height: 5.9vh;
+    margin-left: 4.6vh;
+    width: 16.3vh;
+    margin-top: 0.6vh;
 }
 
 
@@ -43,12 +45,17 @@ body {
 .user-info input {
     font-weight: 400;
     font-size: 2.8vh; /* 16px -> 1.6vh */
-    line-height: 4.4vh; /* 24px -> 2.4vh */
     color: #797979;
+    line-height: 4.4vh; /* 24px -> 2.4vh */
     border: none;
     border-bottom: 1px solid #cfcfcf;
     width: 50vh; /* 350px -> 35vh */
     margin-top: 2vh; /* 20px -> 2vh */
+    padding-left: 10px;
+}
+
+.user-info input:focus{
+    outline: none;
 }
 
 /* register 박스 스타일 */
@@ -74,7 +81,7 @@ body {
 
 
 p {
-    font-size: 1.2vh; /* 9px -> 0.9vh */
+    font-size: 1.4vh; /* 9px -> 0.9vh */
     color: red;
 }
 
@@ -88,13 +95,20 @@ p {
     width: 60vh; /* 400px -> 40vh */
     height: 6.5vh; /* 40px -> 4vh */
     font-weight: 400;
-    font-size: 2.8vh; /* 18px -> 1.8vh */
+    font-size: 2.5vh; /* 18px -> 1.8vh */
     text-align: center;
     color: white;
     background: #4461F2;
     border: 1px solid #4461F2;
     border-radius: 10px;
+    cursor: pointer;
 }
+
+.btn > button:hover{
+    background-color: #2d46c2;    
+    transition: ease-in 0.2s
+}
+
 .register_clostBtnBox{
     /* background-color: rgb(170, 255, 0); */
     width: 100%;
@@ -112,6 +126,7 @@ p {
     padding: 1px; /* 1px -> 0.1vh */
     cursor: pointer;
     font-size: 25px; /* 25px -> 2.5vh */
+    margin-top: 0.8vh;
 }
 
 .sign-content {
@@ -165,7 +180,7 @@ p {
     width: 12vh; /* 120px -> 12vh */
     color: rgb(255, 0, 0);
     text-decoration: none;
-    font-size: 1.2vh; /* 9px -> 0.9vh */
+    font-size: 1.4vh; /* 9px -> 0.9vh */
 }
 
 .validation-message {

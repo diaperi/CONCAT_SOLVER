@@ -107,6 +107,8 @@
     height: 25vh;
     position: relative;
     cursor: pointer;
+    min-width: 30vh;
+    flex-wrap: nowrap;
 }
 
 .myPageMain_videoBox3 > img {

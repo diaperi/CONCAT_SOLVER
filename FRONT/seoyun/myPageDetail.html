@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/seoyun/css/myPageDetail.css">
 </head>
 <body>
+    <div id="header-container"></div>
+
     <div class="myPageDetail_container">
         <div class="myPageDetail_container2">
             <div class="myPageDetail_main">
@@ -107,5 +109,14 @@
 
 
     <script src="/seoyun/js/myPageDetail.js"></script>
+    <script>
+        // JavaScript to load the header
+        fetch('/hyeeun/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+
 </body>
 </html>
