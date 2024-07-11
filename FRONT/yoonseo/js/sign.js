@@ -11,7 +11,7 @@ function goToRegister() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    const $agreementForm = document.querySelector('.agreement-form');
+    const $agreementForm = document.querySelector('.agreement-form2');
     const $selectAll = $agreementForm.querySelector('.select-all');
     const $listInput = $agreementForm.querySelectorAll('.list input');
     const $selectAllMkt = $agreementForm.querySelector('.select-all-marketing');
