@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    flex-wrap: nowrap;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    height: 100vh;
+       background: linear-gradient(137.29deg,
+           #03BED6 20.13%,
+           #10B3DA 33.05%,
+           #1DA4E1 45.02%,
+           #249CE5 58.56%,
+           #2D8EED 72.11%,
+           #3084F4 83.13%);   
+}
+
+
+.mainpagenotlogin_container {
+    background: linear-gradient(
+        to bottom,
+        #03BED6 0%,
+        #10B3DA 25%,
+        #1DA4E1 50%,
+        #249CE5 75%,
+        #2D8EED 100%,
+        #3084F4 100%
+    );
+    display: flex;
+    justify-content: center;
+}
+
+.mainpagenotlogin_container2 {
+    margin-top: 4vh;
+    width: 90%;
+    height: 80vh;
+}
+
+.mainpagenotlogin_main {
+    height: 100%;
+    display: flex;
+}
+
+.mainpagenotlogin_videoBox {
+    width: 70%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(23, 23, 23, 0.9);
+}
+
+.mainpagenotlogin_videoBox > video {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.mainpagenotlogin_rightBox {
+    width: 30%;
+}
+
+.mainpagenotlogin_rightTop {
+    background-color: rgb(0, 0, 0);
+    justify-content: space-between;
+    display: flex;
+    height: 6vh;
+    align-items: center;
+    font-size: 1.7vh;
+    color: white;
+    padding-left: 2vh;
+    padding-right: 2vh;
+}
+
+.mainpagenotlogin_rightTop > span:nth-child(2) {
+    font-size: 2vh;
+    cursor: pointer;
+}
+
+.mainpagenotlogin_rightMain {
+    background-color: rgba(0, 0, 0, 0.74);
+    height: 66vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 2vh;
+    padding-top: 2vh;
+    padding-right: 2vh;
+    color: rgb(223, 223, 223);
+    padding-bottom: 6vh;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mainpagenotlogin_rightMain p {
+    font-size: 2.5vh;
+}
+
+.mainpagenotlogin_rightMain::-webkit-scrollbar {
+    display: none;
+}
+
+.fullscreen-video {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: #000;
+    transition: transform 0.5s ease;
+}
+
+.close-button {
+    position: absolute;
+    top: 1vh;
+    right: 1.5vh;
+    z-index: 1001;
+    font-size: 2.4vh;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.mainpagenotlogin_error-message {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    font-size: 1.8vh;
+    z-index: 2;
+}
+
+.mainpagenotlogin_error-message img {
+    width: 15vh;
+    margin-top: 2vh;
+}
+
+.mainpagenotlogin_error-message p {
+    font-size: 2.5vh;
+}
