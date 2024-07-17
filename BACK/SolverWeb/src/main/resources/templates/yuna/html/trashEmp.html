@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLVER_trash</title>
+    <link rel="stylesheet" href="../css/trashEmp.css">
+    <script src="../js/trashEmp.js"></script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <section>
+        <div class="trashEmp_notice">
+            <span class="trashEmp_noticeContent">휴지통에 있는 항목은 30일 후 완전히 삭제됩니다.</span>
+            <button id="trash_EmptyTrashBtn">휴지통 비우기</button>
+        </div>
+    </section>
+    <section>
+        <div class="trashEmp_trashIcon">
+            <img src="../img/trashEmp_trashIcon.png" alt="">
+        </div>
+        <div class="trashEmp_content">
+            <h1>휴지통이 비어있습니다.</h1>
+            <p>필요하지 않은 항목은 휴지통으로 옮기세요.</p>
+        </div>
+    </section>
+    <div class="trashModal_popup">
+        <div class="trashModal_confirm">
+            <div class="trashModal_modalHeader">
+                <h3>완전히 삭제하시겠습니까?</h3>
+            </div>
+            <div class="trashModal_modalContent">
+                <p>휴지통의 모든 항목이 완전히 삭제되며<br> 복원할 수 없게 됩니다.</p>
+            </div>
+            <div class="trashModeal_BtnContainer">
+                <button id="trashModal_cancel">취소</button>
+                <button id="trashModal_delete">완전히 삭제</button>
+            </div>
+        </div>
+    </div>    
+</body>
+
+
+<script>
+    // JavaScript to load the header
+    fetch('/hyeeun/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        });
+</script>
+</html>
+   
