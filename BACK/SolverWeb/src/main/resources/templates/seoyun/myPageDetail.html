@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myPageDetail</title>
     <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/seoyun/css/myPageDetail.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
 </head>
 <body>
-    <div id="header-container"></div>
+<div th:replace="hyeeun/header :: header"></div>
 
     <div class="myPageDetail_container">
         <div class="myPageDetail_container2">
@@ -109,14 +110,6 @@
 
 
     <script src="/seoyun/js/myPageDetail.js"></script>
-    <script>
-        // JavaScript to load the header
-        fetch('/hyeeun/header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            });
-    </script>
 
 </body>
 </html>
