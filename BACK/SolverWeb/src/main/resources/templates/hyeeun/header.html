@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>헤더</title>
-    <link rel="stylesheet" href="/hyeeun/css/header.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
 </head>
 <body>
-    <div class="header_navbar">
-        <img src="/hyeeun/img/solver_logo.png">
-        <div class="header_menu">
-            <a href="#realtime">실시간 화면</a>
-            <a href="#mypage">마이페이지</a>
-            <a href="#logout">로그아웃</a>
-        </div>
+<div class="header_navbar" th:fragment="header">
+    <img src="/hyeeun/img/solver_logo.png">
+    <div class="header_menu">
+        <a href="#realtime">실시간 화면</a>
+        <a href="#mypage">마이페이지</a>
+        <a href="#logout">로그아웃</a>
     </div>
+</div>
 </body>
 </html>
