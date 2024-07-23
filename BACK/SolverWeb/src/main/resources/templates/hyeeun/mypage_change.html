@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원정보수정 페이지</title>
-    <link rel="stylesheet" href="css/mypage_change.css"> <!-- CSS 파일 링크 -->
+    <link rel="stylesheet" href="/hyeeun/css/mypage_change.css"> <!-- CSS 파일 링크 -->
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
 </head>
-<div id="header-container"></div>
+<div th:replace="hyeeun/header :: header"></div>
 
 <body>
     <div class="mypage_change_container">
         <div class="mypage_change_form-container">
             <div class="mypage_change_header-container">
                 <div class="icons">
-                    <img src="img/notification_icon.png" alt="알림 아이콘" class="icon">
-                    <img src="img/profile_image.png" alt="프로필 사진" class="icon">
+                    <img src="/hyeeun/img/notification_icon.png" alt="알림 아이콘" class="icon">
+                    <img src="/hyeeun/img/profile_image.png" alt="프로필 사진" class="icon">
                 </div>
             </div>
             <form id="mypage_change_updateForm">
                 <div class="mypage_change_formBox">
                     <div class="mypage_change_title-container">
                         <h2>회원정보수정</h2>
-                        <img src="img/profile_image.png" alt="프로필 사진" class="profile-large">
+                        <img src="/hyeeun/img/profile_image.png" alt="프로필 사진" class="profile-large">
                     </div>
                     <div class="mypage_change_inputBox">
                         <label for="mypage_change_name">이름</label>
@@ -70,23 +70,14 @@
                     <span class="close-btn" onclick="closeConfirmationPopup()">X</span> <!-- 닫기 버튼 추가 -->
                     <h2><b>회원 탈퇴를 신청하기 전, 다음 내용을 꼭 확인해주세요!!</b></h2>
                     <p><b>1. 고객 정보 및 개인형 서비스 이용 기록은 개인 정보보호 처리 방침 기준에 따라 삭제됩니다.</b></p>
-                    <p><b>2. 회원 탈퇴 시 더 이상 솔버 홈캠 서비스 사용이 불가능하며,</b< /p>
+                    <p><b>2. 회원 탈퇴 시 더 이상 솔버 홈캠 서비스 사용이 불가능하며,</b</p>
                     <p><b>솔버 공식 사이트에서도 탈퇴 처리됩니다.</b></p>
                     <button onclick="confirmDelete()">회원탈퇴하기</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="js/mypage_change.js"></script> <!-- JavaScript 파일 링크 -->
-
-    <script>
-        // JavaScript to load the header
-        fetch('/hyeeun/header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            });
-    </script>
+    <script src="/hyeeun/js/mypage_change.js"></script> <!-- JavaScript 파일 링크 -->
 
 </body>
 

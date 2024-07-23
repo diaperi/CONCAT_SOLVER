@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLVER_cs</title>
+    <link rel="stylesheet" href="/yuna/css/cs.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+</head>
+<body>
+<div th:replace="hyeeun/header :: header"></div>
+
+<div class="cs_csContainer">
+    <div class="cs_mainContainer">
+        <div class="cs_searchContainer">
+            <div class="cs_searchSection">
+                <h1>무엇을 도와드릴까요?</h1>
+                <div class="cs_searchBar">
+                    <img src="/yuna/img/cs_search.png" alt="검색-아이콘" class="cs_searchIcon">
+                    <input type="text" placeholder="검색어를 입력해주세요.">
+                </div>
+            </div>
+            <div class="cs_honeCam">
+                <img src="/yuna/img/cs_homecam.png" alt="홈캠-아이콘3">
+            </div>
+        </div>
+        <div class="cs_infoSectionHead">
+            <h1>자주하는 질문</h1>
+            <h2><a href="#"></a>전체</h2>
+        </div>
+    </div>
+    <div class="cs_infoContainer">
+        <div class="cs_infoFaq">
+            <ul>
+                <li><img src="/yuna/img/cs_qna.png" alt="cs_qna"><a href="#"></a>회원가입 시 입력한 이메일을 변경할 수 있습니까?
+                </li>
+                <li><img src="/yuna/img/cs_qna.png" alt="cs_qna"><a href="#"></a>휴지통에 있는 영상을 복원하고 싶어요.</li>
+                <li><img src="/yuna/img/cs_qna.png" alt="cs_qna"><a href="#"></a>저장된 영상, 해결책이 사라졌어요.</li>
+                <li><img src="/yuna/img/cs_qna.png" alt="cs_qna"><a href="#"></a>실시간 영상이 화면에 안 나와요.</li>
+                <li><img src="/yuna/img/cs_qna.png" alt="cs_qna"><a href="#"></a>대화내용에 오류가 떠요.</li>
+            </ul>
+        </div>
+        <div class="cs_infoBoxContainer">
+            <div class="cs_infoBox">
+                <div class="cs_infoBoxContent">
+                    <h1>전화 문의</h1>
+                    <p>평일, 주말, 공휴일 관계없이<br> 24시간 운영합니다.</p>
+                    <p id="cs_num">0000-0000</p>
+                </div>
+            </div>
+            <div class="cs_infoBox">
+                <div class="cs_infoBoxContent">
+                    <h1>이메일 문의</h1>
+                    <p>평일, 주말, 공휴일 관계없이<br> 24시간 운영합니다.</p>
+                    <p id="cs_num">000@ooo.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

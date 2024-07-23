@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Scroll navigation
     const navAbout = document.querySelector('.navAbout');
     const solvernavAbout = document.querySelector('.solver_about');
@@ -7,49 +7,49 @@ document.addEventListener('DOMContentLoaded', function() {
     const navReview = document.querySelector('.navReview');
     const solverReview = document.querySelector('.solver_wh');
 
-    navAbout.addEventListener('click', function() {
-        solvernavAbout.scrollIntoView({ behavior: 'smooth' });
+    navAbout.addEventListener('click', function () {
+        solvernavAbout.scrollIntoView({behavior: 'smooth'});
     });
 
-    navService.addEventListener('click', function() {
-        solverService.scrollIntoView({ behavior: 'smooth' });
+    navService.addEventListener('click', function () {
+        solverService.scrollIntoView({behavior: 'smooth'});
     });
 
-    navReview.addEventListener('click', function() {
-        solverReview.scrollIntoView({ behavior: 'smooth' });
+    navReview.addEventListener('click', function () {
+        solverReview.scrollIntoView({behavior: 'smooth'});
     });
 
     // Button navigation
-    document.getElementById('solver_loginBtn').addEventListener('click', function() {
-        window.location.href = '../../yoonseo/login.html';
+    document.getElementById('solver_loginBtn').addEventListener('click', function () {
+        window.location.href = '../../../templates/yoonseo/login.html';
     });
 
-    document.getElementById('solver_registerBtn').addEventListener('click', function() {
-        window.location.href = '../../yoonseo/register.html';
+    document.getElementById('solver_registerBtn').addEventListener('click', function () {
+        window.location.href = '../../../templates/yoonseo/register.html';
     });
 
-    document.getElementById('solver_registerBtn2').addEventListener('click', function() {
-        window.location.href = '../../yoonseo/register.html';
+    document.getElementById('solver_registerBtn2').addEventListener('click', function () {
+        window.location.href = '../../../templates/yoonseo/register.html';
     });
 
     // Swiper initialization
     var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 3,
-        spaceBetween: 14,
-        loop: false,
-        freeMode: true,
+        slidesPerView   : 3,
+        spaceBetween    : 14,
+        loop            : false,
+        freeMode        : true,
         freeModeMomentum: true,
-        navigation: {
+        navigation      : {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
     });
 
-    document.querySelector('.swiper-button-next').addEventListener('click', function() {
-        swiper.slideTo(swiper.slides.length - 1, 22000); 
+    document.querySelector('.swiper-button-next').addEventListener('click', function () {
+        swiper.slideTo(swiper.slides.length - 1, 22000);
     });
 
-    document.querySelector('.swiper-button-prev').addEventListener('click', function() {
+    document.querySelector('.swiper-button-prev').addEventListener('click', function () {
         swiper.slideTo(0, 22000);
     });
 
@@ -109,10 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var header = document.querySelector('.solver_headerContainer');
     var loginButton = document.querySelector('#solver_loginBtn');
     var registerButton = document.querySelector('#solver_registerBtn');
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 0) {
             header.classList.add('scrolled');
-            header.style.backgroundColor = '#000'; 
+            header.style.backgroundColor = '#000';
             document.querySelectorAll('.solver_navMenu ul li').forEach(navItem => navItem.style.color = '#fff');
             if (loginButton && !loginButton.classList.contains('scrollHover')) {
                 loginButton.style.color = '#000'; // Make login button text black
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.solver_navMenu ul li').forEach(navItem => navItem.style.color = ''); // Reset to default color
             if (loginButton) {
                 loginButton.style.color = '#3084F4'; // Default color for login button
-                loginButton.style.borderColor = '#8b95a1'; 
+                loginButton.style.borderColor = '#8b95a1';
             }
             if (registerButton) {
                 registerButton.style.backgroundColor = '#fff'; // Default background color
@@ -138,12 +138,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add hover effect when scrolled
     document.querySelectorAll('.solver_navMenu ul li').forEach(navItem => {
-        navItem.addEventListener('mouseenter', function() {
+        navItem.addEventListener('mouseenter', function () {
             if (header.classList.contains('scrolled')) {
                 navItem.style.color = '#3084F4'; // Blue color on hover
             }
         });
-        navItem.addEventListener('mouseleave', function() {
+        navItem.addEventListener('mouseleave', function () {
             if (header.classList.contains('scrolled')) {
                 navItem.style.color = '#fff'; // White color on mouse leave
             } else {
