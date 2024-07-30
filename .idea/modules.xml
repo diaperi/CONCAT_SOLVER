@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CONCAT_SOLVER.iml" filepath="$PROJECT_DIR$/.idea/CONCAT_SOLVER.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SolverWeb.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SolverWeb.main.iml" />
     </modules>
   </component>
 </project>
