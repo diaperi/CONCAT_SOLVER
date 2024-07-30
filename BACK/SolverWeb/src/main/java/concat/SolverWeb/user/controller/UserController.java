@@ -27,7 +27,7 @@ public class UserController {
     }
 
     // 아이디/비밀번호 찾기 페이지 이동
-    @GetMapping("/find")
+    @GetMapping("/find")m
     public String findForm() {
         return "yoonseo/find";
     }
