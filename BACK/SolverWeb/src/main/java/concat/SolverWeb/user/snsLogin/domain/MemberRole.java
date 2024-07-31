@@ -3,3 +3,4 @@
 //public enum MemberRole {
 //    USER, ADMIN
 //}
+
