@@ -15,8 +15,9 @@
         <div class="myPageDetail_container2">
             <div class="myPageDetail_main">
                 <div class="myPageDetail_videoBox slide-out-left" id="videoBox">
-                    <video id="myVideo" controls>
-                        <source src="http://192.168.137.4:8098/video_feed" type="video/mp4">
+                    <video id="video" width="640" height="480" controls autoplay>
+                        <source src="http://192.168.137.227:5000/stream/output.m3u8" type="application/vnd.apple.mpegurl">
+                        Your browser does not support the video tag.
                     </video>
                     <span class="close-button" id="closeButton"><i class="fa-solid fa-x"></i></span>
                 </div>
@@ -107,6 +108,5 @@
 
 
     <script src="/seoyun/js/myPageDetail.js"></script>
-
 </body>
 </html>

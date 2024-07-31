@@ -1,5 +1,5 @@
-package concat.SolverWeb.user.snsLogin.domain;
-
-public enum MemberRole {
-    USER, ADMIN
-}
+//package concat.SolverWeb.user.snsLogin.domain;
+//
+//public enum MemberRole {
+//    USER, ADMIN
+//}
