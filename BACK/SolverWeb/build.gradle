@@ -28,6 +28,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // SNS 로그인
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 //    implementation 'org.springframework.boot:spring-boot-starter-validation' // SNS 로그인
+    implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 전송
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
