@@ -5,15 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>헤더</title>
     <link rel="stylesheet" href="/hyeeun/css/header.css">
+    <script defer src="/hyeeun/js/header.js"></script>
 </head>
 <body>
     <div class="header_navbar">
-        <img src="/hyeeun/img/solver_logo.png">
+        <img src="/hyeeun/img/solver_logo.png" alt="로고">
         <div class="header_menu">
             <a href="#realtime">실시간 화면</a>
-            <a href="#mypage">마이페이지</a>
+            <div class="dropdown">
+                <span id="mypage-btn">마이페이지</span>
+                <div class="dropdown-content" id="mypage-dropdown">
+                    <a href="/seoyun/myPageMain.html">저장된 영상</a>
+                    <a href="/hyeeun/mypage_change.html">회원정보수정</a>
+                    <a href="/yuna/html/trash.html">휴지통</a>
+                    <a href="/yuna/html/cs.html">고객센터</a>
+                </div>
+            </div>
             <a href="#logout">로그아웃</a>
         </div>
     </div>
 </body>
 </html>
+
+
