@@ -262,3 +262,9 @@ body {
     position: absolute;
     margin-top: 6vh; /* Adjust margin for responsiveness */
 }
+
+
+.popupBox > img{
+    width: 40vh;
+    height: 80%;
+}

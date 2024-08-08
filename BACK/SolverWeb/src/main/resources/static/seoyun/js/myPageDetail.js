@@ -1,18 +1,18 @@
-document.getElementById('expandButton').addEventListener('click', function() {
+document.getElementById('expandButton').addEventListener('click', function () {
     var videoBox = document.getElementById('videoBox');
-    var video = document.getElementById('myVideo');
+    var video = document.getElementById('popup-video');
     var closeButton = document.getElementById('closeButton');
     var myPageDetailRightBox = document.getElementById('myPageDetail_rightBox');
-    
+
     videoBox.classList.add('fullscreen-video');
     videoBox.classList.remove('slide-out-left');
     videoBox.classList.add('slide-in-right');
     myPageDetailRightBox.classList.remove('visible');
     myPageDetailRightBox.classList.add('hidden');
-    
+
     closeButton.style.display = 'block';
 
-    closeButton.addEventListener('click', function() {
+    closeButton.addEventListener('click', function () {
         videoBox.classList.remove('fullscreen-video');
         videoBox.classList.remove('slide-in-right');
         videoBox.classList.add('slide-out-left');
@@ -21,3 +21,4 @@ document.getElementById('expandButton').addEventListener('click', function() {
         closeButton.style.display = 'none';
     });
 });
+
