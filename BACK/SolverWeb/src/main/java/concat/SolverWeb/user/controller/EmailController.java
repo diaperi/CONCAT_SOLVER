@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 @Controller
 public class EmailController {
@@ -20,6 +22,9 @@ public class EmailController {
 
     @Autowired
     private EmailService emailService;
+
+    private static final int password_len = 8;
+    private final Random random = new SecureRandom();
 
     @GetMapping("/send-email")
     @ResponseBody
@@ -32,12 +37,19 @@ public class EmailController {
             System.out.println("Member Email: " + member.getMemberEmail());
             System.out.println("Member ID: " + member.getMemberId());
 
+            // 임시 비밀번호 생성
+            String tempPassword = generateTemporaryPassword();
+
+            // 비밀번호 해싱하여 업데이트
+            member.setMemberPassword(tempPassword);
+            memberService.updateMemberPassword(member);
+
             String subject = "[SOLVER] 아이디/비밀번호 안내드립니다.";
             String text = member.getMemberName() + " 님, 안녕하세요." + "\n"
-                    + "SOLVER에 요청하신 아이디와 비밀번호를 보내드립니다." + "\n"
+                    + "SOLVER에 요청하신 아이디와 임시 비밀번호를 보내드립니다." + "\n"
                     + "로그인 후 반드시 비밀번호를 변경해주세요." + "\n\n"
                     + "아이디: " + member.getMemberId() + "\n"
-                    + "비밀번호: " + member.getMemberPassword();
+                    + "비밀번호: " + tempPassword;
 
             try {
                 // 이메일 전송
@@ -53,4 +65,21 @@ public class EmailController {
             return "Member not found";
         }
     }
+
+    private String generateTemporaryPassword() {
+        StringBuilder password = new StringBuilder(password_len);
+        for (int i = 0; i < password_len; i++) {
+            int randIndex = random.nextInt(36);
+
+            char selectedChar;
+            if (randIndex < 10) {
+                selectedChar = (char) ('0' + randIndex);
+            } else {
+                selectedChar = (char) ('A' + randIndex - 10);
+            }
+            password.append(selectedChar);
+        }
+        return password.toString();
+    }
+
 }
