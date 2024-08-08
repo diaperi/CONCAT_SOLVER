@@ -62,6 +62,35 @@ emailButton.addEventListener('click', function() {
 
     // 여기에 이메일을 처리하는 로직을 추가하면 됩니다.
     // 예를 들어, 이메일 발송 등의 처리를 수행할 수 있습니다.
+
+    // AJAX 요청을 통해 이메일 전송
+    fetch(`/send-email?email=${encodeURIComponent(email)}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('서버 응답에 문제가 발생했습니다.');
+            }
+            return response.text();
+        })
+        .then(result => {
+            console.log(result);
+            if (result.includes("Email sent")) {
+                modalContent.querySelector('p.menu_msg').textContent = '이메일을 발송했습니다.';
+                modalContent.querySelector('p.menu_msg2').textContent = '이메일에서 계정 정보를 확인해주세요.';
+                modal.style.display = 'block';
+            } else {
+                alert("회원 정보를 찾을 수 없습니다.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("문제가 발생했습니다. 나중에 다시 시도해 주세요.");
+        });
+
     
     // 모달 팝업 열기
     modal.style.display = 'block';
