@@ -1,7 +1,7 @@
-package concat.SolverWeb.user.Service;
+package concat.SolverWeb.user.service;
 
-import concat.SolverWeb.user.Entity.MemberEntity;
-import concat.SolverWeb.user.Repository.MemberRepository;
+import concat.SolverWeb.user.entity.MemberEntity;
+import concat.SolverWeb.user.repository.MemberRepository;
 import concat.SolverWeb.user.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,15 @@ public class MemberService {
             return convertToDTO(member);
         }
         return null;
+    }
+
+    public void updateMemberPassword(MemberDTO memberDTO) {
+        MemberEntity member = memberRepository.findByMemberEmail(memberDTO.getMemberEmail())
+                .orElse(null);
+        if (member != null) {
+            member.setMemberPassword(memberDTO.getMemberPassword());
+            memberRepository.save(member);
+        }
     }
 
     private MemberDTO convertToDTO(MemberEntity member) {

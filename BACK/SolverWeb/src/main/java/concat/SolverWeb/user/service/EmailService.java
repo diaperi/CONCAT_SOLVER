@@ -1,4 +1,4 @@
-package concat.SolverWeb.user.Service;
+package concat.SolverWeb.user.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
