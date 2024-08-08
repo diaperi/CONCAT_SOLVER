@@ -15,6 +15,11 @@ function goToLogin() {
     // login.html로 이동합니다.
     window.location.href = 'login.html';
 }
+function goToSign() {
+    // register.html로 이동
+    window.location.href = 'sign.html';
+}
+
 
 // 아이디 중복 확인 (여기서는 간단히 아이디가 'test'일 경우 중복으로 간주)
 function checkDuplicate() {

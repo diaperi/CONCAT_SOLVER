@@ -3,10 +3,6 @@ function goToLogin() {
     window.location.href = 'login.html';
 }
 
-function goToRegister() {
-    // register.html로 이동
-    window.location.href = 'register.html';
-}
 
 
 
@@ -47,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const allMandatoryChecked = Array.from($mandatoryInputs).every(input => input.checked);
         if (allMandatoryChecked) {
             // 필수 항목 모두 체크 시 로그인 화면으로 이동.
-            window.location.href = 'login.html'; 
+            window.location.href = 'register.html';
         } else {
             // 필수 항목 체크 안 된 경우 경고창 표시
             // alert("모든 필수 항목에 동의해야 합니다.");
