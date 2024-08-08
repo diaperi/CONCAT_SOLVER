@@ -21,7 +21,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   security:
     user:
@@ -33,7 +33,7 @@ spring:
     host: smtp.naver.com
     port: 465
     username: concatsolver@naver.com
-    password: 
+    password:
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
