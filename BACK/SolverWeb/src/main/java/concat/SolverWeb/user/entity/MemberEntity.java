@@ -1,4 +1,4 @@
-package concat.SolverWeb.user.Entity;
+package concat.SolverWeb.user.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
