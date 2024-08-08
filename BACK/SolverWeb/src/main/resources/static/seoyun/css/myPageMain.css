@@ -8,12 +8,13 @@
 
 .myPageMain_container {
     background: linear-gradient(137.29deg,
-            #03BED6 20.13%,
-            #10B3DA 33.05%,
-            #1DA4E1 45.02%,
-            #249CE5 58.56%,
-            #2D8EED 72.11%,
-            #3084F4 83.13%);    display: flex;
+    #03BED6 20.13%,
+    #10B3DA 33.05%,
+    #1DA4E1 45.02%,
+    #249CE5 58.56%,
+    #2D8EED 72.11%,
+    #3084F4 83.13%);
+    display: flex;
     justify-content: center;
 }
 
@@ -96,6 +97,23 @@
     justify-content: space-between;
     width: 100%;
     margin-bottom: 3vh;
+    margin-bottom: 3vh;
+    height: 53vh;
+    overflow: hidden;
+}
+
+.myPageMain_videoBox6 {
+    margin-top: 2vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 3vh;
+    margin-bottom: 3vh;
+    /*height: 53vh;*/
+    /*overflow: hidden;*/
+    overflow-y: auto;
+    max-height: 56vh;
 }
 
 .myPageMain_videoBox3 {
@@ -111,7 +129,7 @@
     flex-wrap: nowrap;
 }
 
-.myPageMain_videoBox3 > img {
+.myPageMain_videoBox3 > a > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -155,8 +173,9 @@
     color: transparent;
     display: inline-block;
     cursor: pointer;
-    margin-bottom: 4vh;
+    margin-bottom: 10vh;
     animation: bounce 2s infinite;
+    margin-top: 15vh;
 }
 
 @keyframes bounce {
@@ -175,4 +194,9 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+
+
+.myPageMain_videoBox6::-webkit-scrollbar {
+    display: none;
 }

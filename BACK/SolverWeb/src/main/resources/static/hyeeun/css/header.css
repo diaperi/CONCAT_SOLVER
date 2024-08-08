@@ -2,27 +2,32 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
+
 .header_navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #000000;
-    padding: 1px 44px; 
+    padding: 1px 44px;
     height: 10.5vh;
 }
+
 .header_navbar img {
-    height: 16vh; 
-    width: 16vh; 
+    height: 16vh;
+    width: 16vh;
     cursor: pointer;
 }
+
 .header_navbar .header_menu {
     display: flex;
     gap: 20px;
 }
+
 .header_navbar .header_menu a {
     color: white;
     text-decoration: none;
     font-size: 17px;
+    transition: color 0.3s;
 }
 
 .header_menu a:hover {
