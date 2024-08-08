@@ -12,6 +12,8 @@ spring:
     #    password: solver
     username: root
     password: root
+  main:
+    allow-bean-definition-overriding: true
   thymeleaf:
     cache: false
 
