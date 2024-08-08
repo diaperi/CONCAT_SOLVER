@@ -21,13 +21,22 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   security:
     user:
       name: admin
       password: admin123
 
+  # 메일 정보 설정
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: concatsolver@naver.com
+    password:
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
 
 # AWS S3 설정 *********서윤 추가 *********
 cloud:

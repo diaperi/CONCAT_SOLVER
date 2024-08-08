@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(19)
     }
 }
 
@@ -25,8 +25,14 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    implementation 'org.springframework.boot:spring-boot-starter-validation' // SNS 로그인
+    implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 전송
+    implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티
+    implementation 'org.springframework.security:spring-security-core' // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

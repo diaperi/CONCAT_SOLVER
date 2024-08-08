@@ -56,24 +56,42 @@ body {
   border-radius: 15px;
 }
 
+/*.sign_BtnBox2{*/
+
+/*  width: 93.5%;*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+/*  margin-top: 2vh;*/
+/*}*/
+
+/*.sign_BtnBox2 > button{*/
+/*  border: none;*/
+/*  background-color: white;*/
+/*  font-size: 25px; */
+/*  color: gray;*/
+/*  cursor: pointer;*/
+/*  */
+/*}*/
 .sign_BtnBox2{
-  /* background-color: yellowgreen; */
-  width: 93.5%;
+  /* background-color: rgb(170, 255, 0); */
+  width: 100%;
+  height: 3vh;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2vh;
+  justify-content: flex-end;
+  margin-right: 40px;
+  margin-top: 10px;
 }
-
-.sign_BtnBox2 > button{
-  border: none;
-  background-color: white;
-  font-size: 25px; /* 25px -> 2.5vh */
+.close-button {
+  position: absolute;
+  background-color: rgb(255, 255, 255, 0);
   color: gray;
+  border: none;
+  padding: 1px; /* 1px -> 0.1vh */
   cursor: pointer;
-  
+  font-size: 25px; /* 25px -> 2.5vh */
+  margin-top: 0.8vh;
 }
-
 .agreement-form {
   margin-top: 5vh; /* 40px -> 4vh */
   font-size: 1.6vh; /* 14px -> 1.4vh */
