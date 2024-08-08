@@ -1,7 +1,7 @@
 package concat.SolverWeb.myPage.userChange.controller;
 
-import concat.SolverWeb.myPage.userChange.dto.MemberDTO;
-import concat.SolverWeb.myPage.userChange.service.MemberService;
+import concat.SolverWeb.myPage.userChange.dto.ChangeMemberDTO;
+import concat.SolverWeb.myPage.userChange.service.ChangeMemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,67 +12,62 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MemberController {
-    // 생성자 주입
-    private final MemberService memberService;
+public class ChangeMemberController {
+    private final ChangeMemberService memberService;
 
-    // 회원가입 페이지 출력 요청
     @GetMapping("/member/save")
     public String saveForm() {
-        return "hyeeun/save";
+        return "hyeeun/userchange/save";
     }
 
     @PostMapping("/member/save")
-    public String save(@ModelAttribute MemberDTO memberDTO) {
+    public String save(@ModelAttribute ChangeMemberDTO memberDTO) {
         System.out.println("MemberController.save");
         System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO);
-        return "hyeeun/changelogin";
+        return "hyeeun/userchange/changelogin";
     }
 
     @GetMapping("/member/login")
     public String loginForm() {
-        return "hyeeun/changelogin";
+        return "hyeeun/userchange/changelogin";
     }
 
     @PostMapping("/member/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
-        MemberDTO loginResult = memberService.login(memberDTO);
+    public String login(@ModelAttribute ChangeMemberDTO memberDTO, HttpSession session) {
+        ChangeMemberDTO loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
-            // login 성공
             session.setAttribute("loginEmail", loginResult.getMemberEmail());
-            return "hyeeun/main";
+            return "hyeeun/userchange/main";
         } else {
-            // login 실패
-            return "hyeeun/changelogin";
+            return "hyeeun/userchange/changelogin";
         }
     }
 
     @GetMapping("/member/")
     public String findAll(Model model) {
-        List<MemberDTO> memberDTOList = memberService.findAll();
-        // 어떠한 html로 가져갈 데이터가 있다면 model사용
+        List<ChangeMemberDTO> memberDTOList = memberService.findAll();
         model.addAttribute("memberList", memberDTOList);
-        return "hyeeun/list";
+        return "hyeeun/userchange/list";
     }
 
     @GetMapping("/member/{id}")
     public String findById(@PathVariable Long id, Model model) {
-        MemberDTO memberDTO = memberService.findById(id);
+        ChangeMemberDTO memberDTO = memberService.findById(id);
         model.addAttribute("member", memberDTO);
-        return "hyeeun/detail";
+        return "hyeeun/userchange/detail";
     }
 
     @GetMapping("/member/update")
     public String updateForm(HttpSession session, Model model) {
         String myEmail = (String) session.getAttribute("loginEmail");
-        MemberDTO memberDTO = memberService.updateForm(myEmail);
+        ChangeMemberDTO memberDTO = memberService.updateForm(myEmail);
         model.addAttribute("updateMember", memberDTO);
-        return "hyeeun/update";
+        return "hyeeun/userchange/update";
     }
 
     @PostMapping("/member/update")
-    public String update(@ModelAttribute MemberDTO memberDTO) {
+    public String update(@ModelAttribute ChangeMemberDTO memberDTO) {
         memberService.update(memberDTO);
         return "redirect:/member/" + memberDTO.getId();
     }
@@ -86,22 +81,23 @@ public class MemberController {
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "hyeeun/index";
+        return "hyeeun/userchange/changeindex";
     }
 
     @PostMapping("/member/email-check")
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail) {
         System.out.println("memberEmail = " + memberEmail);
-        String checkResult = memberService.emailCheck(memberEmail);
-        return checkResult;
-//        if (checkResult != null) {
-//            return "ok";
-//        } else {
-//            return "no";
-//        }
+        boolean isEmailAvailable = memberService.isEmailAvailable(memberEmail);
+        return isEmailAvailable ? "ok" : "no";
     }
 
+    @PostMapping("/member/password-check")
+    public @ResponseBody String passwordCheck(@RequestParam("password") String password, @RequestParam("id") Long id) {
+        boolean isPasswordCorrect = memberService.isPasswordCorrect(password, id);
+        return isPasswordCorrect ? "ok" : "no";
+    }
 }
+
 
 
 

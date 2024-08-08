@@ -1,7 +1,7 @@
-package concat.SolverWeb.user.snsLogin.service;
+package concat.SolverWeb.user.snslogin.service;
 
-import concat.SolverWeb.user.snsLogin.domain.dto.*;
-import concat.SolverWeb.user.snsLogin.repository.MemberRepository;
+import concat.SolverWeb.user.snslogin.domain.dto.*;
+import concat.SolverWeb.user.snslogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -9,9 +9,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import concat.SolverWeb.user.snsLogin.domain.Member;
-import concat.SolverWeb.user.snsLogin.domain.MemberRole;
-import concat.SolverWeb.snslogin.domain.dto.*;
+import concat.SolverWeb.user.snslogin.domain.Member;
+import concat.SolverWeb.user.snslogin.domain.MemberRole;
 
 @Service
 @RequiredArgsConstructor
@@ -39,9 +38,6 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         } else if (provider.equals("naver")) {
             log.info("네이버 로그인");
             oAuth2UserInfo = new NaverUserDetails(oAuth2User.getAttributes());
-        }  else if (provider.equals("apple")) {
-            log.info("애플 로그인");
-            oAuth2UserInfo = new AppleUserDetails(oAuth2User.getAttributes());
         }
 
         String providerId = oAuth2UserInfo.getProviderId();

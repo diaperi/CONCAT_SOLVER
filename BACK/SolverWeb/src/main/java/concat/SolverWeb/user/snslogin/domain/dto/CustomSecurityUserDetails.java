@@ -1,8 +1,8 @@
-package concat.SolverWeb.user.snsLogin.domain.dto;
+package concat.SolverWeb.user.snslogin.domain.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import concat.SolverWeb.user.snsLogin.domain.Member;
+import concat.SolverWeb.user.snslogin.domain.Member;
 
 import java.util.ArrayList;
 import java.util.Collection;

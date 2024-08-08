@@ -1,7 +1,7 @@
-package concat.SolverWeb.user.snsLogin.repository;
+package concat.SolverWeb.user.snslogin.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import concat.SolverWeb.user.snsLogin.domain.Member;
+import concat.SolverWeb.user.snslogin.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 

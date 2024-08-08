@@ -1,4 +1,4 @@
-package concat.SolverWeb.user.snsLogin.domain;
+package concat.SolverWeb.user.snslogin.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

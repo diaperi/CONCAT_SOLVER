@@ -1,8 +1,8 @@
-package concat.SolverWeb.user.snsLogin.service;
+package concat.SolverWeb.user.snslogin.service;
 
-import concat.SolverWeb.user.snsLogin.domain.Member;
-import concat.SolverWeb.user.snsLogin.domain.dto.CustomSecurityUserDetails;
-import concat.SolverWeb.user.snsLogin.repository.MemberRepository;
+import concat.SolverWeb.user.snslogin.domain.Member;
+import concat.SolverWeb.user.snslogin.domain.dto.CustomSecurityUserDetails;
+import concat.SolverWeb.user.snslogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,12 +17,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
+        // 로그인 ID로 사용자 정보를 조회
         Member member = memberRepository.findByLoginId(username);
 
-        if (member != null) {
-            return new CustomSecurityUserDetails(member);
+        // 사용자가 존재하지 않는 경우 예외 발생
+        if (member == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
-        return null;
+
+        // 사용자 정보를 기반으로 UserDetails 객체 생성
+        return new CustomSecurityUserDetails(member);
     }
 }

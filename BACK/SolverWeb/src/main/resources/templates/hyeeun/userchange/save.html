@@ -15,10 +15,13 @@
     <!-- name속성: 서버로 전송할 때 변수이름의 역할 -->
     이메일: <input type="text" name="memberEmail" id="memberEmail" onblur="emailCheck()"> <br>
     <p id="check-result"></p>
-    비밀번호: <input type="password" name="memberPassword"> <br>
+    비밀번호: <input type="password" name="memberPassword" id="memberPassword"> <br>
+    비밀번호 확인: <input type="password" name="memberPasswordConfirm" id="memberPasswordConfirm" onblur="passwordCheck()"> <br>
+    <p id="password-check-result"></p>
     이름: <input type="text" name="memberName"> <br>
+    아이디: <input type="text" name="memberId"> <br>
+    전화번호: <input type="text" name="memberPhone"> <br>
     <input type="submit" value="회원가입">
-
 </form>
 </body>
 <script th:inline="javascript">
@@ -50,8 +53,25 @@
             }
         });
     }
+
+    const passwordCheck = () => {
+        const password = document.getElementById("memberPassword").value;
+        const passwordConfirm = document.getElementById("memberPasswordConfirm").value;
+        const passwordCheckResult = document.getElementById("password-check-result");
+        if (password === passwordConfirm) {
+            console.log("비밀번호 일치");
+            passwordCheckResult.style.color = "green";
+            passwordCheckResult.innerHTML = "비밀번호가 일치합니다";
+        } else {
+            console.log("비밀번호 불일치");
+            passwordCheckResult.style.color = "red";
+            passwordCheckResult.innerHTML = "비밀번호가 일치하지 않습니다";
+        }
+    }
 </script>
 </html>
+
+
 
 
 

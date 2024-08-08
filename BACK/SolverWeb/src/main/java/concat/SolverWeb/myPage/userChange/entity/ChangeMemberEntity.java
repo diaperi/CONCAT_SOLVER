@@ -1,6 +1,6 @@
 package concat.SolverWeb.myPage.userChange.entity;
 
-import concat.SolverWeb.myPage.userChange.dto.MemberDTO;
+import concat.SolverWeb.myPage.userChange.dto.ChangeMemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "member_table")
-public class MemberEntity {
+public class ChangeMemberEntity {
     @Id // pk 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
@@ -26,22 +26,27 @@ public class MemberEntity {
     @Column
     private String memberPhone;
 
-    public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
-        MemberEntity memberEntity = new MemberEntity();
+    @Column
+    private String memberId;
+
+    public static ChangeMemberEntity toMemberEntity(ChangeMemberDTO memberDTO) {
+        ChangeMemberEntity memberEntity = new ChangeMemberEntity();
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberPhone(memberDTO.getMemberPhone());
+        memberEntity.setMemberId(memberDTO.getMemberId());
         return memberEntity;
     }
 
-    public static MemberEntity toUpdateMemberEntity(MemberDTO memberDTO) {
-        MemberEntity memberEntity = new MemberEntity();
+    public static ChangeMemberEntity toUpdateMemberEntity(ChangeMemberDTO memberDTO) {
+        ChangeMemberEntity memberEntity = new ChangeMemberEntity();
         memberEntity.setId(memberDTO.getId());
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberPhone(memberDTO.getMemberPhone());
+        memberEntity.setMemberId(memberDTO.getMemberId());
         return memberEntity;
     }
 }

@@ -1,4 +1,4 @@
-package concat.SolverWeb.user.snsLogin.domain.dto;
+package concat.SolverWeb.user.snslogin.domain.dto;
 
 import lombok.AllArgsConstructor;
 

@@ -1,9 +1,9 @@
-package concat.SolverWeb.user.snsLogin.service;
+package concat.SolverWeb.user.snslogin.service;
 
-import concat.SolverWeb.user.snsLogin.domain.Member;
-import concat.SolverWeb.user.snsLogin.domain.dto.JoinRequest;
-import concat.SolverWeb.user.snsLogin.domain.dto.LoginRequest;
-import concat.SolverWeb.user.snsLogin.repository.MemberRepository;
+import concat.SolverWeb.user.snslogin.domain.Member;
+import concat.SolverWeb.user.snslogin.domain.dto.JoinRequest;
+import concat.SolverWeb.user.snslogin.domain.dto.LoginRequest;
+import concat.SolverWeb.user.snslogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

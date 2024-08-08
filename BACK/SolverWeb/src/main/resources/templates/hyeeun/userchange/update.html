@@ -4,16 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <title>update</title>
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <form action="/member/update" method="post">
     <input type="hidden" th:value="${updateMember.id}" name="id"><br>
     이름: <input type="text" th:value="${updateMember.memberName}" name="memberName"> <br>
-    이메일: <input type="text" th:value="${updateMember.memberEmail}" name="memberEmail" readonly> <br>
+    이메일: <input type="text" id="memberEmail" th:value="${updateMember.memberEmail}" name="memberEmail" onblur="emailCheck()"> <br>
+    <p id="email-check-result"></p>
+    아이디: <input type="text" th:value="${updateMember.memberId}" name="memberId"> <br>
     전화번호: <input type="text" th:value="${updateMember.memberPhone}" name="memberPhone"> <br>
-    비밀번호: <input type="text" th:value="${updateMember.memberPassword}" name="memberPassword"> <br>
-
+    비밀번호: <input type="password" id="memberPassword" name="memberPassword"> <br>
+    비밀번호 확인: <input type="password" id="memberPasswordConfirm" name="memberPasswordConfirm" onblur="passwordCheck()"> <br>
+    <p id="password-check-result"></p>
     <input type="submit" value="정보수정">
 </form>
+
+<script>
+    const emailCheck = () => {
+        const email = document.getElementById("memberEmail").value;
+        const emailCheckResult = document.getElementById("email-check-result");
+
+        // 이메일 형식 검증
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            emailCheckResult.style.color = "red";
+            emailCheckResult.innerHTML = "유효한 이메일 주소를 입력해주세요.";
+            return;
+        }
+
+        // 이메일 중복 확인 요청
+        $.ajax({
+            type: "post",
+            url: "/member/email-check",
+            data: {
+                "memberEmail": email
+            },
+            success: function(res) {
+                if (res === "ok") {
+                    emailCheckResult.style.color = "green";
+                    emailCheckResult.innerHTML = "사용 가능한 이메일 주소입니다.";
+                } else {
+                    emailCheckResult.style.color = "red";
+                    emailCheckResult.innerHTML = "이미 사용 중인 이메일 주소입니다.";
+                }
+            },
+            error: function(err) {
+                console.log("에러 발생", err);
+            }
+        });
+    };
+
+    const passwordCheck = () => {
+        const password = document.getElementById("memberPassword").value;
+        const passwordConfirm = document.getElementById("memberPasswordConfirm").value;
+        const passwordCheckResult = document.getElementById("password-check-result");
+        if (password === passwordConfirm) {
+            passwordCheckResult.style.color = "green";
+            passwordCheckResult.innerHTML = "비밀번호가 일치합니다.";
+        } else {
+            passwordCheckResult.style.color = "red";
+            passwordCheckResult.innerHTML = "비밀번호가 일치하지 않습니다.";
+        }
+    };
+</script>
+
 </body>
 </html>
+

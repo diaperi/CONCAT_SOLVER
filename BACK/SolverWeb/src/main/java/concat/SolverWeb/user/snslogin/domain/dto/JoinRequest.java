@@ -1,7 +1,7 @@
-package concat.SolverWeb.user.snsLogin.domain.dto;
+package concat.SolverWeb.user.snslogin.domain.dto;
 
-import concat.SolverWeb.user.snsLogin.domain.Member;
-import concat.SolverWeb.user.snsLogin.domain.MemberRole;
+import concat.SolverWeb.user.snslogin.domain.Member;
+import concat.SolverWeb.user.snslogin.domain.MemberRole;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
