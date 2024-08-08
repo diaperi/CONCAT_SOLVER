@@ -19,7 +19,7 @@ public class MemberController {
     // 회원가입 페이지 출력 요청
     @GetMapping("/member/save")
     public String saveForm() {
-        return "save";
+        return "hyeeun/save";
     }
 
     @PostMapping("/member/save")
@@ -27,12 +27,12 @@ public class MemberController {
         System.out.println("MemberController.save");
         System.out.println("memberDTO = " + memberDTO);
         memberService.save(memberDTO);
-        return "login";
+        return "hyeeun/changelogin";
     }
 
     @GetMapping("/member/login")
     public String loginForm() {
-        return "login";
+        return "hyeeun/changelogin";
     }
 
     @PostMapping("/member/login")
@@ -41,10 +41,10 @@ public class MemberController {
         if (loginResult != null) {
             // login 성공
             session.setAttribute("loginEmail", loginResult.getMemberEmail());
-            return "main";
+            return "hyeeun/main";
         } else {
             // login 실패
-            return "login";
+            return "hyeeun/changelogin";
         }
     }
 
@@ -53,14 +53,14 @@ public class MemberController {
         List<MemberDTO> memberDTOList = memberService.findAll();
         // 어떠한 html로 가져갈 데이터가 있다면 model사용
         model.addAttribute("memberList", memberDTOList);
-        return "list";
+        return "hyeeun/list";
     }
 
     @GetMapping("/member/{id}")
     public String findById(@PathVariable Long id, Model model) {
         MemberDTO memberDTO = memberService.findById(id);
         model.addAttribute("member", memberDTO);
-        return "detail";
+        return "hyeeun/detail";
     }
 
     @GetMapping("/member/update")
@@ -68,7 +68,7 @@ public class MemberController {
         String myEmail = (String) session.getAttribute("loginEmail");
         MemberDTO memberDTO = memberService.updateForm(myEmail);
         model.addAttribute("updateMember", memberDTO);
-        return "update";
+        return "hyeeun/update";
     }
 
     @PostMapping("/member/update")
@@ -86,7 +86,7 @@ public class MemberController {
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "index";
+        return "hyeeun/index";
     }
 
     @PostMapping("/member/email-check")
