@@ -67,6 +67,7 @@ body {
     max-height: 59.5vh; /* Adjust max-height for responsiveness */
     align-items: center;
     min-width: 50vh;
+    border-radius: 1vh;
 }
 
 .myPagePop_videoBox3 {
@@ -79,7 +80,7 @@ body {
     cursor: pointer;
 }
 
-.myPagePop_videoBox3 > img {
+.myPagePop_videoBox3 >a> img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -261,4 +262,15 @@ body {
     cursor: pointer;
     position: absolute;
     margin-top: 6vh; /* Adjust margin for responsiveness */
+}
+#popup-date a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#popup-date a:hover {
+    color: #3084F4;
+    transition: color 0.3s;
 }
