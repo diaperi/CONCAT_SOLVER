@@ -25,11 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('solver_registerBtn').addEventListener('click', function () {
-        window.location.href = '../../../templates/yoonseo/register.html';
+        window.location.href = '/user/sign';
     });
 
     document.getElementById('solver_registerBtn2').addEventListener('click', function () {
-        window.location.href = '../../../templates/yoonseo/register.html';
+        window.location.href = '/user/sign';
     });
 
     // Swiper initialization
