@@ -1,8 +1,9 @@
 package concat.SolverWeb.user.controller;
 
+import concat.SolverWeb.user.service.MessageService;
 import concat.SolverWeb.user.service.EmailService;
-import concat.SolverWeb.user.service.MemberService;
-import concat.SolverWeb.user.dto.MemberDTO;
+//import concat.SolverWeb.user.dto.UserDTO;
+import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,10 @@ import java.util.Random;
 public class EmailController {
 
     @Autowired
-    private MemberService memberService;
+    private EmailService emailService;
 
     @Autowired
-    private EmailService emailService;
+    private MessageService messageService;
 
     private static final int PASSWORD_LEN = 6;
     private final Random random = new SecureRandom();
@@ -32,30 +33,30 @@ public class EmailController {
         System.out.println("Received email request for: " + email);
 
         // 이메일 주소로 데이터베이스에서 회원 조회
-        MemberDTO member = memberService.getMemberByEmail(email);
-        if (member != null) {
-            System.out.println("Member Email: " + member.getMemberEmail());
-            System.out.println("Member ID: " + member.getMemberId());
+        UserDTO user = emailService.getUserByEmail(email);
+        if (user != null) {
+            System.out.println("Member Email: " + user.getUserEmail());
+            System.out.println("Member ID: " + user.getUserId());
 
             // 임시 비밀번호 생성
             String tempPassword = generateTempPassword();
 
             // 비밀번호 업데이트
-            member.setMemberPassword(tempPassword);
-            memberService.updateMemberPassword(member);
+            user.setUserPw(tempPassword);
+            emailService.updateUserPassword(user);
 
             String subject = "[SOLVER] 아이디/비밀번호 안내드립니다.";
-            String text = member.getMemberName() + " 님, 안녕하세요." + "\n"
+            String text = user.getUserName() + " 님, 안녕하세요." + "\n"
                     + "SOLVER에 요청하신 아이디와 비밀번호를 보내드립니다." + "\n"
                     + "로그인 후 반드시 비밀번호를 변경해주세요." + "\n\n"
-                    + "아이디: " + member.getMemberId() + "\n"
+                    + "아이디: " + user.getUserId() + "\n"
                     + "비밀번호: " + tempPassword;
 
             try {
                 // 이메일 전송
-                emailService.sendSimpleMessage(member.getMemberEmail(), subject, text);
-                System.out.println("Email sent to: " + member.getMemberEmail());
-                return "Email sent to " + member.getMemberEmail();
+                messageService.sendSimpleMessage(user.getUserEmail(), subject, text);
+                System.out.println("Email sent to: " + user.getUserEmail());
+                return "Email sent to " + user.getUserEmail();
             } catch (MessagingException | UnsupportedEncodingException e) {
                 // e.printStackTrace();
                 return "Failed to send email: " + e.getMessage();

@@ -1,0 +1,276 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-wrap: nowrap;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: linear-gradient(137.29deg,
+            #03BED6 20.13%,
+            #10B3DA 33.05%,
+            #1DA4E1 45.02%,
+            #249CE5 58.56%,
+            #2D8EED 72.11%,
+            #3084F4 83.13%);    
+}
+
+.myPagePop_container {  
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 96vw; /* Adjust width for responsiveness */
+    height: 96vh; /* Adjust height for responsiveness */
+    box-sizing: border-box;
+}
+
+.myPagePop_container2 {
+    margin-top: 8vh; /* Adjust margin for responsiveness */
+    width: 70%;
+}
+
+.myPagePop_top {
+    background-color: rgba(0, 0, 0, 0.377);
+    width: 75%;
+    font-size: 1.3vh; /* Adjust font-size for responsiveness */
+    color: rgba(255, 255, 255, 0.836);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2.5vh;
+    border-radius: 1vh;
+    height: 7vh; /* Adjust height for responsiveness */
+    min-width: 100vh;
+}
+
+.myPagePop_top > i {
+    font-size: 4vh; /* Adjust icon size for responsiveness */
+}
+
+.myPagePop_main {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100% -11vh); /* Adjust height for responsiveness */
+}
+
+.myPagePop_list {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 59.5vh; /* Adjust max-height for responsiveness */
+    align-items: center;
+    min-width: 50vh;
+    border-radius: 1vh;
+}
+
+.myPagePop_videoBox3 {
+    width: 100%;
+    border-radius: 1vh;
+    margin-bottom: 8vh; /* Adjust margin for responsiveness */
+    overflow: hidden;
+    min-height: 57vh; /* Adjust min-height for responsiveness */
+    position: relative;
+    cursor: pointer;
+}
+
+.myPagePop_videoBox3 >a> img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.myPagePop_videoBox4 {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 3vh 1vh; /* Adjust padding for responsiveness */
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.7vh; /* Adjust font-size for responsiveness */
+    font-weight: bold;
+}
+
+.myPagePop_list::-webkit-scrollbar {
+    display: none;
+}
+
+.calendar-box {
+    width: 40%;
+    background-color: rgba(0, 0, 0, 0.377);
+    border-radius: 0.8vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 59.5vh; /* Adjust max-height for responsiveness */
+    min-width: 50vh;
+}
+
+#calendar {
+    width: 87%;
+    background-color: rgb(0, 0, 0);
+    margin-top: 1vh; /* Adjust margin for responsiveness */
+    border-radius: 0.8vh;
+    min-height: 38vh; /* Adjust min-height for responsiveness */
+}
+
+.calendar-box_top {
+    margin-top: 3vh; /* Adjust margin for responsiveness */
+    color: rgba(255, 255, 255, 0.664);
+    font-size: 1.4vh; /* Adjust font-size for responsiveness */
+    width: 87%;
+}
+
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh; /* Adjust margin for responsiveness */
+    padding-left: 2vh;
+    padding-top: 3vh; /* Adjust padding for responsiveness */
+}
+
+#prev, #next {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 3vh; /* Adjust icon size for responsiveness */
+    cursor: pointer;
+}
+
+#month-year {
+    font-size: 1.6vh; /* Adjust font-size for responsiveness */
+    font-weight: bold;
+}
+
+#calendar-body {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar-body th,
+#calendar-body td {
+    width: 14.28%;
+    text-align: center;
+    padding: 1vh; /* Adjust padding for responsiveness */
+    font-weight: bold;
+}
+
+#calendar-body td {
+    cursor: pointer;
+}
+
+#calendar-body td:hover {
+    background-color: #ffffff2f;
+    border-radius: 5vh;
+}
+
+.calendar_foot {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    margin-top: 6vh; /* Adjust margin for responsiveness */
+}
+
+#calendar-body th:nth-child(1),
+#calendar-body td:nth-child(1) {
+    color: red;
+}
+
+.today {
+    background-color: #ffffff2f;
+    color: white;
+    font-weight: bold;
+    border-radius: 5vh;
+}
+
+.myPagePop_foot {
+    margin-top: 4vh; /* Adjust margin for responsiveness */
+    font-size: 1.4vh; /* Adjust font-size for responsiveness */
+    color: rgba(255, 255, 255, 0.76);
+    font-weight: bold;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+}
+
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #000000d8;
+    padding: 2vh; /* Adjust padding for responsiveness */
+    z-index: 1000;
+    height: 70vh;
+    width: 60vw;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1vh;
+    display: none;
+}
+
+#close-popup {
+    position: absolute;
+    top: 1vh; /* Adjust position for responsiveness */
+    right: 1vh; /* Adjust position for responsiveness */
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    z-index: 1001;
+    font-size: 2vh; /* Adjust icon size for responsiveness */
+    margin-right: 0.9vh;
+}
+
+.popupBox {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#popup-date {
+    width: 89%;
+    font-size: 2vh; /* Adjust font-size for responsiveness */
+    border-bottom: 0.2vh solid white; /* Adjust border for responsiveness */
+    padding-bottom: 0.8vh; /* Adjust padding for responsiveness */
+}
+
+.popupBox > video {
+    width: 85%;
+    height: 80%;
+    cursor: pointer;
+    position: absolute;
+    margin-top: 6vh; /* Adjust margin for responsiveness */
+}
+#popup-date a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#popup-date a:hover {
+    color: #3084F4;
+    transition: color 0.3s;
+}

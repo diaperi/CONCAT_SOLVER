@@ -1,0 +1,379 @@
+/* 공통부분 */
+a {
+    text-decoration-line: none;
+    color: white;
+    text-decoration: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    text-wrap: nowrap;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(137.29deg,
+            #03BED6 20.13%,
+            #10B3DA 33.05%,
+            #1DA4E1 45.02%,
+            #249CE5 58.56%,
+            #2D8EED 72.11%,
+            #3084F4 83.13%);
+}
+
+.login-header-img {
+    height: 10.5vh;
+    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
+    display: flex;
+    align-items: center;
+}
+
+.login-header-img > a > img {
+    height: 5.9vh;
+    margin-left: 4.6vh;
+    width: 16.3vh;
+    margin-top: 0.6vh;
+}
+
+/* **************************************************************************** */
+.login_container {
+    display: flex;
+    justify-content: center;
+}
+
+.login_container2 {
+    margin-top: 5vh;
+    width: 80%;
+    display: flex;
+}
+
+/* **************************왼쪽**************************** */
+.login_side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    color: white;
+    font-size: 2.5vh;
+    margin-top: 5vh;
+    margin-left: 7vh;
+}
+
+.login_intro1 {
+    font-weight: 400;
+}
+
+.login-body-img {
+    margin-top: 4vh;
+}
+
+.login-body-img > img {
+    width: 45vh;
+}
+
+/* *******************************오른쪽**************************** */
+.login_formBox {
+    display: flex;
+    justify-content: flex-end;
+    width: 63%;
+}
+
+.login_formBox2 {
+    background-color: black;
+    width: 65%;
+    border-radius: 1vh;
+    display: flex;
+    justify-content: flex-end;
+    color: #c9c9c9;
+    font-size: 1.5vh;
+}
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    border-radius: 1vh;
+}
+
+.login-img > img {
+    width: 14vh;
+    margin-top: 1vh;
+}
+
+.login-input-idbox {
+    width: 80%;
+    margin-top: 3vh;
+}
+
+.login-input-pwbox {
+    width: 80%;
+    margin-bottom: 2.5vh;
+}
+
+.login-input-idbox > input {
+    width: 98%;
+    height: 5vh;
+    border-radius: 0.8vh;
+    border: none;
+    padding-left: 1vh;
+    font-size: 1.8vh;
+}
+
+.login-input-idbox > input:focus {
+    outline: none; /* Remove default outline */
+}
+
+.login-input-pwbox > input:focus {
+    outline: none; /* Remove default outline */
+}
+
+.login-input-idbox > input::placeholder {
+    font-size: 1.4vh;
+    color: #383838;
+}
+
+.login-input-pwbox > input::placeholder {
+    color: #383838;
+    font-size: 1.4vh;
+}
+
+.login-input-pwbox > input {
+    width: 98%;
+    height: 5vh;
+    border-radius: 0.8vh;
+    border: none;
+    padding-left: 1vh;
+    font-size: 1.8vh;
+    margin-top: 2vh;
+}
+
+.login-check {
+    width: 78%;
+}
+
+#login_btn {
+    margin-top: 6vh;
+    width: 60%;
+    height: 5vh;
+    border-radius: 0.8vh;
+    background-color: #4461F2;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.6vh;
+    cursor: pointer;
+    margin-bottom: 2.5vh;
+}
+
+#login_btn:hover{
+    background-color: #2d46c2;    
+    transition: ease-in 0.2s
+}
+
+.login_register {
+    width: 53%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login_register > a {
+    color: #c9c9c9;
+}
+
+/* ******************************************* */
+.login_type {
+    margin-top: 8vh;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login_typeLine {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2vh 0;
+    position: relative;
+    width: 100%;    
+    justify-content: center; 
+}
+
+.login_typeLine hr {
+    width: 100%;
+    border: none;
+    border-top: 0.1vh solid #d6d9dc;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+.or-text {
+    color: #d6d9dc;
+    font-size: 1.4vh;
+    background-color: #000000;
+    padding: 0 3vh;
+    position: relative;
+    z-index: 1;
+    line-height: 1; /* 텍스트가 중앙에 오도록 */
+}
+
+.login_typeIcon {
+    margin-top: 1.5vh;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4vh;
+}
+
+.login_typeIcon > button {
+    height: 5.5vh;
+    width: 5.8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0.8vh;
+    cursor: pointer;
+}
+
+.login_typeIcon > button > img {
+    width: 3.5vh;
+    border-radius: 1vh;
+}
+
+
+
+
+
+
+
+/* 수정 전 코드 */
+/* 
+.login-body-img > img{
+    height: 100px;
+} 
+
+.login_side{ 
+    margin-top: 100px;
+    margin-left: 300px;
+}
+
+.login_intro1 {
+    display: block; 
+    font-size: 18px; 
+    margin-bottom: 10px; 
+}
+.login_intro1 .indent {
+    display: inline-block;
+    padding-left: 40px; 
+}
+.login_intro2 {
+    text-indent: 20px; 
+    display: block; 
+    font-size: 18px; 
+    margin-bottom: 10px; 
+}
+
+.login-img>img{
+    width: 120px; 
+    height: auto; 
+    margin-top: 20px; 
+}
+
+.login{
+    background-color: rgb(59, 57, 57); 
+    width: 450px; 
+    height: 600px; 
+    top: 50px; 
+    position: fixed; 
+    top: 80px; 
+    left: 900px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.login-input-idbox input{ 
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 24px;
+    color: #090909;
+    border: 1px solid rgb(175, 175, 175);
+    width: 380px;
+    height: 40px;
+    margin-top: 0px; 
+    border-radius: 8px;
+}
+
+.login-input-pwbox input{
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 24px;
+    color: #000000;
+    border: 1px solid rgb(175, 175, 175);
+    width: 380px;
+    height: 40px;
+    margin-top: 15px; 
+    border-radius: 8px;
+}
+.login-check{
+    margin-left: -250px;
+    font-weight: 300;
+    margin-top: 15px; 
+    font-size: 14px;
+}
+.login>button{ 
+    margin-top: 20px;
+    width: 300px;
+    height: 45px;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    background: #4461F2;
+    border: 1px solid #4461F2;
+    border-radius: 10px;
+}
+
+.register{
+    font-weight: 250;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.login_type {
+    text-align: center; 
+}
+.or-text {
+    margin-top: 55px; 
+    margin-bottom: 10px;
+    display: block; 
+    font-size: 14px;
+}
+.login_type .login-button {
+    display: inline-block; 
+    background-color: white; 
+    border: none; 
+    padding: 8px; 
+    margin: 10px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+.login_type .login-button img {
+    width: 30px; 
+    height: auto; 
+    vertical-align: middle; 
+}
+<<<<<<< HEAD
+
+.kakao-login-btn p {
+    margin: 0;
+    display: none; /* p 요소가 차지하는 공간 없애기 */

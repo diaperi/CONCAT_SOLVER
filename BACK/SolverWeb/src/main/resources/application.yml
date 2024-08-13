@@ -33,7 +33,7 @@ spring:
     host: smtp.naver.com
     port: 465
     username: concatsolver@naver.com
-    password:
+    password: concatSolver
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
