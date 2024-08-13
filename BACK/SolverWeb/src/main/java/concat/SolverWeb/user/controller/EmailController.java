@@ -27,9 +27,6 @@ public class EmailController {
     private static final int PASSWORD_LEN = 6;
     private final Random random = new SecureRandom();
 
-    private static final int PASSWORD_LEN = 6;
-    private final Random random = new SecureRandom();
-
     @GetMapping("/send-email")
     @ResponseBody
     public String sendEmail(@RequestParam String email) {
@@ -48,16 +45,9 @@ public class EmailController {
             user.setUserPw(tempPassword);
             emailService.updateUserPassword(user);
 
-            // 임시 비밀번호 생성
-            String tempPassword = generateTempPassword();
-
-            // 비밀번호 업데이트
-            member.setMemberPassword(tempPassword);
-            memberService.updateMemberPassword(member);
-
             String subject = "[SOLVER] 아이디/비밀번호 안내드립니다.";
             String text = user.getUserName() + " 님, 안녕하세요." + "\n"
-                    + "SOLVER에 요청하신 아이디와 비밀번호를 보내드립니다." + "\n"
+                    + "SOLVER에 요청하신 아이디와 임시 비밀번호를 보내드립니다." + "\n"
                     + "로그인 후 반드시 비밀번호를 변경해주세요." + "\n\n"
                     + "아이디: " + user.getUserId() + "\n"
                     + "비밀번호: " + tempPassword;
