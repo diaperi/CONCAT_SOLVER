@@ -1,6 +1,6 @@
 function goToLogin() {
     // login.html로 이동합니다.
-    window.location.href = 'login.html';
+    window.location.href = '/user/login';
 }
 
 // const emailInput = document.getElementById('email-input');

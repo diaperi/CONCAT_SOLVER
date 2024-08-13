@@ -19,32 +19,13 @@
     <div class="myPagePop_container2">
         <div class="myPagePop_main">
             <div class="myPagePop_list">
-                <div class="myPagePop_videoBox3">
-                    <img src="/seoyun/img/cha.png" alt="">
+                <div class="myPagePop_videoBox3" th:each="image : ${latestImages}">
+                    <a th:href="@{/myPage/myPageDetail(timestamp=${image.key.split('_')[2] + '_' + image.key.split('_')[3].substring(0, 6)})}">
+                        <img th:src="${image.url}" alt="Image">
+                    </a>
                     <div class="myPagePop_videoBox4">
-                        <span>영상길이: 00:33:06</span>
-                        <span>생성시간: 3034.04.36</span>
-                    </div>
-                </div>
-                <div class="myPagePop_videoBox3">
-                    <img src="/seoyun/img/cha.png" alt="">
-                    <div class="myPagePop_videoBox4">
-                        <span>영상길이: 00:33:06</span>
-                        <span>생성시간: 3034.04.36</span>
-                    </div>
-                </div>
-                <div class="myPagePop_videoBox3">
-                    <img src="/seoyun/img/cha.png" alt="">
-                    <div class="myPagePop_videoBox4">
-                        <span>영상길이: 00:33:06</span>
-                        <span>생성시간: 3034.04.36</span>
-                    </div>
-                </div>
-                <div class="myPagePop_videoBox3">
-                    <img src="/seoyun/img/cha.png" alt="">
-                    <div class="myPagePop_videoBox4">
-                        <span>영상길이: 00:33:06</span>
-                        <span>생성시간: 3034.04.36</span>
+                        <span>생성시간: <span th:text="${image.lastModifiedDate}"></span></span>
+                        <!--                        <span>파일크기: <span th:text="${image.formattedSize}"></span></span>-->
                     </div>
                 </div>
             </div>
@@ -90,8 +71,9 @@
 <div id="popup">
     <div class="popupBox">
         <div id="popup-date"></div>
-        <video controls>
-            <source src="video.mp4" type="video/mp4">
+        <video id="popup-video" width="320" height="240" controls>
+            <source id="popup-video-source" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
     </div>
     <div id="close-popup"><i class="fa-solid fa-xmark"></i></div>
@@ -99,6 +81,5 @@
 
 
 <script src="/seoyun/js/myPagePop.js"></script>
-
 </body>
 </html>
