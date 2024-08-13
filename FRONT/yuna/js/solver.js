@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Button navigation
     document.getElementById('solver_loginBtn').addEventListener('click', function() {
-        window.location.href = '../../yoonseo/login.html';
+        window.location.href = '/user/login';
     });
 
     document.getElementById('solver_registerBtn').addEventListener('click', function() {
-        window.location.href = '../../yoonseo/register.html';
+        window.location.href = '/user/register';
     });
 
     document.getElementById('solver_registerBtn2').addEventListener('click', function() {
-        window.location.href = '../../yoonseo/register.html';
+        window.location.href = '/user/register';
     });
 
     // Swiper initialization
