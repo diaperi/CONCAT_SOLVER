@@ -19,6 +19,9 @@ public class UserEntity {
     @Column(name = "USER_NO", columnDefinition = "INT")
     private Integer userNo; //사용자 번호
 
+    @Column(name = "USER_NAME", nullable = false, unique = true, length = 50)
+    private String userName; // 사용자 이름
+
     @Column(name = "USER_ID", nullable = false, unique = true, length = 50)
     private String userId; // 사용자 아이디
 
@@ -42,6 +45,7 @@ public class UserEntity {
 
     public static UserEntity toUserEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
+        userEntity.setUserName(userDTO.getUserName());
         userEntity.setUserId(userDTO.getUserId());
         userEntity.setUserPw(userDTO.getUserPw());
         userEntity.setUserEmail(userDTO.getUserEmail());
