@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -26,22 +26,22 @@
         </div>
         <div class="login_formBox">
             <div class="login_formBox2">
-                <form action="" class="login_form">
+                <form action="" th:action="@{/user/login}" method="post" class="login_form" id="login_form">
                     <div class="login-img"><img src="/yoonseo/img/SOLVER_login_body.png"></div>
                     <div class="login-input-idbox">
-                        <input type="text" id="userId" placeholder="아이디" required>
+                        <input type="text" id="userId"  name="userId" placeholder="아이디" required>
                     </div>
                     <div class="login-input-pwbox">
-                        <input type="password" id="userPw" placeholder="비밀번호" required>
+                        <input type="password" id="userPw" name="userPw" placeholder="비밀번호" required>
                     </div>
                     <div class="login-check">
                         <input type="checkbox"><span> 로그인 상태 유지</span>
                     </div>
-                    <button type="submit" id="login_btn">로그인</button>
+                    <button type="submit" id="login_btn" form="login_form">로그인</button>
                     <div class="login_register">
-                        <a href="find.html">아이디 찾기</a>
-                        |<a href="find.html"> 비밀번호 찾기</a>
-                        |<a href="register.html"> 회원가입</a>
+                        <a href="/user/find">아이디 찾기</a>
+                        |<a href="/user/find"> 비밀번호 찾기</a>
+                        |<a href="/user/sign"> 회원가입</a>
                     </div>
 
                     <div class="login_type">
@@ -65,9 +65,9 @@
         </div>
     </div>
 </div>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-        crossorigin="anonymous"></script>
+<!--<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"-->
+<!--        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"-->
+<!--        crossorigin="anonymous"></script>-->
 <script src="/yoonseo/js/login.js"></script>
 </body>
 
