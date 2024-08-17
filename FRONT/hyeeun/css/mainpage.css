@@ -65,12 +65,14 @@ body {
     /* font-size: 1.8vh; */
     cursor: pointer;
     margin-left: 3vh;
+    text-wrap: nowrap;
 }
 
 .myPageDetail_rightTop > span:nth-child(2) {
     /* font-size: 1.8vh; */
     cursor: pointer;
     margin-left: 2vh;
+    text-wrap: nowrap;
 }
 
 .myPageDetail_rightTop > span:nth-child(3) {
