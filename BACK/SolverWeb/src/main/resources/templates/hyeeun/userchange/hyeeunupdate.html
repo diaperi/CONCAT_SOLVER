@@ -13,17 +13,10 @@
 
 <div class="mypage_change_container">
     <div class="mypage_change_form-container">
-        <div class="mypage_change_header-container">
-            <div class="icons">
-                <img src="/hyeeun/img/notification_icon.png" alt="알림 아이콘" class="icon">
-                <img src="/hyeeun/img/profile_image.png" alt="프로필 사진" class="icon">
-            </div>
-        </div>
         <form th:object="${updateUser}" th:action="@{/change/update/detail}" method="post" id="updateForm">
             <div class="mypage_change_formBox">
                 <div class="mypage_change_title-container">
                     <h2>회원정보수정</h2>
-                    <img src="/hyeeun/img/profile_image.png" alt="프로필 사진" class="profile-large">
                 </div>
                 <input type="hidden" th:field="*{userNo}" name="userNo">
                 <div class="mypage_change_inputBox">
