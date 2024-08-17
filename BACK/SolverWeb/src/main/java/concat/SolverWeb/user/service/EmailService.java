@@ -1,5 +1,6 @@
 package concat.SolverWeb.user.service;
 
+import concat.SolverWeb.user.utils.PasswordUtil;
 import concat.SolverWeb.user.yoonseo.entity.UserEntity;
 import concat.SolverWeb.user.repository.EmailRepository;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
@@ -57,7 +58,8 @@ public class EmailService {
     public void updateUserPassword(UserDTO userDTO) {
         UserEntity user = emailRepository.findByUserEmail(userDTO.getUserEmail()).orElse(null);
         if (user != null) {
-            user.setUserPw(userDTO.getUserPw());
+            String hashedPassword = PasswordUtil.encrypt(userDTO.getUserPw());
+            user.setUserPw(hashedPassword);
             emailRepository.save(user);
         } else {
             logger.warn("Failed to update password: {}", userDTO.getUserEmail());
@@ -100,7 +102,6 @@ public class EmailService {
         userDTO.setUserEmail(user.getUserEmail());
         userDTO.setUserName(user.getUserName());
         userDTO.setUserId(user.getUserId());
-        userDTO.setUserPw(user.getUserPw());
         return userDTO;
     }
 }
