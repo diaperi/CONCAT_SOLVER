@@ -28,7 +28,7 @@ public class UserDTO {
         userDTO.setUserName(userEntity.getUserName());
         userDTO.setUserPhone(userEntity.getUserPhone());
         userDTO.setUserId(userEntity.getUserId());
-        userDTO.setUserPw(userEntity.getUserPw());
+        userDTO.setUserPw(userEntity.getUserPw()); // 암호화된 비밀번호를 가져옴
         userDTO.setUserEmail(userEntity.getUserEmail());
         userDTO.setIsVerified(userEntity.getIsVerified());
         userDTO.setEnrollDate(userEntity.getEnrollDate());

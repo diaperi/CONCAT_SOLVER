@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -97,21 +95,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    //아이디중복
-//    @PostMapping("/id-check")
-//    public @ResponseBody String idCheck(@RequestParam("userId") String userId){
-//        System.out.println("memberUserId = " + userId);
-//        String checkResult = userService.idCheck(userId);
-//        return checkResult;
-//    }
 
-//    @PostMapping("/save")
-//    public String register(@ModelAttribute UserDTO userDTO) {
-//        System.out.println("UserController.save");
-//        System.out.println("userDTO = " + userDTO);
-//        userService.save(userDTO);
-//        return "/user/login";
-//    }
 @PostMapping("/id-check")
 public ResponseEntity<String> checkUserId(@RequestParam("id") String userId) {
     boolean isDuplicate = userService.isUserIdDuplicate(userId);
