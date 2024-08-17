@@ -26,7 +26,7 @@
                 <div class="register-line"></div>
                 <div class="register-2"><img src="/yoonseo/img/number2.png"></div>
             </div>
-            <form th:action="@{/user/register}" method="post" class="register_form">
+            <form th:action="@{/user/register}" onsubmit="return checkInputs();" method="post" class="register_form">
                 <div class="user-info">
                     <div class="user-info-name">
                         이름
@@ -45,7 +45,7 @@
                     </div>
                     <div class="user-info-pw-check">
                         비밀번호
-                        <input type="password" id="pwCheckInput"/>
+                        <input type="password" name="password" id="pwCheckInput"/>
                     </div>
                     <div class="user-info-email">
                         이메일
@@ -53,7 +53,7 @@
                         <p>이메일로 전송된 인증 확인 버튼을 클릭해야 가입이 완료됩니다.</p>
                     </div>
                     <div class="btn">
-                        <button  type="submit" id="registerup" onclick="checkInputs()">가입</button>
+                        <button  type="submit" id="registerup">가입</button>
                     </div>
                 </div>
             </form>
