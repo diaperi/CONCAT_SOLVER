@@ -11,21 +11,12 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-//이것도 잠깐 주석처리
+//
 //@RequiredArgsConstructor
 public class UserService {
     //이게 맞는건데 주석처리
 //    private final UserRepository userRepository;
 
-
-
-//    public void save(UserDTO userDTO) {
-//        // 1. dto -> entity 변환
-//        // 2. repository의 register 메서드 호출
-//        UserEntity userEntity = UserEntity.toUserEntity(userDTO);
-//        userRepository.save(userEntity);
-//        // repository의 register메서드 호출 (조건. entity 객체를 넘겨줘야 함)
-//    }
 
     public UserDTO login(UserDTO userDTO) {
     /*
@@ -59,17 +50,7 @@ public class UserService {
         // Entity 저장
         userRepository.save(userEntity);
     }
-     // onblur 아이디 중복체크
-//     public String idCheck(String userId) {
-//         Optional<UserEntity> byUserId = userRepository. findByUserId(userId);
-//         if(byUserId.isPresent()){
-//             // 조회결과가 있다 -> 사용할 수 없다.
-//             return null;
-//         }else{
-//             // 조회결과가 없다 -> 사용할 수 있다.
-//             return "ok";
-//         }
-//     }
+
      @Autowired
      private UserRepository userRepository;
 
