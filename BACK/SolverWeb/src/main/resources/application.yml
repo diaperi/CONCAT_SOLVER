@@ -38,6 +38,12 @@ spring:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
 
+email:
+  from:
+    address: concatsolver@naver.com
+    name: CONCAT
+
+
 # AWS S3 설정 *********서윤 추가 *********
 cloud:
   aws:
