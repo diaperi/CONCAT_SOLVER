@@ -2,36 +2,26 @@
     margin: 0;
     padding: 0;
     flex-wrap: nowrap;
-    /* text-wrap: nowrap; */
     font-family: Arial, sans-serif;
 }
 
-body{
-     height: 100vh;
-        background: linear-gradient(137.29deg,
-            #03BED6 20.13%,
-            #10B3DA 33.05%,
-            #1DA4E1 45.02%,
-            #249CE5 58.56%,
-            #2D8EED 72.11%,
-            #3084F4 83.13%);   
+body {
+    height: 100vh;
+    background: linear-gradient(137.29deg,
+        #03BED6 20.13%,
+        #10B3DA 33.05%,
+        #1DA4E1 45.02%,
+        #249CE5 58.56%,
+        #2D8EED 72.11%,
+        #3084F4 83.13%);
 }
 
 .myPageDetail_container {
-    /* background: linear-gradient(137.29deg,
-            #03BED6 20.13%,
-            #10B3DA 33.05%,
-            #1DA4E1 45.02%,
-            #249CE5 58.56%,
-            #2D8EED 72.11%,
-            #3084F4 83.13%);     */
     display: flex;
     justify-content: center;
-    /* height: 100vh; */
 }
 
 .myPageDetail_container2 {
-    /* background-color: rgb(78, 95, 109); */
     margin-top: 4vh;
     width: 90%;
     height: 80vh;
@@ -39,13 +29,12 @@ body{
 
 /* *************************************************** */
 .myPageDetail_main {
-    /* background-color: yellowgreen; */
     height: 100%;
     display: flex;
+    position: relative;
 }
 
 .myPageDetail_videoBox {
-    /* background-color: pink; */
     width: 70%;
 }
 
@@ -57,7 +46,7 @@ body{
 /* ********************************************** */
 .myPageDetail_rightBox {
     width: 30%;
-    /* background-color: tomato; */
+    position: relative;
 }
 
 .myPageDetail_rightTop {
@@ -72,7 +61,21 @@ body{
     padding-right: 2vh;
 }
 
+.myPageDetail_rightTop > span:nth-child(1) {
+    /* font-size: 1.8vh; */
+    cursor: pointer;
+    margin-left: 3vh;
+    text-wrap: nowrap;
+}
+
 .myPageDetail_rightTop > span:nth-child(2) {
+    /* font-size: 1.8vh; */
+    cursor: pointer;
+    margin-left: 2vh;
+    text-wrap: nowrap;
+}
+
+.myPageDetail_rightTop > span:nth-child(3) {
     font-size: 2vh;
     cursor: pointer;
 }
@@ -87,13 +90,36 @@ body{
     padding-right: 2vh;
     color: rgb(223, 223, 223);
     padding-bottom: 6vh;
+    display: block; /* 첫 번째 화면은 기본적으로 보임 */
 }
+
+.myPageDetail_rightMain.hidden {
+    display: none; /* 숨김 처리 */
+}
+
+.myPageDetail_rightTop > span {
+    font-size: 1.8vh;
+    cursor: pointer;
+    margin-left: 3vh;
+    color: white; /* 기본 색상 */
+}
+
+.myPageDetail_rightTop > span.active {
+    color: #3084F4; /* 클릭된 상태에서 파란색 */
+}
+
+
 
 .myPageDetail_rightMain::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+    display: none;
 }
 
-/* ************************************* */
+.myPageDetail_rightBox {
+    position: relative;
+    overflow: hidden;
+}
+
+/* *************************** */
 .fullscreen-video {
     position: relative;
     width: 100%;
@@ -119,27 +145,9 @@ body{
     font-size: 2.4vh;
     color: #fff;
     cursor: pointer;
-    display: none; /* Initially hidden */
+    display: none;
 }
 
 .hidden {
     display: none;
 }
-
-
-/* *************************** */
-/* .myPageDetail_trashBtn{
-    background-color: rgba(0, 0, 0, 0.74);
-    display: flex;
-    justify-content: flex-end;
-    position: fixed;
-    width: 27%;
-    height: 6vh;
-    align-items: center;
-}
-
-.myPageDetail_trashBtn > img{
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-} */
