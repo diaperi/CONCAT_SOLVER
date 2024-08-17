@@ -19,7 +19,7 @@ public class UserEntity {
     @Column(name = "USER_NO", columnDefinition = "INT")
     private Integer userNo; //사용자 번호
 
-    @Column(name = "USER_NAME", nullable = false, unique = true, length = 50)
+    @Column(name = "USER_NAME", nullable = false, length = 50)
     private String userName; // 사용자 이름
 
     @Column(name = "USER_PHONE") // 폰
