@@ -7,13 +7,24 @@
     <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
 </head>
 <body>
-<div class="header_navbar" th:fragment="header">
-    <img src="/hyeeun/img/solver_logo.png">
-    <div class="header_menu">
-        <a href="#realtime">실시간 화면</a>
-        <a href="#mypage">마이페이지</a>
-        <a href="#logout">로그아웃</a>
+<div th:fragment="header">
+    <div class="header_navbar">
+            <img src="/hyeeun/img/solver_logo.png" alt="로고">
+        <div class="header_menu">
+            <a href="/main/mainPage">실시간 화면</a>
+            <div class="dropdown">
+                <span id="mypage-btn"><a href="/myPage/myPageMain">마이페이지</a> </span>
+                <div class="dropdown-content" id="mypage-dropdown">
+                    <a href="/myPage/myPagePop">저장된 영상</a>
+                    <a href="/change/update">회원정보수정</a>
+                    <a href="/yuna/html/trash.html">휴지통</a>
+                    <a href="/yuna/html/cs.html">고객센터</a>
+                </div>
+            </div>
+            <a href="/user/login">로그아웃</a>
+        </div>
     </div>
 </div>
+<script src="/hyeeun/js/header.js"></script>
 </body>
 </html>

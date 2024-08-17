@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     // 추가적인 메서드 정의도 가능
     Optional<UserEntity> findByUserId(String userId);
 
+    Optional<UserEntity> findByUserEmail(String userEmail);
+
 }
