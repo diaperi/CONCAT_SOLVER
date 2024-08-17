@@ -58,6 +58,7 @@ public class UserController {
         if(loginResult != null){
             // login 성공시 mainpage로 이동
             session.setAttribute("loggedInUser", loginResult);
+            session.setAttribute("userEmail", loginResult.getUserEmail()); // 이메일도 세션에 저장
             return "hyeeun/mainpage"; //mainpage로 이동.
         }else{
             // login 실패시 똑같이 login페이지

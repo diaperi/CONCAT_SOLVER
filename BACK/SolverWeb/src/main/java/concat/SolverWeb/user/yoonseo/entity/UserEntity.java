@@ -22,6 +22,10 @@ public class UserEntity {
     @Column(name = "USER_NAME", nullable = false, unique = true, length = 50)
     private String userName; // 사용자 이름
 
+    @Column(name = "USER_PHONE") // 폰
+    private String userPhone;
+
+
     @Column(name = "USER_ID", nullable = false, unique = true, length = 50)
     private String userId; // 사용자 아이디
 
@@ -45,7 +49,9 @@ public class UserEntity {
 
     public static UserEntity toUserEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
+        userEntity.setUserNo(userDTO.getUserNo()); // 필요에 따라 설정
         userEntity.setUserName(userDTO.getUserName());
+        userEntity.setUserPhone(userDTO.getUserPhone()); // 폰
         userEntity.setUserId(userDTO.getUserId());
         userEntity.setUserPw(userDTO.getUserPw());
         userEntity.setUserEmail(userDTO.getUserEmail());
