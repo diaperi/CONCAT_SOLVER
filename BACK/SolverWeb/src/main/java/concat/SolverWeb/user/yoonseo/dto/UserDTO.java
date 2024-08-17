@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class UserDTO {
     private Integer userNo;  // 사용자 번호
     private String userName; // 사용자 이름
+    private String userPhone; // 폰
     private String userId;    // 사용자 아이디
     private String userPw;    // 사용자 비밀번호
     private String userEmail; // 사용자 이메일
@@ -25,6 +26,7 @@ public class UserDTO {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserNo(userEntity.getUserNo());
         userDTO.setUserName(userEntity.getUserName());
+        userDTO.setUserPhone(userEntity.getUserPhone());
         userDTO.setUserId(userEntity.getUserId());
         userDTO.setUserPw(userEntity.getUserPw());
         userDTO.setUserEmail(userEntity.getUserEmail());
