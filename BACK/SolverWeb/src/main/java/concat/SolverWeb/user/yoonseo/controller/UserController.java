@@ -29,12 +29,13 @@ public class UserController {
 
     @PostMapping("/register")
     public ModelAndView register(
-            @RequestParam("name") String name,
+            @RequestParam("name") String UserName,
             @RequestParam("id") String userId,
             @RequestParam("password") String userPw,
             @RequestParam("email") String userEmail) {
 
         UserEntity newUser = new UserEntity();
+        newUser.setUserName(UserName);
         newUser.setUserId(userId);
         newUser.setUserPw(userPw); // 비밀번호 암호화 없이 평문 저장
         newUser.setUserEmail(userEmail);
