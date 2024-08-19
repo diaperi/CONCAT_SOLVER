@@ -1,7 +1,6 @@
-package concat.SolverWeb.user.controller;
+package concat.SolverWeb.user.email.controller;
 
-import concat.SolverWeb.user.service.EmailService;
-import concat.SolverWeb.user.service.MessageService;
+import concat.SolverWeb.user.email.service.FindEmailService;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.UnsupportedEncodingException;
 
 @Controller
-public class EmailController {
+public class FindEmailController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FindEmailController.class);
 
     @Autowired
-    private EmailService emailService;
+    private FindEmailService findEmailService;
 
     @GetMapping("/send-email")
     @ResponseBody
@@ -28,13 +27,13 @@ public class EmailController {
 
         // 이메일 주소로 데이터베이스에서 사용자 조회
         try {
-            UserDTO user = emailService.getUserByEmail(email);
+            UserDTO user = findEmailService.getUserByEmail(email);
 
             if (user != null) {
                 logger.info("User found: {}", user.getUserEmail());
 
                 // 비밀번호 재설정 이메일 전송
-                emailService.sendPasswordResetEmail(user);
+                findEmailService.sendPasswordResetEmail(user);
                 return "Email sent to: " + user.getUserEmail();
             } else {
                 logger.warn("User not found: {}", email);
