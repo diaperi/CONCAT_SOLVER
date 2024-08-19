@@ -1,8 +1,8 @@
-package concat.SolverWeb.user.service;
+package concat.SolverWeb.user.email.service;
 
 import concat.SolverWeb.user.utils.PasswordUtil;
 import concat.SolverWeb.user.yoonseo.entity.UserEntity;
-import concat.SolverWeb.user.repository.EmailRepository;
+import concat.SolverWeb.user.email.repository.FindEmailRepository;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
@@ -15,22 +15,22 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 @Service
-public class EmailService {
+public class FindEmailService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
-
-    @Autowired
-    private EmailRepository emailRepository;
+    private static final Logger logger = LoggerFactory.getLogger(FindEmailService.class);
 
     @Autowired
-    private MessageService messageService;
+    private FindEmailRepository findEmailRepository;
+
+    @Autowired
+    private FindMessageService findMessageService;
 
     private static final int PASSWORD_LEN = 6;
     private final Random random = new SecureRandom();
 
     // 이메일로 사용자 정보 조회
     public UserDTO getUserByEmail(String userEmail) {
-        UserEntity user = emailRepository.findByUserEmail(userEmail).orElse(null);
+        UserEntity user = findEmailRepository.findByUserEmail(userEmail).orElse(null);
         if (user != null) {
             return convertToDTO(user);
         }
@@ -56,11 +56,11 @@ public class EmailService {
 
     // 임시 비밀번호 업데이트
     public void updateUserPassword(UserDTO userDTO) {
-        UserEntity user = emailRepository.findByUserEmail(userDTO.getUserEmail()).orElse(null);
+        UserEntity user = findEmailRepository.findByUserEmail(userDTO.getUserEmail()).orElse(null);
         if (user != null) {
             String hashedPassword = PasswordUtil.encrypt(userDTO.getUserPw());
             user.setUserPw(hashedPassword);
-            emailRepository.save(user);
+            findEmailRepository.save(user);
         } else {
             logger.warn("Failed to update password: {}", userDTO.getUserEmail());
         }
@@ -80,7 +80,7 @@ public class EmailService {
     private void sendResetEmail(UserDTO user, String tempPassword) throws MessagingException, UnsupportedEncodingException {
         String subject = createEmailSubject();
         String text = createEmailText(user, tempPassword);
-        messageService.sendSimpleMessage(user.getUserEmail(), subject, text);
+        findMessageService.sendSimpleMessage(user.getUserEmail(), subject, text);
     }
 
     // 이메일 제목
