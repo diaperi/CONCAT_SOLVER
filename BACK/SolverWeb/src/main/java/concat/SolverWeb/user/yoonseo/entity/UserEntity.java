@@ -25,7 +25,6 @@ public class UserEntity {
     @Column(name = "USER_PHONE") // 폰
     private String userPhone;
 
-
     @Column(name = "USER_ID", nullable = false, unique = true, length = 50)
     private String userId; // 사용자 아이디
 

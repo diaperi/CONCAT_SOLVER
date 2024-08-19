@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Info</title>
+</head>
+<body>
+<h1>User Information</h1>
+<p>Email: <span th:text="${user.email}"></span></p>
+<p>Name: <span th:text="${user.name}"></span></p>
+<p>Provider: <span th:text="${user.provider}"></span></p>
+<p>Provider ID: <span th:text="${user.providerId}"></span></p>
+</body>
+</html>
+
