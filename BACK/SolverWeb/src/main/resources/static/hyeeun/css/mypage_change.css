@@ -76,15 +76,6 @@ html, body {
     border-radius: 50%;
 }
 
-/* .profile-large {
-    width: 9vh;
-    height: 9vh;
-    border-radius: 50%;
-    padding: 0 44vh; /* 왼쪽과 오른쪽에 공백 추가 */
-
-
-
-
 /* ******************************************************************** */
 
 .mypage_change_form-container label {
@@ -276,3 +267,12 @@ html, body {
     transition: background-color 0.3s ease;
     width: 100%;
 }
+
+/*로그아웃 회원정보수정에*/
+.logout-link {
+    color: #8FD4FB; /* 원하는 색상으로 변경 */
+    text-decoration: none;
+    font-size: 1.6vh;
+    padding: 0 50vh;
+}
+
