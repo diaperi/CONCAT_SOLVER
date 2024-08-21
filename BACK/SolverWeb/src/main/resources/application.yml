@@ -7,11 +7,16 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_solver?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    #    username: user_solver
-    #    password: solver
+    # AWS RDS URL
+    url: jdbc:mysql://solver-db.clc60kwem0qc.ap-northeast-2.rds.amazonaws.com:3306/SOLVER-DB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    # AWS RDS NAME, PW (유출되면 안됨)
     username: root
-    password: root
+    password: solver1234
+  #    url: jdbc:mysql://localhost:3306/db_solver?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+  #    username: user_solver
+  #    password: solver
+  #    username: root
+  #    password: root
   thymeleaf:
     cache: false
 
@@ -21,7 +26,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   security:
     user:
