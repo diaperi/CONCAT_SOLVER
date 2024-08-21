@@ -13,12 +13,12 @@ a {
 body {
     height: 100vh;
     background: linear-gradient(137.29deg,
-            #03BED6 20.13%,
-            #10B3DA 33.05%,
-            #1DA4E1 45.02%,
-            #249CE5 58.56%,
-            #2D8EED 72.11%,
-            #3084F4 83.13%);
+    #03BED6 20.13%,
+    #10B3DA 33.05%,
+    #1DA4E1 45.02%,
+    #249CE5 58.56%,
+    #2D8EED 72.11%,
+    #3084F4 83.13%);
 
 }
 .register-header-img {
@@ -109,7 +109,7 @@ p {
 }
 
 .btn > button:hover{
-    background-color: #2d46c2;    
+    background-color: #2d46c2;
     transition: ease-in 0.2s
 }
 
@@ -209,4 +209,23 @@ p {
 .validation-message {
     display: inline;
     margin-top: -1.3vh; /* -13px -> -1.3vh */
+}
+
+.user-info-email input {
+    width: 45vh;
+}
+
+.email-container button {
+    font-size: 1.6vh;
+    padding: 1vh 1.6vh;
+    background-color: #4461F2;
+    color: white;
+    border: 1px solid #4461F2;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.email-container button:hover {
+    background-color: #2d46c2;
+    transition: ease-in 0.2s;
 }
