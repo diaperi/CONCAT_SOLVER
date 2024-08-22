@@ -1,8 +1,8 @@
 # 서버 포트 설정
 server:
-  #  port: 8098
+  port: 8098
   #  배포용 포트
-  port: 80
+#  port: 80
 
 # database 연동 설정
 #hyeeun
@@ -55,14 +55,14 @@ email:
 cloud:
   aws:
     credentials:
-      accessKey: AKIAVRUVSZXBMY5MFLM5
-      secretKey: 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
+      accessKey: AKIAVRUVSZXBHUUJZIOJ
+      secretKey: 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
     region:
-      static: ap-southeast-2
+      static: ap-northeast-2
     stack:
       auto: false
     s3:
-      bucket: diaperiwinklebucket
+      bucket: diaperiwinklebucket2
 
 #SNS 로그인
 oauth2:
