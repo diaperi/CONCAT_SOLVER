@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let today = new Date();
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
-    let currentDate = today.getDate(); // Get current date
+    let currentDate = today.getDate();
 
     const monthYear = document.getElementById("month-year");
     const calendarBody = document.querySelector("#calendar-body tbody");
@@ -40,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     cell.textContent = "";
                 } else {
                     cell.textContent = date;
-                    cell.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`; // 날짜 데이터 설정
+                    cell.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
                     if (j === 0) {
                         cell.classList.add("sunday");
                     }
                     if (date === currentDate && month === today.getMonth() && year === today.getFullYear()) {
-                        cell.classList.add("today"); // Highlight today's date
+                        cell.classList.add("today");
                     }
-                    // Capture the current values of date, month, and year
+
                     const capturedDate = date;
                     const capturedMonth = month;
                     const capturedYear = year;
@@ -62,93 +62,59 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    const loggedInUserId = document.getElementById('loggedInUserId').value; // 숨겨진 input 요소에서 유저 ID 가져오기
 
-    // function openPopup(day, month, year) {
-    //     // 날짜를 올바르게 표시
-    //     const dateStr = `${year}.${String(month + 1).padStart(2, '0')}.${String(day).padStart(2, '0')}`;
-    //     popupDate.innerText = `${month + 1}월 ${day}일`;
-    //
-    //     // ************** 동영상 팝업 표시 **************
-    //     fetch(`/myPage/getVideoByDate?date=${dateStr}`)
-    //         .then(response => {
-    //             console.log(`Response status: ${response.status}`);
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! Status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(video => {
-    //             console.log('Video data:', video);
-    //             if (video && video.url) {
-    //                 const popupVideoSource = document.getElementById('popup-video-source');
-    //                 const popupVideo = document.getElementById('popup-video');
-    //                 console.log('Setting video URL:', video.url);  // 콘솔 로그 추가
-    //                 popupVideoSource.src = video.url;
-    //                 popupVideo.load(); // Load the new video source
-    //                 overlay.style.display = 'block';
-    //                 popup.style.display = 'block';
-    //             } else {
-    //                 alert("해당 날짜에 대한 동영상을 찾을 수 없습니다.");
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //             alert("해당 날짜에 대한 동영상을 찾을 수 없습니다.");
-    //         });
-    //
-    //     // 팝업 표시
-    //     overlay.style.display = 'block';
-    //     popup.style.display = 'block';
-    // }
     function openPopup(day, month, year) {
-        // 날짜를 올바르게 표시
-        const dateStr = `${year}.${String(month + 1).padStart(2, '0')}.${String(day).padStart(2, '0')}`;
+        // 날짜를 yyyyMMdd 형식으로 변환
+        const dateStr = `${year}${String(month + 1).padStart(2, '0')}${String(day).padStart(2, '0')}`;
         popupDate.innerText = `${month + 1}월 ${day}일`;
 
-        // ************** 동영상 팝업 표시 **************
-        fetch(`/myPage/getVideoByDate?date=${dateStr}`)
+        const encodedDate = encodeURIComponent(dateStr);
+        const encodedUserId = encodeURIComponent(loggedInUserId);
+        const requestUrl = `/myPage/getVideoByDate?date=${encodedDate}&userId=${encodedUserId}`;
+
+        fetch(requestUrl)
             .then(response => {
-                console.log(`Response status: ${response.status}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(video => {
-                console.log('Video data:', video);
                 if (video && video.url) {
                     const popupVideoSource = document.getElementById('popup-video-source');
                     const popupVideo = document.getElementById('popup-video');
-                    const popupDate = document.getElementById('popup-date');
 
-                    console.log('Setting video URL:', video.url);  // 콘솔 로그 추가
                     popupVideoSource.src = video.url;
-                    popupVideo.load(); // Load the new video source
+                    popupVideo.load();
 
-                    // Extract timestamp from video URL
-                    const timestamp = video.url.match(/negative_emotion_(\d{8}_\d{6})_converted\.mp4/)[1];
-                    const detailUrl = `/myPage/myPageDetail?timestamp=${timestamp}`;
+                    // 타임스탬프를 추출해 디테일 페이지 링크 생성
+                    const match = video.url.match(/negative_emotion_(\d{8}_\d{6})_converted\.mp4/);
+                    if (match && match[1]) {
+                        const timestamp = match[1];
+                        const detailUrl = `/myPage/myPageDetail?timestamp=${timestamp}`;
 
-                    // Wrap popupDate in an anchor tag with desired styles
-                    const link = document.createElement('a');
-                    link.href = detailUrl;
-                    link.innerText = popupDate.innerText;
-                    link.style.textDecoration = 'none';
-                    link.style.color = 'white';
-                    link.style.cursor = 'pointer';
-                    link.style.transition = 'color 0.5s ease';
-                    link.onmouseover = function () {
-                        link.style.color = '#3084F4';
-                    };
-                    link.onmouseout = function () {
+                        const link = document.createElement('a');
+                        link.href = detailUrl;
+                        link.innerText = popupDate.innerText;
+                        link.style.textDecoration = 'none';
                         link.style.color = 'white';
-                    };
+                        link.style.cursor = 'pointer';
+                        link.onmouseover = function () {
+                            link.style.color = '#3084F4';
+                        };
+                        link.onmouseout = function () {
+                            link.style.color = 'white';
+                        };
 
-                    popupDate.innerHTML = '';
-                    popupDate.appendChild(link);
+                        popupDate.innerHTML = '';
+                        popupDate.appendChild(link);
 
-                    overlay.style.display = 'block';
-                    popup.style.display = 'block';
+                        overlay.style.display = 'block';
+                        popup.style.display = 'block';
+                    } else {
+                        alert("영상 URL에서 타임스탬프를 추출할 수 없습니다.");
+                    }
                 } else {
                     alert("해당 날짜에 대한 동영상을 찾을 수 없습니다.");
                 }
@@ -159,11 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-
     function closePopup() {
         overlay.style.display = 'none';
         popup.style.display = 'none';
-        popupVideo.pause(); // Pause the video when closing the popup
+        popupVideo.pause();
     }
 
     prevButton.addEventListener('click', function () {
