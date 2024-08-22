@@ -21,6 +21,10 @@ spring:
   #    password: root
   thymeleaf:
     cache: false
+  logging:
+    level:
+      root: INFO
+      concat.SolverWeb: INFO
 
   # spring data jpa 설정
   jpa:

@@ -1,5 +1,6 @@
 package concat.SolverWeb.user.yoonseo.controller;
 
+import concat.SolverWeb.main.controller.MainController;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import concat.SolverWeb.user.yoonseo.service.UserService;
@@ -12,9 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
     private final UserRepository userRepository;
@@ -50,12 +55,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO, HttpSession session){
+    public String login(@ModelAttribute UserDTO userDTO, HttpSession session) {
         UserDTO loginResult = userService.login(userDTO);
-        if(loginResult != null){
+        if (loginResult != null) {
             session.setAttribute("loggedInUser", loginResult);
             session.setAttribute("userEmail", loginResult.getUserEmail());
-            return "hyeeun/mainpage";
+
+            // 로그인 성공 시 로그 추가
+            Logger logger = LoggerFactory.getLogger(UserController.class);
+            logger.info("로그인 성공 - 세션에 사용자 정보 저장됨: {}", loginResult);
+
+            // 로그인 성공 시 메인 페이지로 리다이렉트
+            return "redirect:/main/mainPage";
         } else {
             return "yoonseo/login";
         }
@@ -82,7 +93,7 @@ public class UserController {
     }
 
     @GetMapping("/check-session")
-    public String checkSession(HttpSession session){
+    public String checkSession(HttpSession session) {
         UserDTO loggedInUser = (UserDTO) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             System.out.println("세션에 저장된 사용자 정보: " + loggedInUser);
