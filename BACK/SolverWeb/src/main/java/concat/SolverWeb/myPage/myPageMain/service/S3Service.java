@@ -44,7 +44,7 @@ public class S3Service {
         this.s3Client = S3Client.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                .endpointOverride(URI.create("https://s3.ap-southeast-2.amazonaws.com"))
+                .endpointOverride(URI.create("https://s3.ap-northeast-2.amazonaws.com"))
                 .build();
     }
 
