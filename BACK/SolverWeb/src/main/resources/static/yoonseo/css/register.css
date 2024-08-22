@@ -211,21 +211,21 @@ p {
     margin-top: -1.3vh; /* -13px -> -1.3vh */
 }
 
-.user-info-email input {
-    width: 45vh;
-}
+/*.user-info-email input {*/
+/*    width: 45vh;*/
+/*}*/
 
-.email-container button {
-    font-size: 1.6vh;
-    padding: 1vh 1.6vh;
-    background-color: #4461F2;
-    color: white;
-    border: 1px solid #4461F2;
-    border-radius: 8px;
-    cursor: pointer;
-}
+/*.email-container button {*/
+/*    font-size: 1.6vh;*/
+/*    padding: 1vh 1.6vh;*/
+/*    background-color: #4461F2;*/
+/*    color: white;*/
+/*    border: 1px solid #4461F2;*/
+/*    border-radius: 8px;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.email-container button:hover {
-    background-color: #2d46c2;
-    transition: ease-in 0.2s;
-}
+/*.email-container button:hover {*/
+/*    background-color: #2d46c2;*/
+/*    transition: ease-in 0.2s;*/
+/*}*/
