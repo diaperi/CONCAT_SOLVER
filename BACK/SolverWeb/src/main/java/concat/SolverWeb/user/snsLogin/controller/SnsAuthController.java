@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import concat.SolverWeb.user.snsLogin.dto.SnsUserDTO;
 import concat.SolverWeb.user.snsLogin.service.SnsUserService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -14,17 +15,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/snslogin")
 public class SnsAuthController {
 
     @Autowired
     private SnsUserService snsUserService;
+
+    @Autowired
+    private HttpSession session;  // HttpSession 주입
+
+    private static final Logger logger = LoggerFactory.getLogger(SnsAuthController.class);
+
 
     @Value("${oauth2.client.registration.google.client-id}")
     private String googleClientId;
@@ -61,6 +70,9 @@ public class SnsAuthController {
     private final String KAKAO_AUTHORIZATION_URL = "https://kauth.kakao.com/oauth/authorize";
     private final String NAVER_AUTHORIZATION_URL = "https://nid.naver.com/oauth2.0/authorize";
 
+    private final String GOOGLE_LOGOUT_URL = "https://accounts.google.com/o/oauth2/revoke?token=";
+    private final String KAKAO_LOGOUT_URL = "https://kapi.kakao.com/v1/user/logout";
+    private final String NAVER_LOGOUT_URL = "https://nid.naver.com/oauth2.0/token";
     @GetMapping("/oauth2/authorization/google")
     public String googleLogin() {
         return "redirect:" + GOOGLE_AUTHORIZATION_URL + "?client_id=" + googleClientId +
@@ -102,16 +114,29 @@ public class SnsAuthController {
 
             snsUserService.saveOrUpdateUser(snsUserDTO);
 
-            // 세션에 사용자 정보 저장
+            // 세션에 사용자 정보와 로그인 유형 저장
             session.setAttribute("user", snsUserDTO);
+            session.setAttribute("loginType", "SNS");
 
-            // 메인 페이지로 리다이렉트
-            return "hyeeun/mainpage"; // 메인 페이지 경로
+            return "redirect:/snslogin/main";  // 메인 페이지로 리디렉션
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/error"; // 오류 페이지 경로
+            return "redirect:/error";
         }
     }
+
+
+    @GetMapping("/main")
+    public String mainPage(HttpSession session, Model model) {
+        SnsUserDTO snsUser = (SnsUserDTO) session.getAttribute("user");
+        if (snsUser == null) {
+            return "redirect:/user/login";
+        }
+
+        model.addAttribute("user", snsUser);
+        return "hyeeun/mainpage"; // 메인 페이지
+    }
+
 
     private String getAccessToken(String provider, String code) {
         String tokenUrl;
@@ -250,8 +275,102 @@ public class SnsAuthController {
                 throw new IllegalArgumentException("Unsupported provider: " + provider);
         }
     }
-}
 
+    @GetMapping("/sns-update")
+    public String updateSnsUserDetail(HttpSession session, Model model) {
+        // 세션에서 사용자 정보와 로그인 유형을 가져옵니다.
+        SnsUserDTO snsUser = (SnsUserDTO) session.getAttribute("user");
+        String loginType = (String) session.getAttribute("loginType");
+
+        // 사용자가 로그인되지 않은 경우 로그인 페이지로 리디렉션
+        if (snsUser == null) {
+            return "redirect:/user/login";
+        }
+
+        // 로그인 유형에 따라 다른 업데이트 페이지로 리디렉션
+        if ("SNS".equals(loginType)) {
+            model.addAttribute("user", snsUser);
+            return "hyeeun/snslogin/hyeeunsnsupdate"; // SNS 사용자 업데이트 폼
+        } else if ("GENERAL".equals(loginType)) {
+            model.addAttribute("updateUser");
+            return "hyeeun/userchange/hyeeunupdate"; // 일반 사용자 업데이트 폼
+        }
+
+        // 로그인 유형이 정의되지 않은 경우 로그인 페이지로 리디렉션
+        return "redirect:/user/login";
+    }
+
+    @PostMapping("/delete/{providerId}")
+    public ResponseEntity<String> deleteUserByProviderId(@PathVariable String providerId, HttpSession session) {
+        try {
+            if (providerId == null || providerId.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Invalid provider ID");
+            }
+
+            // 서비스 호출 시 providerId를 전달
+            snsUserService.deleteUserByProviderId(providerId);
+
+            // 세션 무효화
+            session.invalidate();
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            e.printStackTrace(); // 에러 로그
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        String accessToken = (String) session.getAttribute("accessToken");
+        String provider = (String) session.getAttribute("loginType");
+
+        if (accessToken != null && provider != null) {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken);
+
+            try {
+                if ("google".equals(provider)) {
+                    ResponseEntity<String> response = restTemplate.postForEntity(GOOGLE_LOGOUT_URL + accessToken, null, String.class);
+                    if (!response.getStatusCode().is2xxSuccessful()) {
+                        throw new RuntimeException("Google logout failed. HTTP Status: " + response.getStatusCode());
+                    }
+                } else if ("kakao".equals(provider)) {
+                    HttpEntity<String> request = new HttpEntity<>(headers);
+                    ResponseEntity<String> response = restTemplate.exchange(KAKAO_LOGOUT_URL, HttpMethod.POST, request, String.class);
+                    if (!response.getStatusCode().is2xxSuccessful()) {
+                        throw new RuntimeException("Kakao logout failed. HTTP Status: " + response.getStatusCode());
+                    }
+                } else if ("naver".equals(provider)) {
+                    String naverLogoutUrl = NAVER_LOGOUT_URL + "?grant_type=delete&client_id=" + naverClientId + "&client_secret=" + naverClientSecret + "&access_token=" + accessToken + "&service_provider=NAVER";
+                    ResponseEntity<String> response = restTemplate.postForEntity(naverLogoutUrl, null, String.class);
+                    if (!response.getStatusCode().is2xxSuccessful()) {
+                        throw new RuntimeException("Naver logout failed. HTTP Status: " + response.getStatusCode());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (session != null) {
+            System.out.println("세션 무효화 시도 중...");
+            session.invalidate();
+            System.out.println("세션이 무효화되었습니다.");
+        } else {
+            System.out.println("세션이 null입니다.");
+        }
+
+        try {
+            session.getAttribute("loginType");
+        } catch (IllegalStateException e) {
+            System.out.println("세션이 성공적으로 무효화되었습니다.");
+        }
+
+
+        return "redirect:/user/login"; // 로그아웃 후 로그인 페이지로 리디렉션
+    }
+}
 
 
 

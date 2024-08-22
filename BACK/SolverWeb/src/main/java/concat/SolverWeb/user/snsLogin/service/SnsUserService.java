@@ -30,4 +30,14 @@ public class SnsUserService {
             return snsUserRepository.save(newUser);
         }
     }
+
+    public void deleteUserByProviderId(String providerId) {
+        SnsUser user = snsUserRepository.findByProviderId(providerId);
+        if (user != null) {
+            snsUserRepository.delete(user);
+        } else {
+            throw new IllegalArgumentException("User not found with provider ID: " + providerId);
+        }
+    }
 }
+
