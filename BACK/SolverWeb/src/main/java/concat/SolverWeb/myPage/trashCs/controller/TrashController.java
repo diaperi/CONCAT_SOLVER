@@ -15,8 +15,12 @@ public class TrashController {
 
     private static final Logger logger = LoggerFactory.getLogger(TrashController.class);
 
+    private final TrashService trashService;
+
     @Autowired
-    private TrashService trashService;
+    public TrashController(TrashService trashService) {
+        this.trashService = trashService;
+    }
 
     @PostMapping("/trash")
     public Map<String, Object> moveToTrash(@RequestBody Map<String, String> request) {
@@ -28,7 +32,7 @@ public class TrashController {
         if (success) {
             logger.info("Moved to trash successfully");
         } else {
-            logger.warn("Failed to move");
+            logger.warn("Failed to move to trash");
         }
         return response;
     }
