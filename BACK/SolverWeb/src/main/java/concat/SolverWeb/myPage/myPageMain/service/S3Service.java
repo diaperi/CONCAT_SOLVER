@@ -1,5 +1,8 @@
 package concat.SolverWeb.myPage.myPageMain.service;
 
+import concat.SolverWeb.myPage.myPageMain.controller.MyPageController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class S3Service {
+    private static final Logger logger = LoggerFactory.getLogger(S3Service.class);
 
     private S3Client s3Client;
 
@@ -37,7 +41,6 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
 
-    //    aws s3 연결
     @PostConstruct
     public void initialize() {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
@@ -48,10 +51,13 @@ public class S3Service {
                 .build();
     }
 
-    //  이미지 목록 출력
-    public List<ImageInfo> getAllImagesSortedByLatest() {
+    // 특정 사용자의 폴더 내 이미지 목록 출력
+    public List<ImageInfo> getAllImagesSortedByLatest(String userId) {
+        String userFolderPrefix = userId + "/videos/";
+
         ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
                 .bucket(bucketName)
+                .prefix(userFolderPrefix)
                 .build();
 
         ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
@@ -69,25 +75,24 @@ public class S3Service {
                 .collect(Collectors.toList());
     }
 
+    // 특정 사용자의 폴더 내에서 날짜에 해당하는 영상 가져오기
+    public Optional<ImageInfo> getVideoByDate(String userId, String date) {
+        String userFolderPrefix = userId + "/videos/";
 
-    //    팝업에서 누른 날짜의 해당 영상 가져오기
-    public Optional<ImageInfo> getVideoByDate(String date) {
         ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
                 .bucket(bucketName)
+                .prefix(userFolderPrefix)  // 특정 사용자의 폴더에서만 파일 검색
                 .build();
 
         ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-
-        response.contents().forEach(s -> {
-            String fileDate = ZonedDateTime.ofInstant(s.lastModified(), ZoneId.systemDefault()).format(formatter);
-            System.out.println("File: " + s.key() + " Date: " + fileDate);  // 로그 출력
-        });
-
         return response.contents().stream()
                 .filter(s -> s.key().endsWith(".mp4"))
-                .filter(s -> ZonedDateTime.ofInstant(s.lastModified(), ZoneId.systemDefault()).format(formatter).equals(date))
+                .filter(s -> {
+                    // 파일명에서 날짜 추출
+                    String fileDate = s.key().substring(s.key().indexOf("negative_emotion_") + 17, s.key().indexOf("negative_emotion_") + 25);
+                    return fileDate.equals(date);  // 요청된 날짜와 파일의 날짜 비교
+                })
                 .max(Comparator.comparing(S3Object::lastModified))  // 가장 최근의 파일 선택
                 .map(s -> new ImageInfo(
                         s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(s.key())).toExternalForm(),
@@ -97,10 +102,13 @@ public class S3Service {
     }
 
 
-    //    썸네일의 해당 영상 출력
-    public Optional<ImageInfo> getVideoByTimestamp(String timestamp) {
+    // 특정 사용자의 폴더 내에서 타임스탬프에 해당하는 영상 가져오기
+    public Optional<ImageInfo> getVideoByTimestamp(String userId, String timestamp) {
+        String userFolderPrefix = userId + "/videos/";
+
         ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
                 .bucket(bucketName)
+                .prefix(userFolderPrefix)
                 .build();
 
         ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
@@ -114,7 +122,6 @@ public class S3Service {
                         s.key()))
                 .findFirst();
     }
-
 
     public static class ImageInfo {
         private String url;
