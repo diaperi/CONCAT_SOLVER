@@ -21,7 +21,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   security:
     user:
@@ -48,14 +48,14 @@ email:
 cloud:
   aws:
     credentials:
-      accessKey: AKIAVRUVSZXBMY5MFLM5
-      secretKey: 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
+      accessKey: AKIAVRUVSZXBHUUJZIOJ
+      secretKey: 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
     region:
-      static: ap-southeast-2
+      static: ap-northeast-2
     stack:
       auto: false
     s3:
-      bucket: diaperiwinklebucket
+      bucket: diaperiwinklebucket2
 
 #SNS 로그인
 oauth2:

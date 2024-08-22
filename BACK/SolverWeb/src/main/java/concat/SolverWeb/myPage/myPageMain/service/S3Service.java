@@ -44,11 +44,11 @@ public class S3Service {
         this.s3Client = S3Client.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                .endpointOverride(URI.create("https://s3.ap-southeast-2.amazonaws.com"))
+                .endpointOverride(URI.create("https://s3.ap-northeast-2.amazonaws.com"))
                 .build();
     }
 
-    //  이미지 목록 출력
+    //    trash 폴더를 제외한 이미지 목록 출력
     public List<ImageInfo> getAllImagesSortedByLatest() {
         ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
                 .bucket(bucketName)
@@ -59,7 +59,7 @@ public class S3Service {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
         return response.contents().stream()
-                .filter(s -> s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png"))
+                .filter(s -> !s.key().startsWith("trash/") && (s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png")))
                 .sorted(Comparator.comparing(S3Object::lastModified).reversed())
                 .map(s -> new ImageInfo(
                         s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(s.key())).toExternalForm(),
@@ -68,7 +68,6 @@ public class S3Service {
                         s.key()))
                 .collect(Collectors.toList());
     }
-
 
     //    팝업에서 누른 날짜의 해당 영상 가져오기
     public Optional<ImageInfo> getVideoByDate(String date) {

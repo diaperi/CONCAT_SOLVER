@@ -60,6 +60,44 @@ function showSolution() {
     spans[0].classList.remove('active'); // "대화내용" 버튼 기본 색상으로
 }
 
+if (rightMains.length > 1) {
+    rightMains[1].classList.remove('hidden'); // 두 번째 화면 보이기
+} else {
+    console.error('rightMains[1] does not exist.');
+}
+
+document.getElementById('trashBtn').addEventListener('click', function() {
+    const videoElement = document.getElementById('popup-video');
+    const videoUrl = videoElement.querySelector('source').src;
+
+    fetch('/yuna/trash', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ videoUrl: videoUrl })
+    })
+        .then(response => response.text())
+        .then(text => {
+            console.log('Response Text:', text);
+            try {
+                // 서버 응답이 JSON 형식인지 확인하고 파싱
+                const data = JSON.parse(text);
+                if (data.success) {
+                    alert('Video moved to trash successfully!');
+                } else {
+                    alert('Failed to move video to trash.');
+                }
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                alert('Failed to parse server response.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred.');
+        });
+});
 
 
 
