@@ -4,6 +4,8 @@ import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import concat.SolverWeb.user.yoonseo.entity.UserEntity;
 import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import jakarta.mail.MessagingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class VerifyEmailService {
+
+    private static final Logger logger = LoggerFactory.getLogger(VerifyEmailService.class);
 
     @Value("${server.port}")
     private int serverPort;
@@ -55,8 +59,9 @@ public class VerifyEmailService {
             String emailText = createEmailText(userDTO, verifyLink);
 
             verifyMessageService.sendSimpleMessage(userDTO.getUserEmail(), emailSubject, emailText);
+            logger.info("Verification sent: {}", userDTO.getUserEmail());
         } catch (MessagingException | UnsupportedEncodingException e) {
-            // e.printStackTrace();
+            logger.error("Email sending error: {}", userDTO.getUserEmail(), e);
         }
     }
 
@@ -67,6 +72,7 @@ public class VerifyEmailService {
             UserEntity userEntity = userEntityOptional.get();
             userEntity.setIsVerified(true); // 이메일 인증 완료
             userRepository.save(userEntity);
+            logger.info("Verification completed");
             return true;
         }
         return false;

@@ -2,6 +2,8 @@ package concat.SolverWeb.user.email.controller;
 
 import concat.SolverWeb.user.email.service.VerifyEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +19,13 @@ public class VerifyEmailController {
     }
 
     @GetMapping("/verify/{userNo}")
-    public String verifyEmail(@PathVariable Integer userNo) {
+    @ResponseBody
+    public ResponseEntity<String> verifyEmail(@PathVariable Integer userNo) {
         boolean isVerified = verifyEmailService.verifyEmail(userNo);
         if (isVerified) {
-            return "yuna/verifySuccess";
+            return ResponseEntity.ok("인증 완료");
         } else {
-            return "yuna/verifyFailed";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증 실패");
         }
     }
-
 }
