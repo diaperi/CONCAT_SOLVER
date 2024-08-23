@@ -8,7 +8,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.CopyObjectRequest;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
-import software.amazon.awssdk.services.s3.model.S3Object;
+import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 
 @Service
 public class TrashService {
@@ -24,8 +24,13 @@ public class TrashService {
         this.s3Client = s3Client;
     }
 
-    public boolean moveToTrash(String videoUrl) {
+    public boolean moveToTrash(String videoUrl, UserDTO userDTO) {
+
         try {
+//            if (userDTO == null || userDTO.getUserId() == null) {
+//                throw new IllegalArgumentException("UserDTO userId cannot be null");
+//            }
+
             // 비디오 URL에서 파일 이름 추출
             String key = videoUrl.substring(videoUrl.lastIndexOf('/') + 1);
 
@@ -36,24 +41,26 @@ public class TrashService {
                 throw new RuntimeException("URL에서 숫자 부분을 추출할 수 없습니다: " + key);
             }
 
-            String imageKey = "first_frame_" + numberPart + ".jpg";
+            String userId = userDTO.getUserId();
+            String imageKey = userId + "/videos/first_frame_" + numberPart + ".jpg";
+            String videoKey = userId + "/videos/" + key;
             String trashKey = "trash/" + key;
-            String trashImageKey = "trash/" + imageKey;
+            String trashImageKey = "trash/first_frame_" + numberPart + ".jpg";
 
-            // 비디오 존재 여부
+            // 비디오 존재 여부 확인
             boolean videoExists = s3Client.headObject(HeadObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(key)
-                    .build()) != null;
+                    .key(videoKey)
+                    .build()).sdkHttpResponse().isSuccessful();
 
             if (!videoExists) {
-                throw new RuntimeException("Video does not exist: " + key);
+                throw new RuntimeException("Video does not exist: " + videoKey);
             }
 
             // 비디오를 trash 폴더로 복사
             s3Client.copyObject(CopyObjectRequest.builder()
                     .sourceBucket(bucketName)
-                    .sourceKey(key)
+                    .sourceKey(videoKey)
                     .destinationBucket(bucketName)
                     .destinationKey(trashKey)
                     .build());
@@ -62,17 +69,18 @@ public class TrashService {
             // 원본 비디오 삭제
             s3Client.deleteObject(DeleteObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(key)
+                    .key(videoKey)
                     .build());
-            logger.info("Video deleted successfully: {}", key);
+            logger.info("Video deleted successfully: {}", videoKey);
 
-            // 이미지 복사
+            // 이미지 존재 여부 확인
             boolean imageExists = s3Client.headObject(HeadObjectRequest.builder()
                     .bucket(bucketName)
                     .key(imageKey)
-                    .build()) != null;
+                    .build()).sdkHttpResponse().isSuccessful();
 
             if (imageExists) {
+                // 이미지를 trash 폴더로 복사
                 s3Client.copyObject(CopyObjectRequest.builder()
                         .sourceBucket(bucketName)
                         .sourceKey(imageKey)
