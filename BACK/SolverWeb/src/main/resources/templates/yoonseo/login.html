@@ -30,7 +30,7 @@
                 <form action="" th:action="@{/user/login}" method="post" class="login_form" id="login_form">
                     <div class="login-img"><img src="/yoonseo/img/SOLVER_login_body.png"></div>
                     <div class="login-input-idbox">
-                        <input type="text" id="userId"  name="userId" placeholder="아이디" required>
+                        <input type="text" id="userId" name="userId" placeholder="아이디" required>
                     </div>
                     <div class="login-input-pwbox">
                         <input type="password" id="userPw" name="userPw" placeholder="비밀번호" required>
@@ -39,29 +39,42 @@
                         <input type="checkbox"><span> 로그인 상태 유지</span>
                     </div>
                     <button type="submit" id="login_btn" form="login_form">로그인</button>
-                    <div class="login_register">
-                        <a href="/user/find">아이디 찾기</a>
-                        |<a href="/user/find"> 비밀번호 찾기</a>
-                        |<a href="/user/sign"> 회원가입</a>
-                    </div>
-
-                    <div class="login_type">
-                        <div class="login_typeLine">
-                            <hr>
-                            <span class="or-text">간편 로그인</span>
-                        </div>
-                        <div class="login_typeIcon">
-                            <button class="login-button" onclick="goToNaverLogin()"><img
-                                    src="/yoonseo/img/naver.jpg"></button>
-                            <button class="login-button" onclick="goToGoogleLogin()"><img
-                                    src="/yoonseo/img/google.png"></button>
-                            <button class="login-button" onclick="goToKakaoLogin()"><img
-                                    src="/yoonseo/img/kakaotalk.png"></button>
-                            <button class="login-button" onclick="goToAppleLogin()"><img
-                                    src="/yoonseo/img/apple.png"></button>
-                        </div>
-                    </div>
                 </form>
+                <div class="login_register">
+                    <a href="/user/find">아이디 찾기</a>
+                    |<a href="/user/find"> 비밀번호 찾기</a>
+                    |<a href="/user/sign"> 회원가입</a>
+                </div>
+
+                <div class="login_type">
+                    <div class="login_typeLine">
+                        <hr>
+                        <span class="or-text">간편 로그인</span>
+                    </div>
+                    <div class="login_typeIcon">
+                        <!-- 구글 로그인 버튼 -->
+                        <a href="/snslogin/oauth2/authorization/google">
+                            <button class="login-button" id="google-login" alt="구글 로그인">
+                                <img src="/yoonseo/img/google.png">
+                            </button>
+                        </a>
+
+                        <!-- 카카오 로그인 버튼 -->
+                        <a href="/snslogin/oauth2/authorization/kakao">
+                            <button class="login-button" id="kakao-login" alt="카카오 로그인">
+                                <img src="/yoonseo/img/kakaotalk.png">
+                            </button>
+                        </a>
+
+                        <!-- 네이버 로그인 버튼 -->
+                        <a href="/snslogin/oauth2/authorization/naver">
+                            <button class="login-button" id="naver-login" alt="네이버 로그인">
+                                <img src="/yoonseo/img/naver.jpg">
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

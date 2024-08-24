@@ -60,7 +60,46 @@ function showSolution() {
     spans[0].classList.remove('active'); // "대화내용" 버튼 기본 색상으로
 }
 
+if (rightMains.length > 1) {
+    rightMains[1].classList.remove('hidden'); // 두 번째 화면 보이기
+} else {
+    console.error('rightMains[1] does not exist.');
+}
 
+document.getElementById('trashBtn').addEventListener('click', function () {
+    const videoElement = document.getElementById('popup-video');
+    const videoUrl = videoElement.querySelector('source').src;
 
+    // 세션 스토리지에서 userDTO 가져옴
+    const userDTO = JSON.parse(sessionStorage.getItem('userDTO'));
 
+    if (!userDTO || !userDTO.userId) {
+        alert('User data is not available');
+        return;
+    }
 
+    const queryParams = new URLSearchParams({
+        videoUrl: videoUrl,
+        userId: userDTO.userId
+    }).toString();
+
+    fetch(`/yuna/trash?${queryParams}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response Data:', data);
+            if (data.success) {
+                alert('Video moved to trash successfully!');
+            } else {
+                alert('Failed to move video to trash.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred.');
+        });
+});

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보수정 페이지</title>
+    <link rel="stylesheet" href="/hyeeun/css/mypage_change.css"> <!-- CSS 파일 링크 -->
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- JQuery 추가 -->
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="mypage_change_container">
+    <div class="mypage_change_form-container">
+        <!-- 사용자 정보를 보여주는 폼 -->
+        <form th:object="${user}" th:action="@{/snslogin/sns-update}" method="post" id="updateSnsUserDetail">
+            <div class="mypage_change_formBox">
+                <div class="mypage_change_title-container">
+                    <h2>회원정보</h2>
+                    <!--로그아웃 회원정보 수정에-->
+                    <a href="/snslogin/logout" class="logout-link">로그아웃</a>
+                </div>
+                <input type="hidden" th:field="*{id}" name="id">
+                <input type="hidden" name="providerid" th:value="${user.providerId}">
+                <div class="mypage_change_inputBox">
+                    <label>이름</label>
+                    <input type="text"  th:field="*{name}" name="snsName" readonly><br>
+                </div>
+                <div class="mypage_change_inputBox">
+                    <label>이메일</label>
+                    <input type="text" th:field="*{email}" name="snsEmail" readonly><br>
+                </div>
+                <div class="mypage_change_inputBox">
+                    <label>로그인 계정</label>
+                    <input type="text" th:field="*{provider}" name="snsLogin" readonly><br>
+                </div>
+                <div class="mypage_change_Btn">
+                    <a href="#" class="delete-account" onclick="openConfirmationPopup()">회원탈퇴하기</a>
+                </div>
+            </div>
+        </form>
+        <!-- 탈퇴 확인 팝업 -->
+        <div id="confirmationPopup" class="confirmation-popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeConfirmationPopup()">X</span>
+                <h2><b>회원 탈퇴를 신청하기 전, 다음 내용을 꼭 확인해주세요!!</b></h2>
+                <p><b>1. 고객 정보 및 개인형 서비스 이용 기록은 개인 정보보호 처리 방침 기준에 따라 삭제됩니다.</b></p>
+                <p><b>2. 회원 탈퇴 시 더 이상 솔버 홈캠 서비스 사용이 불가능하며,</b></p>
+                <p><b>솔버 공식 사이트에서도 탈퇴 처리됩니다.</b></p>
+                <button onclick="confirmDelete()">회원탈퇴하기</button>
+            </div>
+        </div>
+        <!-- JavaScript for Popup -->
+        <script>
+            function openConfirmationPopup() {
+                document.getElementById("confirmationPopup").style.display = "flex";
+            }
+
+            function closeConfirmationPopup() {
+                document.getElementById("confirmationPopup").style.display = "none";
+            }
+
+            function confirmDelete() {
+                const userProviderId = document.querySelector('input[name="providerid"]').value.trim();
+                console.log("User Provider ID:", userProviderId);  // ID 값을 콘솔에 출력하여 확인
+
+                if (!userProviderId) {
+                    alert("Provider ID가 유효하지 않습니다.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: `/snslogin/delete/${userProviderId}`,  // URL 수정
+                    success: function(response) {
+                        if (response === "ok") {
+                            alert("회원 탈퇴가 완료되었습니다.");
+                            window.location.href = "/snslogin/logout";
+                        } else {
+                            alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+                        }
+                    },
+                    error: function(err) {
+                        console.error("Error during deletion:", err);
+                        alert("오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                });
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>
+

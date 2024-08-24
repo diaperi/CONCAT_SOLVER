@@ -1,7 +1,7 @@
 package concat.SolverWeb.user.yoonseo.controller;
 
+import concat.SolverWeb.main.controller.MainController;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
-import concat.SolverWeb.user.yoonseo.entity.UserEntity;
 import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import concat.SolverWeb.user.yoonseo.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -16,11 +16,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final UserService userService;
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    private final UserService userService;
     private final UserRepository userRepository;
 
     @Autowired
@@ -31,32 +35,32 @@ public class UserController {
 
     @PostMapping("/register")
     public ModelAndView register(
-            @RequestParam("name") String UserName,
+            @RequestParam("name") String userName,
             @RequestParam("id") String userId,
             @RequestParam("password") String userPw,
             @RequestParam("email") String userEmail) {
 
-        UserEntity newUser = new UserEntity();
-        newUser.setUserName(UserName);
-        newUser.setUserId(userId);
-        newUser.setUserPw(userPw); // 비밀번호 암호화 없이 평문 저장
-        newUser.setUserEmail(userEmail);
-        newUser.setIsVerified(false);
-        newUser.setEnrollDate(LocalDateTime.now());
-        newUser.setUpdateDate(LocalDateTime.now());
-        newUser.setIsSecession('N');
+        // UserDTO 객체 생성
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserName(userName);
+        userDTO.setUserId(userId);
+        userDTO.setUserPw(userPw); // 비밀번호 평문으로 받아서 서비스에서 해시화
+        userDTO.setUserEmail(userEmail);
+        userDTO.setIsVerified(false);
+        userDTO.setEnrollDate(LocalDateTime.now());
+        userDTO.setUpdateDate(LocalDateTime.now());
+        userDTO.setIsSecession('N');
 
-        userRepository.save(newUser);
+        // 비밀번호 해시화, 저장
+        userService.save(userDTO);
 
         return new ModelAndView("redirect:/user/login");
     }
 
-
     @PostMapping("/login")
     public String login(@ModelAttribute UserDTO userDTO, HttpSession session,  Model model){
         UserDTO loginResult = userService.login(userDTO);
-        if(loginResult != null){
-            // login 성공시 mainpage로 이동
+        if (loginResult != null) {
             session.setAttribute("loggedInUser", loginResult);
             session.setAttribute("userEmail", loginResult.getUserEmail()); // 이메일도 세션에 저장
             return "hyeeun/mainpage"; //mainpage로 이동.
@@ -66,8 +70,6 @@ public class UserController {
             return "yoonseo/login";
         }
     }
-//
-
 
     @GetMapping("/register")
     public String registerForm() {
@@ -76,22 +78,21 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "yoonseo/login"; }
+        return "yoonseo/login";
+    }
 
-    // 아이디/비밀번호 찾기 페이지 이동
     @GetMapping("/find")
     public String findForm() {
         return "yoonseo/find";
     }
-     //회원가입 누르면 -> 이용약관 페이지 이동
+
     @GetMapping("/sign")
     public String signForm() {
         return "yoonseo/sign";
     }
 
-
     @GetMapping("/check-session")
-    public String checkSession(HttpSession session){
+    public String checkSession(HttpSession session) {
         UserDTO loggedInUser = (UserDTO) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             System.out.println("세션에 저장된 사용자 정보: " + loggedInUser);
@@ -101,16 +102,13 @@ public class UserController {
         return "redirect:/";
     }
 
-
-@PostMapping("/id-check")
-public ResponseEntity<String> checkUserId(@RequestParam("id") String userId) {
-    boolean isDuplicate = userService.isUserIdDuplicate(userId);
-    if (isDuplicate) {
-        return ResponseEntity.ok("exists");
-    } else {
-        return ResponseEntity.ok("ok");
+    @PostMapping("/id-check")
+    public ResponseEntity<String> checkUserId(@RequestParam("id") String userId) {
+        boolean isDuplicate = userService.isUserIdDuplicate(userId);
+        if (isDuplicate) {
+            return ResponseEntity.ok("exists");
+        } else {
+            return ResponseEntity.ok("ok");
+        }
     }
 }
-
-}
-
