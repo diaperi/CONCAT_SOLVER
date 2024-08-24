@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (userPw === '' || userPw === '') {
             alert('아이디와 비밀번호를 입력해주세요.');
             event.preventDefault(); // 폼 제출을 막음
+            return;
         // } else {
         //     window.location.href = 'hyeeun/mainpage';
         }
@@ -25,6 +26,7 @@ document.getElementById("kakao-login").addEventListener("click", function() {
 document.getElementById("naver-login").addEventListener("click", function() {
     window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=KeB2I8Od5D0f8tGxtz9h&redirect_uri=http://localhost:8098/snslogin/oauth2/code/naver&response_type=code&scope=name,email`;
 });
+
 
 //카카오 하나만 해보기
 // function goToKakaoLogin() {
