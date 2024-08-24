@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (userPw === '' || userPw === '') {
             alert('아이디와 비밀번호를 입력해주세요.');
             event.preventDefault(); // 폼 제출을 막음
+            return;
         // } else {
         //     window.location.href = 'hyeeun/mainpage';
         }
     });
 });
+
 
 
 //카카오 하나만 해보기

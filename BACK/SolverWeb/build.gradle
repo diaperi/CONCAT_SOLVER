@@ -25,7 +25,9 @@ repositories {
 
 dependencies {
 
-// 비밀번호 암호화 때문에 추가한거 2개 (윤서)
+
+
+// 비밀번호 암호화 때문에 추가한거 1개 (윤서)
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // SNS 로그인

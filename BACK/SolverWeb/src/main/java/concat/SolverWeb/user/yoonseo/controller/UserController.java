@@ -6,11 +6,13 @@ import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import concat.SolverWeb.user.yoonseo.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.time.LocalDateTime;
 
@@ -51,7 +53,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO, HttpSession session){
+    public String login(@ModelAttribute UserDTO userDTO, HttpSession session,  Model model){
         UserDTO loginResult = userService.login(userDTO);
         if(loginResult != null){
             // login 성공시 mainpage로 이동
@@ -60,9 +62,13 @@ public class UserController {
             return "hyeeun/mainpage"; //mainpage로 이동.
         }else{
             // login 실패시 똑같이 login페이지
+            model.addAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
             return "yoonseo/login";
         }
     }
+//
+
+
     @GetMapping("/register")
     public String registerForm() {
         return "yoonseo/register";
