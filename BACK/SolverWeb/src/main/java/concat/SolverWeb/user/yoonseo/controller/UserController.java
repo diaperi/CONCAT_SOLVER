@@ -8,8 +8,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.time.LocalDateTime;
 
@@ -55,19 +58,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserDTO userDTO, HttpSession session) {
+    public String login(@ModelAttribute UserDTO userDTO, HttpSession session,  Model model){
         UserDTO loginResult = userService.login(userDTO);
         if (loginResult != null) {
             session.setAttribute("loggedInUser", loginResult);
-            session.setAttribute("userEmail", loginResult.getUserEmail());
-
-            // 로그인 성공 시 로그 추가
-            Logger logger = LoggerFactory.getLogger(UserController.class);
-            logger.info("로그인 성공 - 세션에 사용자 정보 저장됨: {}", loginResult);
-
-            // 로그인 성공 시 메인 페이지로 리다이렉트
-            return "redirect:/main/mainPage";
-        } else {
+            session.setAttribute("userEmail", loginResult.getUserEmail()); // 이메일도 세션에 저장
+            return "hyeeun/mainpage"; //mainpage로 이동.
+        }else{
+            // login 실패시 똑같이 login페이지
+            model.addAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
             return "yoonseo/login";
         }
     }
