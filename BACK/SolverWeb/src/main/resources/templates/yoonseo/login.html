@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <link rel="stylesheet" href="/yoonseo/css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -69,6 +70,16 @@
 <!--        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"-->
 <!--        crossorigin="anonymous"></script>-->
 <script src="/yoonseo/js/login.js"></script>
+<script>
+    $(document).ready(function() {
+        let message = "[[${msg}]]";
+        if (message != "") {
+            alert(message);
+        }else {
+        }
+    })
+
+</script>
 </body>
 
 </html>
