@@ -18,9 +18,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
@@ -28,7 +25,6 @@ public class MyPageController {
     @Autowired
     private S3Service s3Service;
     private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
-
 
     // 마이페이지 이동
     @GetMapping("/myPageMain")
@@ -46,7 +42,6 @@ public class MyPageController {
         model.addAttribute("latestImages", latestImages);
         return "seoyun/myPageMain";
     }
-
 
     // 마이페이지 달력 페이지 이동
     @GetMapping("/myPagePop")
@@ -79,11 +74,23 @@ public class MyPageController {
         }
 
         String userId = loggedInUser.getUserId();
+
+        // 해당 timestamp에 일치하는 영상 URL 가져오기
         Optional<ImageInfo> video = s3Service.getVideoByTimestamp(userId, timestamp);
         if (video.isPresent()) {
             model.addAttribute("videoUrl", video.get().getUrl());
+            model.addAttribute("gptTitle", video.get().getGptTitle()); // GPT 제목 추가
         } else {
             model.addAttribute("videoUrl", "");
+            model.addAttribute("gptTitle", "제목 없음");
+        }
+
+        // 해당 timestamp에 일치하는 GPT 해결책 가져오기
+        Optional<String> gptResponse = s3Service.getGptResponseByVideoTimestamp(userId, timestamp);
+        if (gptResponse.isPresent()) {
+            model.addAttribute("gptResponse", gptResponse.get());
+        } else {
+            model.addAttribute("gptResponse", "해결책을 찾을 수 없습니다.");
         }
         return "seoyun/myPageDetail";
     }
@@ -106,5 +113,4 @@ public class MyPageController {
         Optional<ImageInfo> video = s3Service.getVideoByDate(userId, date);
         return video.orElse(null);
     }
-
 }
