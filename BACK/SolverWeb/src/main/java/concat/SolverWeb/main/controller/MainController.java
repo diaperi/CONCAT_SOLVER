@@ -1,24 +1,20 @@
 package concat.SolverWeb.main.controller;
 
-import concat.SolverWeb.user.yoonseo.controller.UserController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import concat.SolverWeb.myPage.myPageMain.service.S3Service;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/main")
@@ -26,8 +22,9 @@ public class MainController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
+    @Autowired
+    private S3Service s3Service;
 
-    //  메인 페이지 이동
     @CrossOrigin(origins = "http://192.168.137.107:5000")
     @GetMapping("/mainPage")
     public String mainPage(HttpSession session, Model model) {
@@ -47,7 +44,8 @@ public class MainController {
 
         // 사용자 ID를 가져옴
         String userId = loggedInUser.getUserId();
-
+        // 모델에 userId 추가
+        model.addAttribute("userId", userId);
         // 로그에 사용자 ID 출력
         logger.info("로그인된 사용자 ID: {}", userId);
 
@@ -82,5 +80,55 @@ public class MainController {
         }
 
         return "hyeeun/mainPage";
+    }
+}
+
+@RestController
+@RequestMapping("/api/s3")
+class S3DataController {
+
+    private final S3Service s3Service;
+
+    @Autowired
+    public S3DataController(S3Service s3Service) {
+        this.s3Service = s3Service;
+    }
+
+    @GetMapping("/latest-transcript")
+    public ResponseEntity<String> getLatestTranscript(@RequestParam String userId) {
+        // 최신 영상 파일의 타임스탬프를 추출하고 해당 타임스탬프에 맞는 텍스트 파일의 내용을 가져오는 로직
+        Optional<S3Service.ImageInfo> latestVideo = s3Service.getLatestVideo(userId);
+
+        if (latestVideo.isPresent()) {
+            String videoTimestamp = s3Service.extractTimestampFromVideo(latestVideo.get().getKey());
+            Optional<String> latestTranscriptContent = s3Service.getTranscriptByVideoTimestamp(userId, videoTimestamp);
+
+            if (latestTranscriptContent.isPresent()) {
+                return ResponseEntity.ok(latestTranscriptContent.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No transcript found.");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No video found.");
+        }
+    }
+
+    @GetMapping("/latest-gpt-response")
+    public ResponseEntity<String> getLatestGptResponse(@RequestParam String userId) {
+        // 최신 영상 파일의 타임스탬프를 추출하고 해당 타임스탬프에 맞는 GPT 응답 파일의 내용을 가져오는 로직
+        Optional<S3Service.ImageInfo> latestVideo = s3Service.getLatestVideo(userId);
+
+        if (latestVideo.isPresent()) {
+            String videoTimestamp = s3Service.extractTimestampFromVideo(latestVideo.get().getKey());
+            Optional<String> latestGptResponseContent = s3Service.getGptResponseByVideoTimestamp(userId, videoTimestamp);
+
+            if (latestGptResponseContent.isPresent()) {
+                return ResponseEntity.ok(latestGptResponseContent.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No GPT response found.");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No video found.");
+        }
     }
 }
