@@ -27,11 +27,13 @@
             </div>
             <div class="myPageMain_videoBox2">
                 <div class="myPageMain_videoBox3" th:each="image : ${latestImages}">
-                    <a th:href="@{/myPage/myPageDetail(timestamp=${image.key.split('_')[2] + '_' + image.key.split('_')[3].substring(0, 6)})}">
+                    <!--                    <a th:href="@{/myPage/myPageDetail(timestamp=${image.key.split('_')[2] + '_' + image.key.split('_')[3].substring(0, 6)})}">-->
+                    <a href="javascript:void(0);" onclick="goToMyPagePop()">
                         <img th:src="${image.url}" alt="Image">
                     </a>
                     <div class="myPageMain_videoBox4">
-                        <span>생성시간: <span th:text="${image.lastModifiedDate}"></span></span>
+                        <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
+                        <span>[ 생성시간: <span th:text="${image.lastModifiedDate}"></span> ]</span>
                         <!--                        <span>파일크기: <span th:text="${image.formattedSize}"></span></span>-->
                     </div>
                 </div>
@@ -40,8 +42,8 @@
         </div>
         <div class="myPageMain_lastVideoBox">
             <div class="myPageMain_videoBox1">
-                <span>저장된 영상 & 해결책</span>
-                <span>전체보기 <i class="fa-solid fa-angles-right"></i></span>
+                <span>전체 영상 & 해결책</span>
+                <!--                <span>전체보기 <i class="fa-solid fa-angles-right"></i></span>-->
             </div>
             <div class="myPageMain_videoBox6">
                 <div class="myPageMain_videoBox3" th:each="image : ${latestImages}">
@@ -49,7 +51,8 @@
                         <img th:src="${image.url}" alt="Image">
                     </a>
                     <div class="myPageMain_videoBox4">
-                        <span>생성시간: <span th:text="${image.lastModifiedDate}"></span></span>
+                        <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
+                        <span>[ 생성시간: <span th:text="${image.lastModifiedDate}"></span> ]</span>
                         <!--                        <span>파일크기: <span th:text="${image.formattedSize}"></span></span>-->
                     </div>
                 </div>
