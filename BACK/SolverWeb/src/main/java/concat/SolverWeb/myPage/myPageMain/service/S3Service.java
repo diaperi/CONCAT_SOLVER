@@ -58,6 +58,7 @@ public class S3Service {
                 .build();
     }
 
+
     // 특정 사용자의 폴더 내 이미지 목록 출력
     public List<ImageInfo> getAllImagesSortedByLatest(String userId) {
         String userFolderPrefix = userId + "/videos/";
@@ -72,7 +73,7 @@ public class S3Service {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd_HH:mm:ss"); // 날짜와 시간 포함
 
         return response.contents().stream()
-                .filter(s -> s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png"))
+                .filter(s -> !s.key().startsWith("trash/") && (s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png")))
                 .sorted(Comparator.comparing(S3Object::lastModified).reversed())
                 .map(s -> {
                     String imageUrl = s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(s.key())).toExternalForm();
