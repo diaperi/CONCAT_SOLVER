@@ -56,6 +56,7 @@ public class HyeeunChangeMemberController {
             String email = loginResult.getUserEmail();
             session.setAttribute("userEmail", email); // 이메일을 세션에 저장
             session.setAttribute("loggedInUser", loginResult); // 사용자 정보 저장
+            session.setAttribute("loginType", "GENERAL"); // 일반 로그인 유형 설정
 
             logger.info("User logged in, email set in session: " + email);
             logger.info("Session attributes after login: userEmail=" + session.getAttribute("userEmail"));
@@ -86,6 +87,14 @@ public class HyeeunChangeMemberController {
 
     @GetMapping("/update")
     public String updateForm(HttpSession session, Model model) {
+        String loginType = (String) session.getAttribute("loginType");
+
+        if ("SNS".equals(loginType)) {
+            // SNS 로그인 사용자는 SNS 수정 페이지로 리디렉션
+            return "redirect:/snslogin/sns-update";
+        }
+
+        // 일반 사용자일 경우 기존 로직 실행
         String userEmail = getEmailFromSession(session);
         logger.info("Retrieved userEmail from session: " + userEmail);
         if (userEmail == null) {
@@ -99,10 +108,11 @@ public class HyeeunChangeMemberController {
             } else {
                 logger.info("Session contains logged-in user: " + loggedInUser);
                 model.addAttribute("updateUser", loggedInUser);
-                return "hyeeun/userchange/hyeeunupdate"; // 업데이트 폼
+                return "hyeeun/userchange/hyeeunupdate"; // 일반 사용자 업데이트 폼
             }
         }
     }
+
 
     @PostMapping("/update/detail")
     public String update(@ModelAttribute("updateUser") UserDTO userDTO, Model model, HttpSession session) {

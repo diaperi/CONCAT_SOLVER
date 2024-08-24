@@ -2,6 +2,8 @@ package concat.SolverWeb.myPage.myPageMain.controller;
 
 import concat.SolverWeb.myPage.myPageMain.service.S3Service;
 import concat.SolverWeb.myPage.myPageMain.service.S3Service.ImageInfo;
+import concat.SolverWeb.user.yoonseo.dto.UserDTO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,50 +15,102 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/myPage")
 public class MyPageController {
 
     @Autowired
     private S3Service s3Service;
+    private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 
     // 마이페이지 이동
     @GetMapping("/myPageMain")
-    public String myPageMain(Model model) {
-        List<ImageInfo> latestImages = s3Service.getAllImagesSortedByLatest();
+    public String myPageMain(HttpSession session, Model model) {
+        UserDTO loggedInUser = (UserDTO) session.getAttribute("loggedInUser");
+        // 로그인 유저 정보 로그 출력
+        if (loggedInUser == null) {
+            logger.info("로그인된 사용자 정보가 없습니다.");
+            return "redirect:/user/login";
+        } else {
+            logger.info("로그인된 사용자: {}", loggedInUser.toString());
+        }
+        String userId = loggedInUser.getUserId();
+        List<ImageInfo> latestImages = s3Service.getAllImagesSortedByLatest(userId);
         model.addAttribute("latestImages", latestImages);
         return "seoyun/myPageMain";
     }
 
     // 마이페이지 달력 페이지 이동
     @GetMapping("/myPagePop")
-    public String myPagePop(Model model) {
-        List<ImageInfo> latestImages = s3Service.getAllImagesSortedByLatest();
+    public String myPagePop(HttpSession session, Model model) {
+        UserDTO loggedInUser = (UserDTO) session.getAttribute("loggedInUser");
+        // 로그인 유저 정보 로그 출력
+        if (loggedInUser == null) {
+            logger.info("로그인된 사용자 정보가 없습니다.");
+            return "redirect:/user/login";
+        } else {
+            logger.info("로그인된 사용자: {}", loggedInUser.toString());
+        }
+
+        String userId = loggedInUser.getUserId();
+        List<ImageInfo> latestImages = s3Service.getAllImagesSortedByLatest(userId);
         model.addAttribute("latestImages", latestImages);
         return "seoyun/myPagePop";
     }
 
     // 마이페이지 디테일 페이지 이동
     @GetMapping("/myPageDetail")
-    public String myPageDetail(@RequestParam("timestamp") String timestamp, Model model) {
-        Optional<ImageInfo> video = s3Service.getVideoByTimestamp(timestamp);
+    public String myPageDetail(@RequestParam("timestamp") String timestamp, HttpSession session, Model model) {
+        UserDTO loggedInUser = (UserDTO) session.getAttribute("loggedInUser");
+        // 로그인 유저 정보 로그 출력
+        if (loggedInUser == null) {
+            logger.info("로그인된 사용자 정보가 없습니다.");
+            return "redirect:/user/login";
+        } else {
+            logger.info("로그인된 사용자: {}", loggedInUser.toString());
+        }
+
+        String userId = loggedInUser.getUserId();
+
+        // 해당 timestamp에 일치하는 영상 URL 가져오기
+        Optional<ImageInfo> video = s3Service.getVideoByTimestamp(userId, timestamp);
         if (video.isPresent()) {
             model.addAttribute("videoUrl", video.get().getUrl());
-            System.out.println("Video URL: " + video.get().getUrl()); // 디버그용 로그 출력
+            model.addAttribute("gptTitle", video.get().getGptTitle()); // GPT 제목 추가
         } else {
             model.addAttribute("videoUrl", "");
+            model.addAttribute("gptTitle", "제목 없음");
+        }
+
+        // 해당 timestamp에 일치하는 GPT 해결책 가져오기
+        Optional<String> gptResponse = s3Service.getGptResponseByVideoTimestamp(userId, timestamp);
+        if (gptResponse.isPresent()) {
+            model.addAttribute("gptResponse", gptResponse.get());
+        } else {
+            model.addAttribute("gptResponse", "해결책을 찾을 수 없습니다.");
         }
         return "seoyun/myPageDetail";
     }
 
-
     // 특정 날짜의 동영상을 가져오기 (Ajax)
     @GetMapping("/getVideoByDate")
     @ResponseBody
-    public ImageInfo getVideoByDate(@RequestParam("date") String date) {
-        Optional<ImageInfo> video = s3Service.getVideoByDate(date);
+    public ImageInfo getVideoByDate(@RequestParam("date") String date, HttpSession session) {
+        // 로그인된 사용자 정보를 세션에서 가져옴
+        UserDTO loggedInUser = (UserDTO) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            logger.info("로그인된 사용자 정보가 없습니다.");
+            return null;  // 로그인되지 않은 경우 null 반환
+        } else {
+            logger.info("로그인된 사용자: {}", loggedInUser.toString());
+        }
+
+        String userId = loggedInUser.getUserId();
+        Optional<ImageInfo> video = s3Service.getVideoByDate(userId, date);
         return video.orElse(null);
     }
-
-
 }

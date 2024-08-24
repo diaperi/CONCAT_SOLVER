@@ -1,9 +1,12 @@
 package concat.SolverWeb.myPage.userChange.service;
 
+import concat.SolverWeb.user.utils.PasswordUtil;
 import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import concat.SolverWeb.user.yoonseo.entity.UserEntity;
 import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +19,8 @@ import java.util.Optional;
 public class HyeeunChangeMemberService {
 
     private final UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(HyeeunChangeMemberService.class); // Logger 선언 및 초기화
+
 
     // 사용자 저장
     public void save(UserDTO userDTO) {
@@ -57,20 +62,29 @@ public class HyeeunChangeMemberService {
         return optionalUserEntity.map(UserDTO::toUserDTO).orElse(null);
     }
 
-    // 사용자 정보 업데이트
+    // bcrypt 암호화
     public void update(UserDTO userDTO) {
-
         // DB에서 기존 UserEntity 가져오기
         UserEntity existingUserEntity = userRepository.findByUserId(userDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 비밀번호가 변경된 경우 암호화하여 업데이트
+        if (userDTO.getUserPw() != null && !userDTO.getUserPw().isEmpty()) {
+            userDTO.setUserPw(PasswordUtil.encrypt(userDTO.getUserPw()));
+            logger.info("Password encrypted successfully");
+        } else {
+            // 비밀번호가 변경되지 않은 경우 기존 비밀번호를 유지
+            userDTO.setUserPw(existingUserEntity.getUserPw());
+            logger.info("Password not changed");
+        }
 
         // DTO에서 새로운 정보를 가져와 업데이트
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
 
         // enrollDate는 기존 엔티티의 값을 그대로 유지
         userEntity.setEnrollDate(existingUserEntity.getEnrollDate());
-        userEntity.setIsVerified(existingUserEntity.getIsVerified());  // isVerified 유지
-        userEntity.setIsSecession(existingUserEntity.getIsSecession()); // isSecession 유지
+        userEntity.setIsVerified(existingUserEntity.getIsVerified());
+        userEntity.setIsSecession(existingUserEntity.getIsSecession());
 
         // 수정일 업데이트
         userEntity.setUpdateDate(LocalDateTime.now());

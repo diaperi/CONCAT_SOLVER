@@ -27,8 +27,7 @@
             <div class="login_formBox">
                 <div class="login_formBox2">
                     <form action="/user/login" method="POST" class="login_form">
-
-                    <div class="login-img"><img src="img/SOLVER_login_body.png"></div>
+                        <div class="login-img"><img src="img/SOLVER_login_body.png"></div>
                         <div class="login-input-idbox">
                             <input type="text" id="userId" placeholder="아이디" required>
                         </div>
@@ -39,25 +38,25 @@
                             <input type="checkbox"><span> 로그인 상태 유지</span>
                         </div>
                         <button type="submit" id="login_btn">로그인</button>
-                        <div class="login_register">
-                            <a href="/user/find">아이디 찾기</a>
-                            |<a href="/user/find"> 비밀번호 찾기</a>
-                            |<a href="/user/sign"> 회원가입</a>
-                        </div>
-        
-                        <div class="login_type">
-                            <div class="login_typeLine">
-                                <hr>
-                                <span class="or-text">간편 로그인</span>
-                            </div>
-                            <div class="login_typeIcon">
-                                <button class="login-button" onclick="goToNaverLogin()"><img src="img/naver.jpg"></button>
-                                <button class="login-button" onclick="goToGoogleLogin()"><img src="img/google.png"></button>
-                                <button class="login-button" onclick="goToKakaoLogin()"><img src="img/kakaotalk.png"></button>
-                                <button class="login-button" onclick="goToAppleLogin()"><img src="img/apple.png"></button>
-                            </div>
-                        </div>
                     </form>
+
+                    <div class="login_register">
+                        <a href="/user/find">아이디 찾기</a>
+                        |<a href="/user/find"> 비밀번호 찾기</a>
+                        |<a href="/user/sign"> 회원가입</a>
+                    </div>
+                    <div class="login_type">
+                        <div class="login_typeLine">
+                            <hr>
+                            <span class="or-text">간편 로그인</span>
+                        </div>
+                        <div class="login_typeIcon">
+                            <button class="login-button" onclick="goToNaverLogin()"><img src="img/naver.jpg"></button>
+                            <button class="login-button" onclick="goToGoogleLogin()"><img src="img/google.png"></button>
+                            <button class="login-button" onclick="goToKakaoLogin()"><img src="img/kakaotalk.png"></button>
+                            <button class="login-button" onclick="goToAppleLogin()"><img src="img/apple.png"></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

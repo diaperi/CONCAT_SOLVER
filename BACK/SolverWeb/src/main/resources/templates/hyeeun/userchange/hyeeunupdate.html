@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- JQuery 추가 -->
 </head>
 <body>
-<div th:replace="hyeeun/header :: header"></div>
+<div th:replace="~{hyeeun/header :: header}"></div>
 
 <div class="mypage_change_container">
     <div class="mypage_change_form-container">
@@ -17,6 +17,8 @@
             <div class="mypage_change_formBox">
                 <div class="mypage_change_title-container">
                     <h2>회원정보수정</h2>
+                    <!--로그아웃 회원정보 수정에-->
+                    <a href="/change/logout" class="logout-link">로그아웃</a>
                 </div>
                 <input type="hidden" th:field="*{userNo}" name="userNo">
                 <div class="mypage_change_inputBox">

@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(19)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -35,7 +35,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-validation' // SNS 로그인
     implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 전송
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
+    implementation 'org.mindrot:jbcrypt:0.4' // Bcrpyt
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
