@@ -58,6 +58,68 @@ public class S3Service {
                 .build();
     }
 
+    // 파일 이름에 따라 타임스탬프 추출 방식을 결정하는 메서드
+    private String extractTimestamp(String fileName) {
+        if (fileName.contains("first_frame_")) {
+            return extractTimestampFromImage(fileName);
+        } else if (fileName.contains("negative_emotion_")) {
+            return extractTimestampFromVideo(fileName);
+        } else if (fileName.contains("gpt_response_")) {
+            return extractTimestampFromGpt(fileName);
+        } else {
+            logger.error("타임스탬프 추출 실패: 파일 형식이 잘못되었습니다: " + fileName);
+            return "invalid-timestamp";
+        }
+    }
+
+    // GPT 응답 파일 (gpt_response_YYYYMMDD_HHMMSS.txt)에서 타임스탬프 추출
+    private String extractTimestampFromGpt(String gptKey) {
+        try {
+            int startIndex = gptKey.indexOf("gpt_response_") + 13;
+            int endIndex = gptKey.indexOf(".txt");
+            if (startIndex < 13 || endIndex == -1 || startIndex >= endIndex) {
+                logger.error("타임스탬프 추출 실패: gptKey 형식이 잘못되었습니다: " + gptKey);
+                return "invalid-timestamp";
+            }
+            return gptKey.substring(startIndex, endIndex);
+        } catch (Exception e) {
+            logger.error("타임스탬프 추출 실패: " + e.getMessage());
+            return "invalid-timestamp";
+        }
+    }
+
+    // 이미지 파일 (first_frame_YYYYMMDD_HHMMSS.jpg)에서 타임스탬프 추출
+    private String extractTimestampFromImage(String imageKey) {
+        try {
+            int startIndex = imageKey.indexOf("first_frame_") + 12;
+            int endIndex = imageKey.indexOf(".jpg");
+            if (startIndex < 12 || endIndex == -1 || startIndex >= endIndex) {
+                logger.error("타임스탬프 추출 실패: imageKey 형식이 잘못되었습니다: " + imageKey);
+                return "invalid-timestamp";
+            }
+            return imageKey.substring(startIndex, endIndex); // "YYYYMMDD_HHMMSS" 형식으로 반환
+        } catch (Exception e) {
+            logger.error("타임스탬프 추출 실패: " + e.getMessage());
+            return "invalid-timestamp";
+        }
+    }
+
+
+    // 동영상 파일 (negative_emotion_YYYYMMDD_HHMMSS_converted.mp4)에서 타임스탬프 추출
+    public String extractTimestampFromVideo(String videoKey) {
+        try {
+            int startIndex = videoKey.indexOf("negative_emotion_") + 17;
+            int endIndex = videoKey.indexOf("_converted.mp4");
+            if (startIndex < 17 || endIndex == -1 || startIndex >= endIndex) {
+                logger.error("타임스탬프 추출 실패: videoKey 형식이 잘못되었습니다: " + videoKey);
+                return "invalid-timestamp";
+            }
+            return videoKey.substring(startIndex, endIndex);
+        } catch (Exception e) {
+            logger.error("타임스탬프 추출 실패: " + e.getMessage());
+            return "invalid-timestamp";
+        }
+    }
 
     // 특정 사용자의 폴더 내 이미지 목록 출력
     public List<ImageInfo> getAllImagesSortedByLatest(String userId) {
@@ -73,7 +135,7 @@ public class S3Service {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd_HH:mm:ss"); // 날짜와 시간 포함
 
         return response.contents().stream()
-                .filter(s -> !s.key().startsWith("trash/") && (s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png")))
+                .filter(s -> s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png"))
                 .sorted(Comparator.comparing(S3Object::lastModified).reversed())
                 .map(s -> {
                     String imageUrl = s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(s.key())).toExternalForm();
@@ -90,7 +152,7 @@ public class S3Service {
     // GPT 제목을 추출하는 메서드
     private String getGptTitleFromImageTimestamp(String userId, String imageKey) {
         try {
-            String timestamp = extractTimestampFromImage(imageKey);
+            String timestamp = extractTimestamp(imageKey);
             if ("invalid-timestamp".equals(timestamp)) {
                 return "제목 없음";
             }
@@ -133,21 +195,6 @@ public class S3Service {
         return "제목 없음"; // 예외 발생 시 기본 제목 반환
     }
 
-    // 타임스탬프를 추출하는 메서드
-    private String extractTimestampFromImage(String imageKey) {
-        try {
-            int startIndex = imageKey.indexOf("first_frame_") + 12;
-            int endIndex = imageKey.lastIndexOf(".jpg");
-            if (startIndex < 12 || endIndex == -1 || startIndex >= endIndex) {
-                logger.error("타임스탬프 추출 실패: imageKey 형식이 잘못되었습니다: " + imageKey);
-                return "invalid-timestamp";
-            }
-            return imageKey.substring(startIndex, endIndex); // "YYYYMMDD_HHMMSS" 형식으로 반환
-        } catch (Exception e) {
-            logger.error("타임스탬프 추출 실패: " + e.getMessage());
-            return "invalid-timestamp";
-        }
-    }
 
     // 특정 사용자의 폴더 내에서 날짜에 해당하는 영상 가져오기
     public Optional<ImageInfo> getVideoByDate(String userId, String date) {
@@ -315,24 +362,6 @@ public class S3Service {
                 });
     }
 
-    // 영상 파일 이름에서 타임스탬프를 추출하는 메서드
-    public String extractTimestampFromVideo(String videoKey) {
-        if (!videoKey.contains("negative_emotion_")) {
-            logger.error("타임스탬프 추출 실패: videoKey 형식이 잘못되었습니다: " + videoKey);
-            return "invalid-timestamp"; // 기본 값 또는 에러 메시지 반환
-        }
-
-        int startIndex = videoKey.indexOf("negative_emotion_") + 17;
-        int endIndex = videoKey.indexOf("_converted.mp4");
-
-        if (startIndex < 17 || endIndex == -1 || startIndex >= endIndex) {
-            logger.error("타임스탬프 추출 실패: videoKey 형식이 잘못되었습니다: " + videoKey);
-            return "invalid-timestamp"; // 기본 값 또는 에러 메시지 반환
-        }
-
-        return videoKey.substring(startIndex, endIndex);
-    }
-
     // S3 폴더를 10초마다 감시하는 스케줄러
     @Scheduled(fixedDelay = 10000)  // 10초마다 실행
     public void checkForNewFiles() {
@@ -342,7 +371,7 @@ public class S3Service {
         Optional<ImageInfo> latestVideo = getLatestVideo(userId);
 
         if (latestVideo.isPresent()) {
-            String videoTimestamp = extractTimestampFromVideo(latestVideo.get().getKey());
+            String videoTimestamp = extractTimestamp(latestVideo.get().getKey());
 
             // 기존에 처리한 파일인지 확인
             if (!processedFiles.contains(videoTimestamp)) {
@@ -409,5 +438,30 @@ public class S3Service {
             int exp = (int) (Math.log(size) / Math.log(1024));
             return String.format("%.1f%sB", size / Math.pow(1024, exp), "KMGTPE".charAt(exp - 1));
         }
+    }
+
+
+    public List<ImageInfo> searchImagesByKeyword(String userId, String keyword) {
+        String userFolderPrefix = userId + "/videos/";
+
+        ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(userFolderPrefix)
+                .build();
+
+        ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+        return response.contents().stream()
+                .filter(s -> s.key().endsWith(".jpg") || s.key().endsWith(".jpeg") || s.key().endsWith(".png"))
+                .map(s -> {
+                    String imageUrl = s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(s.key())).toExternalForm();
+                    String lastModifiedDate = ZonedDateTime.ofInstant(s.lastModified(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy.MM.dd_HH:mm:ss"));
+                    String gptTitle = getGptTitleFromImageTimestamp(userId, s.key());
+                    return new ImageInfo(imageUrl, lastModifiedDate, s.size(), s.key(), gptTitle);
+                })
+                .filter(imageInfo ->
+                        imageInfo.getGptTitle().toLowerCase().contains(keyword.toLowerCase()) ||
+                                imageInfo.getLastModifiedDate().contains(keyword))
+                .collect(Collectors.toList());
     }
 }
