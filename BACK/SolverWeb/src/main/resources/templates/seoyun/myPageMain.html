@@ -14,9 +14,9 @@
 <div class="myPageMain_container">
     <div class="myPageMain_container2">
         <div class="myPageMain_top">
-            <span>마이페이지에 오신 것을 환영합니다.</span>
+            <span th:text="' ' + ${userName} + ' 님, 마이페이지에 오신 것을 환영합니다.'"></span>
             <div class="myPageMain_input">
-                <input type="text" name="" id="" placeholder="원하는 영상 찾아보기 [영상 제목 또는 날짜]">
+                <input type="text" name="" id="" placeholder="키워드로 원하는 영상 찾아보기 [영상 제목 또는 날짜]">
                 <span><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
         </div>
@@ -26,48 +26,87 @@
                 <span onclick="goToMyPagePop()">전체보기 <i class="fa-solid fa-angles-right"></i></span>
             </div>
             <div class="myPageMain_videoBox2">
-                <div class="myPageMain_videoBox3" th:each="image : ${latestImages}">
-                    <!--                    <a th:href="@{/myPage/myPageDetail(timestamp=${image.key.split('_')[2] + '_' + image.key.split('_')[3].substring(0, 6)})}">-->
-                    <a href="javascript:void(0);" onclick="goToMyPagePop()">
-                        <img th:src="${image.url}" alt="Image">
-                    </a>
-                    <div class="myPageMain_videoBox4">
-                        <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
-                        <span>[ 생성시간: <span th:text="${image.lastModifiedDate}"></span> ]</span>
-                        <!--                        <span>파일크기: <span th:text="${image.formattedSize}"></span></span>-->
+                <!-- 영상이 없을 경우에만 표시 -->
+                <div id="no-videos" class="no-videos" style="display: none;">
+                    <span>저장된 영상이 없어요 😀</span>
+                </div>
+
+                <!-- 영상이 있을 경우에만 표시 -->
+                <div id="video-list" class="video-list">
+                    <div class="myPageMain_videoBox3" th:each="image : ${latestImages}">
+                        <a href="javascript:void(0);" onclick="goToMyPagePop()">
+                            <img th:src="${image.url}" alt="Image">
+                        </a>
+                        <div class="myPageMain_videoBox4">
+                            <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
+                            <span>[ 업로드일: <span th:text="${image.lastModifiedDate}"></span> ]</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <span class="myPageMain_downBar"><i class="fa-solid fa-angles-down"></i></span>
         </div>
         <div class="myPageMain_lastVideoBox">
             <div class="myPageMain_videoBox1">
                 <span>전체 영상 & 해결책</span>
-                <!--                <span>전체보기 <i class="fa-solid fa-angles-right"></i></span>-->
             </div>
             <div class="myPageMain_videoBox6">
-                <div class="myPageMain_videoBox3" th:each="image : ${latestImages}">
-                    <a th:href="@{/myPage/myPageDetail(timestamp=${image.key.split('_')[2] + '_' + image.key.split('_')[3].substring(0, 6)})}">
-                        <img th:src="${image.url}" alt="Image">
-                    </a>
-                    <div class="myPageMain_videoBox4">
-                        <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
-                        <span>[ 생성시간: <span th:text="${image.lastModifiedDate}"></span> ]</span>
-                        <!--                        <span>파일크기: <span th:text="${image.formattedSize}"></span></span>-->
+                <!-- 영상이 없을 경우에만 표시 -->
+                <div id="no-videos2" class="no-videos" style="display: none;">
+                    <span>저장된 영상이 없어요 😀</span>
+                </div>
+
+                <!-- 영상이 있을 경우에만 표시 -->
+                <div id="video-list2" class="video-list">
+                    <div class="myPageMain_videoBox3" th:each="image : ${latestImages}">
+                        <a href="javascript:void(0);" onclick="goToMyPagePop()">
+                            <img th:src="${image.url}" alt="Image">
+                        </a>
+                        <div class="myPageMain_videoBox4">
+                            <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
+                            <span>[ 업로드일: <span th:text="${image.lastModifiedDate}"></span> ]</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <span class="myPageMain_UpBar"><i class="fa-solid fa-angles-up"></i></span>
         </div>
     </div>
 </div>
 
-
 <script src="/seoyun/js/myPageMain.js"></script>
 <script>
     function goToMyPagePop() {
         window.location.href = '/myPage/myPagePop';
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var videoList = document.getElementById("video-list");
+        var noVideos = document.getElementById("no-videos");
+
+        var videoList2 = document.getElementById("video-list2");
+        var noVideos2 = document.getElementById("no-videos2");
+
+        // 첫 번째 블록 처리
+        if (videoList.children.length > 0) {
+            // 영상이 있을 경우, '저장된 영상이 없어요' 메시지 숨기기
+            noVideos.style.display = "none";
+        } else {
+            // 영상이 없을 경우, 영상 리스트 숨기기
+            videoList.style.display = "none";
+            noVideos.style.display = "block";
+        }
+
+        // 두 번째 블록 처리
+        if (videoList2.children.length > 0) {
+            noVideos2.style.display = "none";
+        } else {
+            videoList2.style.display = "none";
+            noVideos2.style.display = "block";
+        }
+    });
 </script>
 </body>
 </html>

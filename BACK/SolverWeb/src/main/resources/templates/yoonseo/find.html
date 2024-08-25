@@ -32,7 +32,7 @@
             <div class="enroll_box">
                 <p class="menu_msg"><b>이메일을 발송했습니다.</b></p>
                 <p class="menu_msg2">이메일에서 계정 정보를 확인해주세요.</p>
-                <button class="btn ok_btn modal_close">확인</button>
+                <button class="btn ok_btn modal_close" onclick="redirectToLogin()">확인</button>
             </div>
         </section>
     </div>
@@ -40,6 +40,12 @@
 
 
 <script src="/yoonseo/js/find.js"></script>
+<script>
+    function redirectToLogin() {
+        window.location.href = "/user/login";
+    }
+</script>
+
 </body>
 
 </html>
