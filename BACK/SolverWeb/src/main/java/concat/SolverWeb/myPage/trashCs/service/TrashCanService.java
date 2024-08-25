@@ -103,8 +103,9 @@ public class TrashCanService {
     @Scheduled(cron = "0 0 0 * * ?")
     public void deleteOldTrashVideos() {
         try {
-            // 삭제 기준 날짜 설정
+            // 삭제 기준 날짜
             LocalDate cutoffDate = LocalDate.now().minusDays(1);
+
             ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
                     .bucket(bucketName)
                     .prefix("trash/")
@@ -112,41 +113,44 @@ public class TrashCanService {
 
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjects);
 
-            List<S3Object> oldObjects = response.contents().stream()
-                    .filter(s3Object -> s3Object.key().endsWith(".jpg") || s3Object.key().endsWith(".jpeg"))
+            List<S3Object> allObjects = response.contents();
+
+            List<S3Object> oldObjects = allObjects.stream()
+                    .filter(s3Object -> {
+                        String key = s3Object.key();
+                        return key.endsWith(".jpg") || key.endsWith(".jpeg") || key.endsWith(".mp4");
+                    })
                     .filter(s3Object -> {
                         LocalDate objectDate = Instant.ofEpochMilli(s3Object.lastModified().toEpochMilli())
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate();
                         return objectDate.isBefore(cutoffDate);
                     })
-                    .toList();
+                    .collect(Collectors.toList());
 
-            // 삭제할 영상이 있는 경우
+            // 삭제 처리
             if (!oldObjects.isEmpty()) {
-                final int MAX_KEYS = 1000; // aws s3 api 삭제 최대치 개수
+                final int MAX_KEYS = 1000;
                 for (int i = 0; i < oldObjects.size(); i += MAX_KEYS) {
-                    // 삭제할 목록
-                    List<ObjectIdentifier> objectsToDelete = oldObjects.subList(i, Math.min(i + MAX_KEYS, oldObjects.size())).stream()
+                    List<ObjectIdentifier> objectIdentifiers = oldObjects.subList(i, Math.min(i + MAX_KEYS, oldObjects.size())).stream()
                             .map(s3Object -> ObjectIdentifier.builder()
                                     .key(s3Object.key())
                                     .build())
                             .toList();
 
-                    // 삭제 요청
                     DeleteObjectsRequest deleteRequest = DeleteObjectsRequest.builder()
                             .bucket(bucketName)
-                            .delete(d -> d.objects(objectsToDelete))
+                            .delete(d -> d.objects(objectIdentifiers))
                             .build();
 
                     DeleteObjectsResponse deleteResponse = s3Client.deleteObjects(deleteRequest);
-                    logger.info("휴지통에서 {}개의 오래된 영상을 삭제했습니다.", deleteResponse.deleted().size());
+                    logger.info("휴지통 비우기를 성공했습니다. {}개", deleteResponse.deleted().size());
                 }
             } else {
                 logger.info("삭제할 오래된 영상이 없습니다.");
             }
         } catch (Exception e) {
-            logger.error("오래된 영상 삭제 실패", e);
+            logger.error("휴지통 비우기 실패", e);
         }
     }
 

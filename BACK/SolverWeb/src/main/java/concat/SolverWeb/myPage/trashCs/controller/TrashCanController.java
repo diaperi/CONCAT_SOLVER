@@ -46,7 +46,7 @@ public class TrashCanController {
         try {
             trashCanService.deleteOldTrashVideos();
             response.put("success", true);
-            logger.info("Successfully deleted old trash videos."); // 삭제 성공
+            logger.info("Successfully deleted old trash videos"); // 삭제 성공
         } catch (Exception e) {
             logger.error("Failed to delete the old video", e); // 삭제 실패
             response.put("success", false);
@@ -71,7 +71,7 @@ public class TrashCanController {
         return response;
     }
 
-    // 휴지통에서 영상 복구
+    // 휴지통 영상 복구
     @PostMapping("/trash/videos/recover")
     public ResponseEntity<Map<String, Object>> recoverVideo(@RequestBody Map<String, String> request, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
@@ -111,7 +111,7 @@ public class TrashCanController {
                 logger.info("Successfully recovered video: {}", videoKey);
             } else {
                 response.put("success", false);
-                response.put("error", "Failed to recover video.");
+                response.put("error", "Failed to recover video");
             }
         } catch (Exception e) {
             logger.error("Failed to recover video", e);
