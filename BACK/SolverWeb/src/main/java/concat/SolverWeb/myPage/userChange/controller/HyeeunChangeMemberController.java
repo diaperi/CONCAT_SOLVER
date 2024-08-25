@@ -147,7 +147,7 @@ public class HyeeunChangeMemberController {
     public String logout(HttpSession session) {
         session.invalidate(); // 로그아웃 시 세션 무효화
         logger.info("User logged out, session invalidated.");
-        return "redirect:/user/login"; // 로그아웃 후 로그인 페이지
+        return "redirect:/"; // 로그아웃 후 로그인 페이지
     }
 
     @PostMapping("/email-check")
