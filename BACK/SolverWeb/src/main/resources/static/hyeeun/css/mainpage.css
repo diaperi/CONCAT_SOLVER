@@ -5,20 +5,20 @@
     font-family: Arial, sans-serif;
 }
 
-body {
-    height: 100vh;
-    background: linear-gradient(137.29deg,
-    #03BED6 20.13%,
-    #10B3DA 33.05%,
-    #1DA4E1 45.02%,
-    #249CE5 58.56%,
-    #2D8EED 72.11%,
-    #3084F4 83.13%);
-}
-
+b
 .myPageDetail_container {
     display: flex;
     justify-content: center;
+    background: linear-gradient(
+            to bottom,
+            #03BED6 0%,
+            #10B3DA 25%,
+            #1DA4E1 50%,
+            #249CE5 75%,
+            #2D8EED 100%,
+            #3084F4 100%
+    );
+    height: 89.3vh;
 }
 
 .myPageDetail_container2 {
@@ -150,3 +150,4 @@ body {
 .hidden {
     display: none;
 }
+

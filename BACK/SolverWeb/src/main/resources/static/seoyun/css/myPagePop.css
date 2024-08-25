@@ -6,27 +6,33 @@
     text-wrap: nowrap;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background: linear-gradient(137.29deg,
-            #03BED6 20.13%,
-            #10B3DA 33.05%,
-            #1DA4E1 45.02%,
-            #249CE5 58.56%,
-            #2D8EED 72.11%,
-            #3084F4 83.13%);    
-}
+/*body {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    height: 100vh;*/
+/*    background: linear-gradient(137.29deg,*/
+/*            #03BED6 20.13%,*/
+/*            #10B3DA 33.05%,*/
+/*            #1DA4E1 45.02%,*/
+/*            #249CE5 58.56%,*/
+/*            #2D8EED 72.11%,*/
+/*            #3084F4 83.13%);    */
+/*}*/
 
 .myPagePop_container {  
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 96vw; /* Adjust width for responsiveness */
-    height: 96vh; /* Adjust height for responsiveness */
-    box-sizing: border-box;
+    width: 100%; /* Adjust width for responsiveness */
+    height: 89.5vh;    box-sizing: border-box;
+    background: linear-gradient(137.29deg,
+    #03BED6 20.13%,
+    #10B3DA 33.05%,
+    #1DA4E1 45.02%,
+    #249CE5 58.56%,
+    #2D8EED 72.11%,
+    #3084F4 83.13%);
 }
 
 .myPagePop_container2 {
@@ -113,8 +119,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 59.5vh; /* Adjust max-height for responsiveness */
+    min-height: 57vh; /* Adjust max-height for responsiveness */
     min-width: 50vh;
+    max-height: 57vh;
 }
 
 #calendar {
@@ -273,4 +280,20 @@ body {
 #popup-date a:hover {
     color: #3084F4;
     transition: color 0.3s;
+}
+.video-list {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.no-videos {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 55vh;
+    font-size: 2vh;
+    font-weight: bold;
 }

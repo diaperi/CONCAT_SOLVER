@@ -18,7 +18,7 @@
                 <div class="mypage_change_title-container">
                     <h2>회원정보수정</h2>
                     <!--로그아웃 회원정보 수정에-->
-                    <a href="/change/logout" class="logout-link">로그아웃</a>
+                    <a href="#" class="logout-link" onclick="handleLogout()">로그아웃</a>
                 </div>
                 <input type="hidden" th:field="*{userNo}" name="userNo">
                 <div class="mypage_change_inputBox">
@@ -35,7 +35,8 @@
                 </div>
                 <div class="mypage_change_inputBox">
                     <label>이메일</label>
-                    <input type="text" id="userEmail" th:field="*{userEmail}" name="userEmail" onblur="emailCheck()"><br>
+                    <input type="text" id="userEmail" th:field="*{userEmail}" name="userEmail"
+                           onblur="emailCheck()"><br>
                     <p id="email-check-result"></p>
                 </div>
                 <div class="mypage_change_inputBox">
@@ -80,6 +81,7 @@
                 const idWarning = document.getElementById("id-warning");
                 idWarning.style.display = "none";
             }
+
             const emailCheck = () => {
                 const email = document.getElementById("userEmail").value;
                 const emailCheckResult = document.getElementById("email-check-result");
@@ -94,12 +96,12 @@
 
                 // 이메일 중복 확인 요청
                 $.ajax({
-                    type: "post",
-                    url: "/change/email-check",
-                    data: {
+                    type   : "post",
+                    url    : "/change/email-check",
+                    data   : {
                         "userEmail": email
                     },
-                    success: function(res) {
+                    success: function (res) {
                         if (res === "ok") {
                             emailCheckResult.style.color = "green";
                             emailCheckResult.innerHTML = "사용 가능한 이메일 주소입니다.";
@@ -108,7 +110,7 @@
                             emailCheckResult.innerHTML = "이미 사용 중인 이메일 주소입니다.";
                         }
                     },
-                    error: function(err) {
+                    error  : function (err) {
                         console.log("에러 발생", err);
                     }
                 });
@@ -145,9 +147,9 @@
                 const userId = document.querySelector('input[name="userNo"]').value;  // userNo 가져오기
 
                 $.ajax({
-                    type: "POST",
-                    url: `/change/delete/${userId}`,  // ID를 포함한 삭제 요청 전송
-                    success: function(response) {
+                    type   : "POST",
+                    url    : `/change/delete/${userId}`,  // ID를 포함한 삭제 요청 전송
+                    success: function (response) {
                         if (response === "ok") {
                             alert("회원 탈퇴가 완료되었습니다.");
                             window.location.href = "/change/logout";  // 탈퇴 후 로그아웃 처리
@@ -155,11 +157,17 @@
                             alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
                         }
                     },
-                    error: function(err) {
+                    error  : function (err) {
                         console.error("Error during deletion", err);
                         alert("오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 });
+            }
+
+            function handleLogout() {
+                if (confirm('로그아웃 되었습니다.')) {
+                    window.location.href = "/change/logout";
+                }
             }
         </script>
     </div>

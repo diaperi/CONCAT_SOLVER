@@ -79,18 +79,37 @@
         </div>
     </div>
 </div>
+
+
+<!-- 로딩 오버레이 (페이지 로딩 중 표시) -->
+<div id="loadingOverlay">
+    <div id="loadingMessage">
+        <div class="loader"></div>
+        <p>기기와의 연결을 확인하고 있어요...</p>
+    </div>
+</div>
+
 <!--<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"-->
 <!--        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"-->
 <!--        crossorigin="anonymous"></script>-->
 <script src="/yoonseo/js/login.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         let message = "[[${msg}]]";
         if (message != "") {
             alert(message);
-        }else {
         }
-    })
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // 로그인 버튼 클릭 시 애니메이션 표시
+        const loginForm = document.getElementById('login_form');
+
+        loginForm.addEventListener('submit', function () {
+            // 로그인 버튼이 클릭된 후 로딩 애니메이션 표시
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        });
+    });
 
 </script>
 </body>
