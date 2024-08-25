@@ -2,23 +2,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}  
+}
 
 body {
     width: 100%;
     font-family: Arial, sans-serif;
-    background: linear-gradient(137.29deg, 
-    #03BED6 20.13%, 
-    #10B3DA 33.05%, 
-    #1DA4E1 45.02%, 
-    #249CE5 58.56%, 
-    #2D8EED 72.11%, 
+    background: linear-gradient(137.29deg,
+    #03BED6 20.13%,
+    #10B3DA 33.05%,
+    #1DA4E1 45.02%,
+    #249CE5 58.56%,
+    #2D8EED 72.11%,
     #3084F4 83.13%);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-    
+
 main {
     display: flex;
     flex-direction: column;
@@ -28,7 +28,7 @@ main {
 
 .trash_notice {
     width: 90%;
-    height: 7vh;
+    height: 6vh;
     background: #00000059;
     padding: 1.6vh 4vh;
     align-items: center;
@@ -38,14 +38,14 @@ main {
 }
 
 .trash_noticeContent {
-    font-size: 1.2em;
+    font-size: 2vh;
     font-weight: 500;
     color: #fff;
 }
 
 #trash_EmptyTrashBtn {
     float: right;
-    font-size: 1em;
+    font-size: 1.6vh;
     background-color: transparent;
     border: none;
     padding: 0;
@@ -58,29 +58,30 @@ main {
 }
 
 section {
-    margin-top: 4.2vh;
+    margin-top: 5vh;
 }
 
 .trash_sectionTitle {
     color: #fff;
-    margin-bottom: 0.8vh;
+    margin-bottom: 1vh;
 }
 
 .trash_itemContainer{
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 2.8vh;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 3vh;
+    column-gap: 5.8vh;
 }
 
 @media (max-width: 1024px) {
     .trash_itemContainer {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
     .trash_itemContainer {
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
     }
 }
 
@@ -88,7 +89,7 @@ section {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    margin-bottom: -4.2vh;    
+    margin-bottom: -4.2vh;
     width: 31.5vh;
 }
 
@@ -109,8 +110,8 @@ section {
 }
 
 .trash_itemHead p {
-    margin-left: 1.5vh; 
-    flex-grow: 1; 
+    margin-left: 1.5vh;
+    flex-grow: 1;
 }
 
 .trash_itemClick img {
@@ -169,7 +170,7 @@ section {
     transform: translate(-50%, -50%);
     padding: 2vh;
     border-radius: 0.8vh;
-    text-align: center;   
+    text-align: center;
     width: 85%;
     max-width: 46vh;
 }
@@ -189,13 +190,13 @@ section {
 
 .trashModeal_BtnContainer {
     display: flex;
-    gap: 2vh; 
+    gap: 2vh;
     margin-bottom: 0.4vh;
     justify-content: center;
 }
 
 .trashModeal_BtnContainer button {
-    flex: 1; 
+    flex: 1;
     cursor: pointer;
     color: #fff;
     border: none;
@@ -214,10 +215,10 @@ section {
 }
 
 .trash_upBar i {
-    font-size: 4vh; 
+    font-size: 4vh;
     background: linear-gradient(to bottom, rgb(0, 112, 240), #000000);
-    -webkit-background-clip: text; 
-    color: transparent; 
+    -webkit-background-clip: text;
+    color: transparent;
     display: inline-block;
     cursor: pointer;
     margin: 6vh;
@@ -234,4 +235,47 @@ section {
     60% {
         transform: translateY(0.5vh);
     }
+}
+
+.trash_itemClick {
+    position: relative;
+}
+
+.trash_moreOptions {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.trash_moreOptionsMenu {
+    position: absolute;
+    left: 0;
+    display: none;
+    z-index: 1000;
+}
+
+.trash_moreOptionsMenu.show {
+    display: block;
+}
+
+.trash_recoverBtn {
+    position: absolute;
+    top: -6.6vh;
+    left: -5.4vh;
+    border: none;
+    background: #fff;
+    color: black;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+.trash_recoverBtn:hover {
+    background: #e7e7e7;
+}
+
+.recoveryText {
+    white-space: nowrap;
+    text-align: center;
+    font-size: 1.5vh;
 }
