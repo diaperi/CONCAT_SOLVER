@@ -114,7 +114,7 @@ public class HyeeunChangeMemberController {
     }
 
 
-    @PostMapping("/update/detail")
+    @PostMapping("/update")
     public String update(@ModelAttribute("updateUser") UserDTO userDTO, Model model, HttpSession session) {
 
         // 세션에서 기존 사용자 정보를 가져옵니다
@@ -132,7 +132,7 @@ public class HyeeunChangeMemberController {
         session.setAttribute("loggedInUser", userDTO); // 업데이트된 정보를 세션에 반영
         model.addAttribute("user", userDTO);
         logger.info("User updated, redirecting to user detail page: " + userDTO.getUserNo());
-        return "hyeeun/userchange/hyeeundetail"; // 업데이트 후 사용자 상세 페이지로 리다이렉트
+        return "hyeeun/userchange/hyeeunupdate"; // 업데이트 후에도 회원정보 수정 페이지 유지
     }
 
     @PostMapping("/delete/{id}")
