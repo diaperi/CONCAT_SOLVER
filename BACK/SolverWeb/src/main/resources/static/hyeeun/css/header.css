@@ -54,7 +54,7 @@ body {
     top: 100%; /* 드롭다운을 버튼 바로 아래에 위치시킴 */
     left: 50%; /* 드롭다운 메뉴를 부모 요소의 왼쪽에서 50% 이동 */
     transform: translateX(-50%); /* 드롭다운 메뉴를 가로축에서 가운데 정렬 */
-    padding-top: 10px; /* 위쪽에 간격 추가 */
+    padding-top: 22px; /* 위쪽에 간격 추가 */
 }
 
 .dropdown-content a {
