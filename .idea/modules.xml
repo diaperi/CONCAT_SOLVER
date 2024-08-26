@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CONCAT_SOLVER.iml" filepath="$PROJECT_DIR$/.idea/CONCAT_SOLVER.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SolverWeb.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SolverWeb.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SolverWeb.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SolverWeb.test.iml" />
     </modules>
   </component>
 </project>

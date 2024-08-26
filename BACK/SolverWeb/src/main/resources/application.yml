@@ -67,6 +67,8 @@ cloud:
       auto: false
     s3:
       bucket: diaperiwinklebucket2
+#      base:
+#        url: https://diaperiwinklebucket2.s3.ap-northeast-2.amazonaws.com/
 
 #SNS 로그인
 oauth2:
