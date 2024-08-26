@@ -21,200 +21,148 @@
         <section class="today">
             <h2 class="trash_sectionTitle">오늘</h2>
             <div class="trash_itemContainer">
-<!--                <div class="trash_itemBox">-->
-<!--                    <div class="trash_itemHead">-->
-<!--                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">-->
-<!--                        <p>소유물 다툼 갈등 해결</p>-->
-<!--                        <div class="trash_itemClick">-->
-<!--                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    <div class="trash_itemBody">-->
-<!--                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="trash_itemBox" th:each="video : ${todayVideos}">
+                    <div class="trash_itemHead">
+                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
+                        <p th:text="${video.gptTitle}"></p>
+                        <div class="trash_itemClick">
+                            <button class="trash_moreOptions">
+                                <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            </button>
+                            <div class="trash_moreOptionsMenu">
+                                <button class="trash_recoverBtn">
+                                    <span class="recoveryText">복구하기</span>
+                                </button>
+                            </div>
+                        </div>
+                    <div class="trash_itemBody">
+                        <img class="trash_img" th:src="@{${video.url}}" alt="">
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="this-week">
-            <h2 class="trash_sectionTitle">이번 주 초</h2>
+            <h2 class="trash_sectionTitle">이번 주</h2>
             <div class="trash_itemContainer">
-                <div class="trash_itemBox">
+                <div class="trash_itemBox" th:each="video : ${thisWeekVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
+                        <p th:text="${video.gptTitle}"></p>
                         <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            <button class="trash_moreOptions">
+                                <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            </button>
+                            <div class="trash_moreOptionsMenu">
+                                <button class="trash_recoverBtn">
+                                    <span class="recoveryText">복구하기</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-
                     <div class="trash_itemBody">
-                        <!-- <img class="trash_icon" src="../img/trash_folderIcon.png" alt="폴더-아이콘2"> -->
-                        <img class="trash_img" src="/yuna/img/trash_img.png" alt="폴더-이미지">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
+                        <img class="trash_img" th:src="@{${video.url}}" alt="">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="last-week">
-            <h2 class="trash_sectionTitle">지난주</h2>
+
+        <section class="last-1week">
+            <h2 class="trash_sectionTitle">1주 전</h2>
             <div class="trash_itemContainer">
-                <div class="trash_itemBox">
+                <div class="trash_itemBox" th:each="video : ${last1WeekVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
+                        <p th:text="${video.gptTitle}"></p>
                         <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            <button class="trash_moreOptions">
+                                <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            </button>
+                            <div class="trash_moreOptionsMenu">
+                                <button class="trash_recoverBtn">
+                                    <span class="recoveryText">복구하기</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-
                     <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
-                    </div>
-                </div>
-
-                <div class="trash_itemBox">
-                    <div class="trash_itemHead">
-                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
-                        <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
-                        </div>
-                    </div>
-
-                    <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
+                        <img class="trash_img" th:src="@{${video.url}}" alt="">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="this-month">
-            <h2 class="trash_sectionTitle">이번 달 초</h2>
+        <section class="last-2week">
+            <h2 class="trash_sectionTitle">2주 전</h2>
             <div class="trash_itemContainer">
-                <div class="trash_itemBox">
+                <div class="trash_itemBox" th:each="video : ${last2WeeksVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p>갈등 해결</p>
+                        <p th:text="${video.gptTitle}"></p>
                         <div class="trash_itemClick">
-                            <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            <button class="trash_moreOptions">
+                                <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            </button>
+                            <div class="trash_moreOptionsMenu">
+                                <button class="trash_recoverBtn">
+                                    <span class="recoveryText">복구하기</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-
                     <div class="trash_itemBody">
-                        <img class="trash_icon" src="/yuna/img/trash_folderIcon.png" alt="폴더-아이콘2">
+                        <img class="trash_img" th:src="@{${video.url}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="last-3week">
+            <h2 class="trash_sectionTitle">3주 전</h2>
+            <div class="trash_itemContainer">
+                <div class="trash_itemBox" th:each="video : ${last3WeeksVideos}">
+                    <div class="trash_itemHead">
+                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
+                        <p th:text="${video.gptTitle}"></p>
+                        <div class="trash_itemClick">
+                            <button class="trash_moreOptions">
+                                <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            </button>
+                            <div class="trash_moreOptionsMenu">
+                                <button class="trash_recoverBtn">
+                                    <span class="recoveryText">복구하기</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trash_itemBody">
+                        <img class="trash_img" th:src="@{${video.url}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="last-4week">
+            <h2 class="trash_sectionTitle">4주 전</h2>
+            <div class="trash_itemContainer">
+                <div class="trash_itemBox" th:each="video : ${last4WeeksVideos}">
+                    <div class="trash_itemHead">
+                        <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
+                        <p th:text="${video.gptTitle}"></p>
+                        <div class="trash_itemClick">
+                            <button class="trash_moreOptions">
+                                <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
+                            </button>
+                            <div class="trash_moreOptionsMenu">
+                                <button class="trash_recoverBtn">
+                                    <span class="recoveryText">복구하기</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trash_itemBody">
+                        <img class="trash_img" th:src="@{${video.url}}" alt="">
                     </div>
                 </div>
             </div>

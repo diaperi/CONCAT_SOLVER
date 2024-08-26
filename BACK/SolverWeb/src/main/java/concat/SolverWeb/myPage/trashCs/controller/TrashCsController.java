@@ -19,4 +19,9 @@ public class TrashCsController {
     public String trash() {
         return "yuna/trash";
     }
+
+    @RequestMapping("/trashEmp")
+    public String trashEmp() {
+        return "yuna/trashEmp";
+    }
 }
