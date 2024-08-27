@@ -122,7 +122,6 @@ public class HyeeunChangeMemberController {
 
         if (currentUser != null) {
             userDTO.setEnrollDate(currentUser.getEnrollDate()); // 기존의 enrollDate 유지
-            userDTO.setIsVerified(currentUser.getIsVerified());
             userDTO.setIsSecession(currentUser.getIsSecession());
         }
 

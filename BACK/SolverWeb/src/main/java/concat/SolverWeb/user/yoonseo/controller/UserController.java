@@ -46,7 +46,6 @@ public class UserController {
         userDTO.setUserId(userId);
         userDTO.setUserPw(userPw); // 비밀번호 평문으로 받아서 서비스에서 해시화
         userDTO.setUserEmail(userEmail);
-        userDTO.setIsVerified(false);
         userDTO.setEnrollDate(LocalDateTime.now());
         userDTO.setUpdateDate(LocalDateTime.now());
         userDTO.setIsSecession('N');
