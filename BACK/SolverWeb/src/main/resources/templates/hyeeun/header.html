@@ -9,11 +9,13 @@
 <body>
 <div th:fragment="header">
     <div class="header_navbar">
+        <a href="/main/mainPage">
             <img src="/hyeeun/img/solver_logo.png" alt="로고">
+        </a>
         <div class="header_menu">
             <a href="/main/mainPage">실시간 화면</a>
             <div class="dropdown">
-                <span id="mypage-btn"><a href="/myPage/myPageMain">마이페이지</a> </span>
+                <span id="mypage-btn"><a href="/myPage/myPageMain">마이페이지</a></span>
                 <div class="dropdown-content" id="mypage-dropdown">
                     <a href="/myPage/myPagePop">저장된 영상</a>
                     <a href="/change/update">회원정보수정</a>
