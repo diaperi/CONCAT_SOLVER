@@ -20,12 +20,8 @@ import java.net.URI;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -464,4 +460,127 @@ public class S3Service {
                                 imageInfo.getLastModifiedDate().contains(keyword))
                 .collect(Collectors.toList());
     }
+
+
+    // Python 스크립트를 실행하여 감정 분석 결과를 생성하는 메서드
+    public String generateEmotionAnalysis(String s3Key, String participant, String outputPath) {
+        try {
+            // Python 명령어와 인수를 설정
+            List<String> commands = new ArrayList<>();
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+            commands.add("src/main/resources/scripts/emotionChart.py"); // Python 스크립트의 경로
+            commands.add(bucketName); // S3 버킷 이름
+            commands.add(s3Key); // S3 경로
+            commands.add(participant); // 분석할 참여자
+            commands.add(outputPath); // 결과 이미지 경로
+
+            // ProcessBuilder를 사용하여 Python 스크립트 실행
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            // Python 스크립트의 출력을 읽어오기
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                logger.info(line); // 스크립트 출력을 로깅합니다.
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                logger.info("Python script executed successfully.");
+                return outputPath;
+            } else {
+                logger.error("Python script execution failed with exit code: " + exitCode);
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Failed to execute Python script for emotion analysis.", e);
+            return null;
+        }
+    }
+
+
+    public Optional<String> getLatestTranscript(String userId) {
+        try {
+            // 사용자의 폴더 경로 지정
+            String userFolderPrefix = userId + "/done/";
+
+            // S3에서 객체 목록을 가져옵니다.
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            // 최신 텍스트 파일을 찾습니다.
+            Optional<S3Object> latestTranscript = response.contents().stream()
+                    .filter(s -> s.key().endsWith("_transcript.txt"))  // 텍스트 파일 필터링
+                    .max(Comparator.comparing(S3Object::lastModified));  // 가장 최근 파일 찾기
+
+            if (latestTranscript.isPresent()) {
+                String key = latestTranscript.get().key(); // S3 경로를 반환
+                return Optional.of(key);
+            } else {
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            logger.error("Failed to retrieve the latest transcript from S3.", e);
+            return Optional.empty();
+        }
+    }
+
+
+    //    제목추출
+    public List<String> getRecentTitlesFromTranscripts(String userId, int limit) {
+        try {
+            String userFolderPrefix = userId + "/done/";
+
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            // 최근 파일 순으로 정렬하고 제한 수 만큼 가져오기
+            return response.contents().stream()
+                    .filter(s -> s.key().endsWith("_transcript.txt"))
+                    .sorted(Comparator.comparing(S3Object::lastModified).reversed())
+                    .limit(limit)
+                    .map(s -> extractTitleFromTranscript(userId, s.key()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("Failed to retrieve recent transcript titles from S3.", e);
+            return Collections.emptyList();
+        }
+    }
+
+    private String extractTitleFromTranscript(String userId, String transcriptKey) {
+        try {
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(transcriptKey)
+                    .build();
+
+            ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(getObjectRequest);
+            String content = new BufferedReader(new InputStreamReader(s3ObjectInputStream))
+                    .lines()
+                    .collect(Collectors.joining("\n"));
+
+            // 정규식을 통해 제목 추출
+            Pattern pattern = Pattern.compile("<(.*?)>");
+            Matcher matcher = pattern.matcher(content);
+            if (matcher.find()) {
+                return matcher.group(1); // 제목 반환
+            } else {
+                return "제목 없음"; // 제목이 없는 경우 기본값 반환
+            }
+        } catch (Exception e) {
+            logger.error("Failed to extract title from transcript.", e);
+            return "제목 없음";
+        }
+    }
+
 }
