@@ -17,7 +17,6 @@ public class UserDTO {
     private String userId;    // 사용자 아이디
     private String userPw;    // 사용자 비밀번호
     private String userEmail; // 사용자 이메일
-    private Boolean isVerified; // 인증여부
     private LocalDateTime enrollDate; // 가입일
     private LocalDateTime updateDate; // 수정일
     private Character isSecession;  // 탈퇴여부 (Y or N)
@@ -30,7 +29,6 @@ public class UserDTO {
         userDTO.setUserId(userEntity.getUserId());
         userDTO.setUserPw(userEntity.getUserPw()); // 암호화된 비밀번호를 가져옴
         userDTO.setUserEmail(userEntity.getUserEmail());
-        userDTO.setIsVerified(userEntity.getIsVerified());
         userDTO.setEnrollDate(userEntity.getEnrollDate());
         userDTO.setUpdateDate(userEntity.getUpdateDate());
         userDTO.setIsSecession(userEntity.getIsSecession());

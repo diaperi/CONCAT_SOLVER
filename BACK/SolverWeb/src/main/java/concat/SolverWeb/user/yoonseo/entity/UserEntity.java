@@ -34,9 +34,6 @@ public class UserEntity {
     @Column(name = "USER_EMAIL", nullable = false, unique = true, length = 100)
     private String userEmail; // 사용자 이메일
 
-    @Column(name = "IS_VERIFIED", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private Boolean isVerified; // 인증여부
-
     @Column(name = "ENROLL_DATE", columnDefinition = "TIMESTAMP")
     private LocalDateTime enrollDate; // 가입일
 
@@ -54,7 +51,6 @@ public class UserEntity {
         userEntity.setUserId(userDTO.getUserId());
         userEntity.setUserPw(userDTO.getUserPw());
         userEntity.setUserEmail(userDTO.getUserEmail());
-        userEntity.setIsVerified(userDTO.getIsVerified());
         userEntity.setEnrollDate(userDTO.getEnrollDate());
         userEntity.setUpdateDate(userDTO.getUpdateDate());
         userEntity.setIsSecession(userDTO.getIsSecession());

@@ -11,7 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FindMessageService {
+public class EmailSenderService {
 
     @Autowired
     private JavaMailSender emailSender;
@@ -24,12 +24,12 @@ public class FindMessageService {
 
     public void sendSimpleMessage(String to, String subject, String text) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
         helper.setFrom(new InternetAddress(fromEmail, fromName));
         helper.setTo(to);
         helper.setSubject(subject);
-        helper.setText(text);
+        helper.setText(text, true);
 
         emailSender.send(message);
     }
