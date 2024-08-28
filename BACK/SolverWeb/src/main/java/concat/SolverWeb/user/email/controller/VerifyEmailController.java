@@ -1,31 +1,42 @@
 package concat.SolverWeb.user.email.controller;
 
-import concat.SolverWeb.user.email.service.VerifyEmailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import concat.SolverWeb.user.email.service.verify.VerifyCodeService;
+import concat.SolverWeb.user.email.service.verify.VerifyEmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/user")
+import jakarta.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
+
+@RestController
+@RequestMapping("/user/email")
 public class VerifyEmailController {
 
-    private final VerifyEmailService verifyEmailService;
+    private static final Logger logger = LoggerFactory.getLogger(FindEmailController.class);
 
-    @Autowired
-    public VerifyEmailController(VerifyEmailService verifyEmailService) {
+    private final VerifyEmailService verifyEmailService;
+    private final VerifyCodeService verifyCodeService;
+
+    public VerifyEmailController(VerifyEmailService verifyEmailService, VerifyCodeService verifyCodeService) {
         this.verifyEmailService = verifyEmailService;
+        this.verifyCodeService = verifyCodeService;
     }
 
-    @GetMapping("/verify/{userNo}")
-    @ResponseBody
-    public ResponseEntity<String> verifyEmail(@PathVariable Integer userNo) {
-        boolean isVerified = verifyEmailService.verifyEmail(userNo);
-        if (isVerified) {
-            return ResponseEntity.ok("인증 완료");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증 실패");
+    @PostMapping("/send")
+    public String sendVerificationEmail(@RequestParam String email) {
+        try {
+            verifyEmailService.sendVerifyEmail(email);
+            logger.info("Verification email: {}", email);
+            return "메일 발송 완료";
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            logger.error("Failed to send email: {}", email);
+            return "메일 발송 실패: " + e.getMessage();
         }
+    }
+
+    @PostMapping("/verify")
+    public boolean verifyEmail(@RequestParam String email, @RequestParam String code) {
+        return verifyCodeService.checkVerifyCode(email, code);
     }
 }

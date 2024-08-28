@@ -47,20 +47,19 @@
                         비밀번호 확인
                         <input type="password"  id="pwCheckInput"/>
                     </div>
-                    <div class="user-info-email">
-                        이메일
-                        <input type="email" id="emailInput" name="email" />
-                        <p>이메일로 전송된 인증 확인 버튼을 클릭해야 가입이 완료됩니다.</p>
+                        <div class="email-container">
+                            <div class="user-info-email">
+                                이메일
+                            <input type="email" id="emailInput" name="email" />
+                            <button type="button" id="verifyEmail" onclick="sendVerifyEmail()">인증 받기</button>
+                            </div>
+                            <p>이메일로 전송된 인증번호를 입력해야 가입이 완료됩니다.</p>
+                        </div>
+                    <div class="user-info-email-check">
+                        인증번호
+                        <input type="text" id="emailCheckInput" />
+                        <div id="emailCheckResult"></div>
                     </div>
-<!--                    <div class="email">-->
-<!--                        <div class="email-container">-->
-<!--                            <div class="user-info-email">-->
-<!--                                이메일-->
-<!--                            <input type="email" id="emailInput" name="email" />-->
-<!--                            <button type="button" id="verifyEmail" onclick="sendVerificationEmail()">인증 받기</button>-->
-<!--                        </div>-->
-<!--                        <p>이메일로 전송된 인증 확인 버튼을 클릭해야 가입이 완료됩니다.</p>-->
-<!--                    </div>-->
                     <div class="btn">
                         <button  type="submit" id="registerup" onclick="checkInputs()">가입</button>
                     </div>
