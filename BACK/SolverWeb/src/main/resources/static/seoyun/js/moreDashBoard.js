@@ -115,41 +115,121 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-let currentPage = 0;
+$(document).ready(function () {
+    let startDate = ""; // 초기 시작 날짜
+    let endDate = ""; // 초기 종료 날짜
+    let currentPage = 1; // 현재 페이지
+    const pageSize = 5; // 한 페이지에 표시할 항목 수
 
-// 화살표 클릭 시 비동기로 데이터 요청
-document.getElementById('left-arrow').addEventListener('click', function () {
-    if (currentPage > 0) {
-        currentPage--;
-        loadDateList(currentPage);
+    // 페이지 로드 시 초기 GPT 제목 데이터를 가져옴
+    loadGptTitles(currentPage, pageSize);
+
+    function loadGptTitles(page, size) {
+        // startDate와 endDate가 빈 값일 때 기본 값 설정 (예: 오늘 날짜)
+        if (!startDate) {
+            startDate = "20240801"; // 기본 시작 날짜 (예시)
+        }
+        if (!endDate) {
+            endDate = "20240831"; // 기본 종료 날짜 (예시)
+        }
+
+        $.ajax({
+            url    : `/api/moreDashBoard/gpt-titles-by-date`,
+            type   : 'GET',
+            data   : {
+                startDate: startDate,
+                endDate  : endDate,
+                page     : page,
+                size     : size
+            },
+            success: function (response) {
+                const dateListContainer = $("#date-list-container");
+                dateListContainer.empty(); // 기존 데이터를 비웁니다.
+
+                if (response && response.length > 0) {
+                    let minDate = response[0].date;
+                    let maxDate = response[0].date;
+
+                    response.forEach(function (item) {
+                        const title = item.title || "제목 없음";
+                        const date = item.date || "날짜 없음";
+                        const time = item.time || "시간 없음";
+
+                        // 날짜 범위를 계산하여 상단에 표시
+                        if (date < minDate) minDate = date;
+                        if (date > maxDate) maxDate = date;
+
+                        const dateItemHtml = `
+                                <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
+                                     data-timestamp="20240824_144249">
+                                <span>📌</span>
+                                <span>${date} ${time}</span>
+                                <span>${title}</span>
+                            </div>
+                        `;
+
+                        dateListContainer.append(dateItemHtml);
+                    });
+
+                    // 상단의 날짜 범위 갱신
+                    $("#date-range-display").text(formatDate(minDate) + " ~ " + formatDate(maxDate));
+                } else {
+                    dateListContainer.append("<div>데이터가 없습니다.</div>");
+                }
+            },
+            error  : function (xhr, status, error) {
+                console.error("GPT 제목 데이터를 가져오는 중 오류 발생: ", error);
+                $("#date-list-container").append("<div>데이터를 가져오는 중 오류가 발생했습니다.</div>");
+            }
+        });
+    }
+
+    // 왼쪽 화살표 클릭 핸들러
+    $("#next-date-range").on("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            loadGptTitles(currentPage, pageSize);
+        }
+    });
+
+    // 오른쪽 화살표 클릭 핸들러
+    $("#prev-date-range").on("click", function () {
+        currentPage++;
+        loadGptTitles(currentPage, pageSize);
+    });
+
+    function formatDate(dateString) {
+        if (dateString.length === 8) {
+            return dateString.substring(0, 4) + "." + dateString.substring(4, 6) + "." + dateString.substring(6, 8);
+        }
+        return dateString;
     }
 });
 
-document.getElementById('right-arrow').addEventListener('click', function () {
-    currentPage++;
-    loadDateList(currentPage);
+
+// ********* 제목에 따른 감정 분석 결과 **************
+$(document).ready(function () {
+    $(document).on('click', '.gpt-title-item', function () {
+        const gptFileKey = $(this).data('gpt-file-key'); // GPT 파일 키를 읽어옴
+        fetchEmotionAnalysis(gptFileKey);
+    });
+
+    function fetchEmotionAnalysis(gptFileKey) {
+        $.ajax({
+            url    : `/api/moreDashBoard/fetch-emotion-analysis`,
+            type   : 'GET',
+            data   : {gptFileKey: gptFileKey}, // 타임스탬프 대신 GPT 파일 키를 보냄
+            success: function (response) {
+                if (response && response.participant1Image && response.participant2Image) {
+                    $('#participant1EmotionChart').attr('src', response.participant1Image);
+                    $('#participant2EmotionChart').attr('src', response.participant2Image);
+                } else {
+                    console.error("감정 분석 결과를 가져오는 데 실패했습니다.");
+                }
+            },
+            error  : function (xhr, status, error) {
+                console.error("서버에서 감정 분석 결과를 가져오는 중 오류 발생:", error);
+            }
+        });
+    }
 });
-
-
-// 지피티 제목
-function loadDateList(page) {
-    fetch(`/moreDashBoard/dateList?page=${page}`)
-        .then(response => response.json())
-        .then(data => {
-            // 날짜 리스트 컨테이너 초기화
-            const dateListContainer = document.getElementById('date-list-container');
-            dateListContainer.innerHTML = '';
-
-            // 새로운 제목 리스트 추가
-            data.forEach(item => {
-                const div = document.createElement('div');
-                div.classList.add('moreDashBoard_top_right5_dateList1');
-                div.innerHTML = `<span>📌</span> <span>${item.date}</span> <span>${item.title}</span>`;
-                dateListContainer.appendChild(div);
-            });
-        })
-        .catch(error => console.error('Error fetching data:', error));
-}
-
-// 초기 페이지 로드
-loadDateList(currentPage);
