@@ -7,6 +7,8 @@
     <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/seoyun/css/moreDashBoard.css}">
     <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <!-- jQuery를 로드 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div th:replace="~{hyeeun/header :: header}"></div>
@@ -60,7 +62,7 @@
                                 <div>
                                     <!-- 참여자1의 감정 분석 결과 이미지 -->
                                     <img th:src="@{|/images/${userId}_participant1_${timestamp}_emotion_chart.png|}"
-                                         alt="참여자1 감정 분석 결과" class="circle">
+                                         alt="참여자1 감정 분석 결과" class="circle" id="participant1EmotionChart">
                                 </div>
                                 <span>참여자1</span>
                             </div>
@@ -70,7 +72,7 @@
                                 <div>
                                     <!-- 참여자2의 감정 분석 결과 이미지 -->
                                     <img th:src="@{|/images/${userId}_participant2_${timestamp}_emotion_chart.png|}"
-                                         alt="참여자2 감정 분석 결과" class="circle">
+                                         alt="참여자2 감정 분석 결과" class="circle" id="participant2EmotionChart">
                                 </div>
                                 <span>참여자2</span>
                             </div>
@@ -82,32 +84,13 @@
                         </div>
                         <div class="moreDashBoard_top_right5">
                             <div class="moreDashBoard_top_right5_date">
-                                <i class="fa-solid fa-angles-left"></i>
-                                <span>2024.08.25 ~ 2024.08.25</span>
-                                <i class="fa-solid fa-angles-right"></i>
+                                <i id="prev-date-range" class="fa-solid fa-angles-left"></i>
+                                <span id="date-range-display">2024.08.25 ~ 2024.08.25</span>
+                                <i id="next-date-range" class="fa-solid fa-angles-right"></i>
                             </div>
                             <div class="moreDashBoard_top_right5_dateList" id="date-list-container">
-                                <div class="moreDashBoard_top_right5_dateList1">
-                                    <span>📌</span>
-                                    <span>2024.08.25</span>
-                                    <span>제목</span>
-                                </div>
-                                <div class="moreDashBoard_top_right5_dateList1">
-                                    <span>📌</span>
-                                    <span>2024.08.25</span>
-                                    <span>제목</span>
-                                </div>
-                                <div class="moreDashBoard_top_right5_dateList1">
-                                    <span>📌</span>
-                                    <span>2024.08.25</span>
-                                    <span>제목</span>
-                                </div>
-                                <div class="moreDashBoard_top_right5_dateList1">
-                                    <span>📌</span>
-                                    <span>2024.08.25</span>
-                                    <span>제목</span>
-                                </div>
-                                <div class="moreDashBoard_top_right5_dateList1">
+                                <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
+                                     data-gpt-file-key="gpt_response_20240824_144249.txt"> <!-- GPT 파일 키 사용 -->
                                     <span>📌</span>
                                     <span>2024.08.25</span>
                                     <span>제목</span>
@@ -203,5 +186,9 @@
 
 
 <script src="/seoyun/js/moreDashBoard.js"></script>
+<script>
+    const userId = /*[[${userId}]]*/ ''; // Thymeleaf를 통해 userId를 가져옵니다.
+</script>
+
 </body>
 </html>

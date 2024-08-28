@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -533,9 +534,9 @@ public class S3Service {
 
 
     //    제목추출
-    public List<String> getRecentTitlesFromTranscripts(String userId, int limit) {
+    public List<Map<String, String>> getGptTitlesByDateRange(String userId, String startDate, String endDate, int page, int size) {
         try {
-            String userFolderPrefix = userId + "/done/";
+            String userFolderPrefix = userId + "/gpt/";
 
             ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
                     .bucket(bucketName)
@@ -544,42 +545,94 @@ public class S3Service {
 
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
 
-            // 최근 파일 순으로 정렬하고 제한 수 만큼 가져오기
-            return response.contents().stream()
-                    .filter(s -> s.key().endsWith("_transcript.txt"))
+            List<S3Object> filteredContents = response.contents().stream()
+                    .filter(s -> s.key().endsWith(".txt"))
+                    .filter(s -> {
+                        Map<String, String> dateTimeMap = extractDateTimeFromGptKey(s.key());
+                        String fileDate = dateTimeMap.get("date");
+                        return fileDate != null && fileDate.compareTo(startDate) >= 0 && fileDate.compareTo(endDate) <= 0;
+                    })
                     .sorted(Comparator.comparing(S3Object::lastModified).reversed())
-                    .limit(limit)
-                    .map(s -> extractTitleFromTranscript(userId, s.key()))
+                    .skip((long) (page - 1) * size) // 페이지 번호에 따른 건너뛰기
+                    .limit(size) // 한 페이지에 보여줄 개수 제한
                     .collect(Collectors.toList());
+
+            if (filteredContents.isEmpty()) {
+                logger.warn("No data found for the given date range: {} to {}", startDate, endDate);
+            }
+
+            return filteredContents.stream()
+                    .map(s -> {
+                        String title = getGptTitleFromFile(s.key());
+                        Map<String, String> dateTimeMap = extractDateTimeFromGptKey(s.key());
+                        Map<String, String> resultMap = new HashMap<>();
+                        resultMap.put("title", title);
+                        resultMap.put("date", dateTimeMap.get("date"));
+                        resultMap.put("time", dateTimeMap.get("time"));
+                        return resultMap;
+                    })
+                    .collect(Collectors.toList());
+
         } catch (Exception e) {
-            logger.error("Failed to retrieve recent transcript titles from S3.", e);
+            logger.error("Failed to retrieve GPT titles by date range.", e);
             return Collections.emptyList();
         }
     }
 
-    private String extractTitleFromTranscript(String userId, String transcriptKey) {
+    private Map<String, String> extractDateTimeFromGptKey(String gptKey) {
+        Map<String, String> dateTimeMap = new HashMap<>();
         try {
-            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(transcriptKey)
-                    .build();
+            Pattern pattern = Pattern.compile("gpt_response_(\\d{8})_(\\d{6})\\.txt");
+            Matcher matcher = pattern.matcher(gptKey);
+            if (matcher.find()) {
+                String date = matcher.group(1); // YYYYMMDD 형식
+                String time = matcher.group(2); // HHMMSS 형식
+                dateTimeMap.put("date", date);
+                dateTimeMap.put("time", time);
+            }
+        } catch (Exception e) {
+            logger.error("Failed to extract date and time from GPT key: {}", gptKey, e);
+        }
+        return dateTimeMap;
+    }
 
-            ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(getObjectRequest);
+    private String getGptTitleFromFile(String s3Key) {
+        try (ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(
+                GetObjectRequest.builder().bucket(bucketName).key(s3Key).build())) {
+
             String content = new BufferedReader(new InputStreamReader(s3ObjectInputStream))
                     .lines()
                     .collect(Collectors.joining("\n"));
 
-            // 정규식을 통해 제목 추출
+            // <제목> 태그에서 제목 추출
             Pattern pattern = Pattern.compile("<(.*?)>");
             Matcher matcher = pattern.matcher(content);
             if (matcher.find()) {
                 return matcher.group(1); // 제목 반환
-            } else {
-                return "제목 없음"; // 제목이 없는 경우 기본값 반환
             }
         } catch (Exception e) {
-            logger.error("Failed to extract title from transcript.", e);
-            return "제목 없음";
+            logger.error("Failed to retrieve GPT title from S3 for key: {}", s3Key, e);
+        }
+        return "제목 없음";
+    }
+
+    private String extractTimestampFromGptFile(String gptKey) {
+        try {
+            // gpt_response_YYYYMMDD_HHMMSS.txt 형식에서 타임스탬프 추출
+            Pattern pattern = Pattern.compile("gpt_response_(\\d{8})_(\\d{6})\\.txt");
+            Matcher matcher = pattern.matcher(gptKey);
+            if (matcher.find()) {
+                // 추출된 타임스탬프는 "YYYYMMDD_HHMMSS" 형식
+                String timestamp = matcher.group(1) + "_" + matcher.group(2);
+                logger.info("Extracted timestamp: " + timestamp); // 타임스탬프를 로그에 출력
+                return timestamp;
+            } else {
+                logger.error("Failed to match GPT key pattern: " + gptKey);
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Error extracting timestamp from GPT key: " + gptKey, e);
+            return null;
         }
     }
 
