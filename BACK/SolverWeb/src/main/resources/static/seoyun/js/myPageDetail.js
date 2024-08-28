@@ -42,7 +42,7 @@ document.getElementById('trashBtn').addEventListener('click', function () {
             if (data.success) {
                 alert('삭제 성공');
             } else {
-                alert('삭제 실패.');
+                alert('삭제 실패');
             }
         })
         .catch(error => {

@@ -83,7 +83,6 @@ public class HyeeunChangeMemberService {
 
         // enrollDate는 기존 엔티티의 값을 그대로 유지
         userEntity.setEnrollDate(existingUserEntity.getEnrollDate());
-        userEntity.setIsVerified(existingUserEntity.getIsVerified());
         userEntity.setIsSecession(existingUserEntity.getIsSecession());
 
         // 수정일 업데이트
