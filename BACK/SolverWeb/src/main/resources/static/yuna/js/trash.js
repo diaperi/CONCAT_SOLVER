@@ -35,9 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     window.onclick = function (event) {
-        if (event.target === modalPopup) {
-            closeModal();
-        } else if (!event.target.closest('.trash_moreOptions') && !event.target.closest('.trash_moreOptionsMenu')) {
+        if (!event.target.closest('.trash_moreOptions') && !event.target.closest('.trash_moreOptionsMenu')) {
             document.querySelectorAll('.trash_moreOptionsMenu').forEach(menu => {
                 menu.classList.remove('show');
             });
