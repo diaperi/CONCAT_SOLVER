@@ -11,14 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
         closeModal();
     });
 
-    window.onclick = function (event) {
-        if (event.target == modalPopup) {
-            closeModal();
-        }
-    };
-});
+    modalContent.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
 
-function closeModal() {
-    const modalPopup = document.querySelector('.trashModal_popup');
-    modalPopup.style.display = 'none';
-}
+    function closeModal() {
+        modalPopup.style.display = 'none';
+    }
+});

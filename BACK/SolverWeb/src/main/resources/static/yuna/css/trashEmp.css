@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 body {
@@ -58,7 +60,6 @@ section {
 
 .trashEmp_trashIcon{
     text-align: center;
-    margin-top: 7vh;
     margin-bottom: 2.4vh;
 }
 
@@ -83,16 +84,6 @@ section {
     color: #E4E4E4E5;
     font-size: 2vh;
     font-weight: 500;
-}
-
-@media (max-width: 468px) {
-    .trashEmp_content h1 {
-        font-size: 8vw;
-    }
-
-    .trashEmp_content p {
-        font-size: 6vw;
-    }
 }
 
 /* Modal pop-up */
