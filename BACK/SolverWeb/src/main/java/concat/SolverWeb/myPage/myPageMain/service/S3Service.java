@@ -14,10 +14,11 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.io.*;
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -462,25 +463,22 @@ public class S3Service {
                 .collect(Collectors.toList());
     }
 
-
-    // Python 스크립트를 실행하여 감정 분석 결과를 생성하는 메서드
-    public String generateEmotionAnalysis(String s3Key, String participant, String outputPath) {
+    // 이미지 감정 분석 수행 메서드
+    public String generateImageEmotionAnalysis(String s3Key, String participant, String outputPath) {
         try {
             // Python 명령어와 인수를 설정
             List<String> commands = new ArrayList<>();
             commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
             commands.add("src/main/resources/scripts/emotionChart.py"); // Python 스크립트의 경로
-            commands.add(bucketName); // S3 버킷 이름
+            commands.add("diaperiwinklebucket2"); // S3 버킷 이름
             commands.add(s3Key); // S3 경로
             commands.add(participant); // 분석할 참여자
             commands.add(outputPath); // 결과 이미지 경로
 
-            // ProcessBuilder를 사용하여 Python 스크립트 실행
             ProcessBuilder processBuilder = new ProcessBuilder(commands);
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
-            // Python 스크립트의 출력을 읽어오기
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -497,6 +495,56 @@ public class S3Service {
             }
         } catch (Exception e) {
             logger.error("Failed to execute Python script for emotion analysis.", e);
+            return null;
+        }
+    }
+
+    // 텍스트 감정 분석 수행 메서드
+    public String generateTextEmotionAnalysis(String s3Key) {
+        try {
+            // Python 명령어와 인수를 설정
+            List<String> commands = new ArrayList<>();
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+            commands.add("src/main/resources/scripts/emotionAdjust.py"); // Python 스크립트의 경로
+            commands.add("diaperiwinklebucket2"); // S3 버킷 이름
+            commands.add(s3Key); // S3 경로
+
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            // 여기서 UTF-8 인코딩을 지정하여 출력을 읽음
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
+
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            StringBuilder errorOutput = new StringBuilder();
+            while ((line = errorReader.readLine()) != null) {
+                errorOutput.append(line).append("\n");
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                logger.info("Python script executed successfully.");
+                String result = output.toString().trim();
+
+                // '.' 기준으로 줄 바꿈 처리
+                result = result.replace(".", ".<br>");
+
+                logger.info("Script output: " + result);
+                return result; // 텍스트 결과 반환
+            } else {
+                logger.error("Python script execution failed with exit code: " + exitCode);
+                logger.error("Script error output: " + errorOutput.toString());
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Failed to execute Python script for text emotion analysis.", e);
             return null;
         }
     }
@@ -616,24 +664,104 @@ public class S3Service {
         return "제목 없음";
     }
 
-    private String extractTimestampFromGptFile(String gptKey) {
+
+    //    ***********대화재구성*********
+    //    ***********대화재구성*********
+    public Map<String, String> processDialogue(String userId, String date) {
         try {
-            // gpt_response_YYYYMMDD_HHMMSS.txt 형식에서 타임스탬프 추출
-            Pattern pattern = Pattern.compile("gpt_response_(\\d{8})_(\\d{6})\\.txt");
-            Matcher matcher = pattern.matcher(gptKey);
-            if (matcher.find()) {
-                // 추출된 타임스탬프는 "YYYYMMDD_HHMMSS" 형식
-                String timestamp = matcher.group(1) + "_" + matcher.group(2);
-                logger.info("Extracted timestamp: " + timestamp); // 타임스탬프를 로그에 출력
-                return timestamp;
-            } else {
-                logger.error("Failed to match GPT key pattern: " + gptKey);
-                return null;
+            // S3 경로 구성
+            String s3PathPrefix = String.format("%s/done/negative_emotion_%s", userId, date);
+
+            // S3에서 해당 경로에 있는 파일 목록 가져오기
+            ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(s3PathPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsRequest);
+            List<S3Object> files = response.contents();
+
+            logger.info("S3 Path Prefix: " + s3PathPrefix);
+            logger.info("Number of files found: " + files.size());
+            files.forEach(file -> logger.info("Found file: " + file.key()));
+
+            if (files.isEmpty()) {
+                logger.warn("No files found for the specified date: " + date);
+                return Map.of("original", "No matching files found.", "result", "");
             }
+
+            // 파일 목록 중 가장 최신의 파일을 선택
+            S3Object latestFile = Collections.max(files, Comparator.comparing(S3Object::lastModified));
+            String latestFileKey = latestFile.key();
+
+            logger.info("Latest file selected: " + latestFileKey);
+
+            // S3에서 원본 텍스트 가져오기
+            String originalContent = getFileFromS3(bucketName, latestFileKey);
+
+// Python 스크립트 실행 명령어 구성
+            List<String> commands = new ArrayList<>();
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+            commands.add("src/main/resources/scripts/recommendText.py"); // Python 스크립트의 경로
+
+            ProcessBuilder pb = new ProcessBuilder(commands);
+            pb.redirectErrorStream(true);
+
+            Process process = pb.start();
+
+// 원본 텍스트를 UTF-8로 인코딩하여 파이썬 프로세스의 입력 스트림에 전달
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8))) {
+                writer.write(originalContent);
+                writer.flush();
+            }
+
+
+            // Python 스크립트의 출력을 UTF-8로 읽어들임
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
+
+            StringBuilder processedContent = new StringBuilder();
+            String result;
+            while ((result = reader.readLine()) != null) {
+                processedContent.append(result).append("\n");
+            }
+
+            String finalResult = processedContent.toString().trim();
+
+            // 결과를 반환할 Map 구성 (로그에 출력하지 않음)
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("original", originalContent);
+            responseMap.put("result", finalResult);
+
+            return responseMap;
+
         } catch (Exception e) {
-            logger.error("Error extracting timestamp from GPT key: " + gptKey, e);
-            return null;
+            logger.error("Error during processing dialogue", e);
+            return Map.of("original", "Error occurred", "result", "");
         }
     }
 
+
+    // S3에서 파일 가져오기 함수
+    private String getFileFromS3(String bucketName, String fileKey) {
+        try {
+            // S3에서 객체 가져오기
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileKey)
+                    .build();
+
+            // S3 객체를 ResponseInputStream으로 가져오기
+            ResponseInputStream<GetObjectResponse> s3Object = s3Client.getObject(getObjectRequest);
+
+            // InputStream을 읽어들여서 문자열로 변환
+            String content = new BufferedReader(new InputStreamReader(s3Object, StandardCharsets.UTF_8))
+                    .lines()
+                    .collect(Collectors.joining("\n"));
+
+            return content;
+        } catch (Exception e) {
+            logger.error("Error fetching file from S3: " + e.getMessage(), e);
+            return "Error occurred while fetching the original file.";
+        }
+    }
 }
