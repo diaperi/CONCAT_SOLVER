@@ -45,3 +45,22 @@ document.addEventListener('DOMContentLoaded', () => {
 //     }
 //     updateLink.attr("href", updateUrl);
 // });
+// /hyeeun/js/header.js 파일에 추가
+
+document.addEventListener("DOMContentLoaded", function () {
+    // 로딩 스피너를 표시하는 함수
+    function showLoadingSpinner() {
+        const spinner = document.getElementById('loading-spinner');
+        if (spinner) {
+            spinner.style.display = 'flex';
+        }
+    }
+
+    // 마이페이지 버튼 클릭 시 로딩 스피너 표시
+    const myPageBtn = document.getElementById('mypage-btn');
+    if (myPageBtn) {
+        myPageBtn.addEventListener('click', function (event) {
+            showLoadingSpinner();
+        });
+    }
+});
