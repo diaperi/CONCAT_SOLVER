@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -13,19 +14,16 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.io.*;
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -463,5 +461,307 @@ public class S3Service {
                         imageInfo.getGptTitle().toLowerCase().contains(keyword.toLowerCase()) ||
                                 imageInfo.getLastModifiedDate().contains(keyword))
                 .collect(Collectors.toList());
+    }
+
+    // 이미지 감정 분석 수행 메서드
+    public String generateImageEmotionAnalysis(String s3Key, String participant, String outputPath) {
+        try {
+            // Python 명령어와 인수를 설정
+            List<String> commands = new ArrayList<>();
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+            commands.add("src/main/resources/scripts/emotionChart.py"); // Python 스크립트의 경로
+            commands.add("diaperiwinklebucket2"); // S3 버킷 이름
+            commands.add(s3Key); // S3 경로
+            commands.add(participant); // 분석할 참여자
+            commands.add(outputPath); // 결과 이미지 경로
+
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                logger.info(line); // 스크립트 출력을 로깅합니다.
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                logger.info("Python script executed successfully.");
+                return outputPath;
+            } else {
+                logger.error("Python script execution failed with exit code: " + exitCode);
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Failed to execute Python script for emotion analysis.", e);
+            return null;
+        }
+    }
+
+    // 텍스트 감정 분석 수행 메서드
+    public String generateTextEmotionAnalysis(String s3Key) {
+        try {
+            // Python 명령어와 인수를 설정
+            List<String> commands = new ArrayList<>();
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+            commands.add("src/main/resources/scripts/emotionAdjust.py"); // Python 스크립트의 경로
+            commands.add("diaperiwinklebucket2"); // S3 버킷 이름
+            commands.add(s3Key); // S3 경로
+
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            // 여기서 UTF-8 인코딩을 지정하여 출력을 읽음
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
+
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            StringBuilder errorOutput = new StringBuilder();
+            while ((line = errorReader.readLine()) != null) {
+                errorOutput.append(line).append("\n");
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                logger.info("Python script executed successfully.");
+                String result = output.toString().trim();
+
+                // '.' 기준으로 줄 바꿈 처리
+                result = result.replace(".", ".<br>");
+
+                logger.info("Script output: " + result);
+                return result; // 텍스트 결과 반환
+            } else {
+                logger.error("Python script execution failed with exit code: " + exitCode);
+                logger.error("Script error output: " + errorOutput.toString());
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("Failed to execute Python script for text emotion analysis.", e);
+            return null;
+        }
+    }
+
+
+    public Optional<String> getLatestTranscript(String userId) {
+        try {
+            // 사용자의 폴더 경로 지정
+            String userFolderPrefix = userId + "/done/";
+
+            // S3에서 객체 목록을 가져옵니다.
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            // 최신 텍스트 파일을 찾습니다.
+            Optional<S3Object> latestTranscript = response.contents().stream()
+                    .filter(s -> s.key().endsWith("_transcript.txt"))  // 텍스트 파일 필터링
+                    .max(Comparator.comparing(S3Object::lastModified));  // 가장 최근 파일 찾기
+
+            if (latestTranscript.isPresent()) {
+                String key = latestTranscript.get().key(); // S3 경로를 반환
+                return Optional.of(key);
+            } else {
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            logger.error("Failed to retrieve the latest transcript from S3.", e);
+            return Optional.empty();
+        }
+    }
+
+
+    //    제목추출
+    public List<Map<String, String>> getGptTitlesByDateRange(String userId, String startDate, String endDate, int page, int size) {
+        try {
+            String userFolderPrefix = userId + "/gpt/";
+
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            List<S3Object> filteredContents = response.contents().stream()
+                    .filter(s -> s.key().endsWith(".txt"))
+                    .filter(s -> {
+                        Map<String, String> dateTimeMap = extractDateTimeFromGptKey(s.key());
+                        String fileDate = dateTimeMap.get("date");
+                        return fileDate != null && fileDate.compareTo(startDate) >= 0 && fileDate.compareTo(endDate) <= 0;
+                    })
+                    .sorted(Comparator.comparing(S3Object::lastModified).reversed())
+                    .skip((long) (page - 1) * size) // 페이지 번호에 따른 건너뛰기
+                    .limit(size) // 한 페이지에 보여줄 개수 제한
+                    .collect(Collectors.toList());
+
+            if (filteredContents.isEmpty()) {
+                logger.warn("No data found for the given date range: {} to {}", startDate, endDate);
+            }
+
+            return filteredContents.stream()
+                    .map(s -> {
+                        String title = getGptTitleFromFile(s.key());
+                        Map<String, String> dateTimeMap = extractDateTimeFromGptKey(s.key());
+                        Map<String, String> resultMap = new HashMap<>();
+                        resultMap.put("title", title);
+                        resultMap.put("date", dateTimeMap.get("date"));
+                        resultMap.put("time", dateTimeMap.get("time"));
+                        return resultMap;
+                    })
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            logger.error("Failed to retrieve GPT titles by date range.", e);
+            return Collections.emptyList();
+        }
+    }
+
+    private Map<String, String> extractDateTimeFromGptKey(String gptKey) {
+        Map<String, String> dateTimeMap = new HashMap<>();
+        try {
+            Pattern pattern = Pattern.compile("gpt_response_(\\d{8})_(\\d{6})\\.txt");
+            Matcher matcher = pattern.matcher(gptKey);
+            if (matcher.find()) {
+                String date = matcher.group(1); // YYYYMMDD 형식
+                String time = matcher.group(2); // HHMMSS 형식
+                dateTimeMap.put("date", date);
+                dateTimeMap.put("time", time);
+            }
+        } catch (Exception e) {
+            logger.error("Failed to extract date and time from GPT key: {}", gptKey, e);
+        }
+        return dateTimeMap;
+    }
+
+    private String getGptTitleFromFile(String s3Key) {
+        try (ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(
+                GetObjectRequest.builder().bucket(bucketName).key(s3Key).build())) {
+
+            String content = new BufferedReader(new InputStreamReader(s3ObjectInputStream))
+                    .lines()
+                    .collect(Collectors.joining("\n"));
+
+            // <제목> 태그에서 제목 추출
+            Pattern pattern = Pattern.compile("<(.*?)>");
+            Matcher matcher = pattern.matcher(content);
+            if (matcher.find()) {
+                return matcher.group(1); // 제목 반환
+            }
+        } catch (Exception e) {
+            logger.error("Failed to retrieve GPT title from S3 for key: {}", s3Key, e);
+        }
+        return "제목 없음";
+    }
+
+
+    //    ***********대화재구성*********
+    //    ***********대화재구성*********
+    public Map<String, String> processDialogue(String userId, String date) {
+        try {
+            // S3 경로 구성
+            String s3PathPrefix = String.format("%s/done/negative_emotion_%s", userId, date);
+
+            // S3에서 해당 경로에 있는 파일 목록 가져오기
+            ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(s3PathPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsRequest);
+            List<S3Object> files = response.contents();
+
+            logger.info("S3 Path Prefix: " + s3PathPrefix);
+            logger.info("Number of files found: " + files.size());
+            files.forEach(file -> logger.info("Found file: " + file.key()));
+
+            if (files.isEmpty()) {
+                logger.warn("No files found for the specified date: " + date);
+                return Map.of("original", "No matching files found.", "result", "");
+            }
+
+            // 파일 목록 중 가장 최신의 파일을 선택
+            S3Object latestFile = Collections.max(files, Comparator.comparing(S3Object::lastModified));
+            String latestFileKey = latestFile.key();
+
+            logger.info("Latest file selected: " + latestFileKey);
+
+            // S3에서 원본 텍스트 가져오기
+            String originalContent = getFileFromS3(bucketName, latestFileKey);
+
+// Python 스크립트 실행 명령어 구성
+            List<String> commands = new ArrayList<>();
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+            commands.add("src/main/resources/scripts/recommendText.py"); // Python 스크립트의 경로
+
+            ProcessBuilder pb = new ProcessBuilder(commands);
+            pb.redirectErrorStream(true);
+
+            Process process = pb.start();
+
+// 원본 텍스트를 UTF-8로 인코딩하여 파이썬 프로세스의 입력 스트림에 전달
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8))) {
+                writer.write(originalContent);
+                writer.flush();
+            }
+
+
+            // Python 스크립트의 출력을 UTF-8로 읽어들임
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
+
+            StringBuilder processedContent = new StringBuilder();
+            String result;
+            while ((result = reader.readLine()) != null) {
+                processedContent.append(result).append("\n");
+            }
+
+            String finalResult = processedContent.toString().trim();
+
+            // 결과를 반환할 Map 구성 (로그에 출력하지 않음)
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("original", originalContent);
+            responseMap.put("result", finalResult);
+
+            return responseMap;
+
+        } catch (Exception e) {
+            logger.error("Error during processing dialogue", e);
+            return Map.of("original", "Error occurred", "result", "");
+        }
+    }
+
+
+    // S3에서 파일 가져오기 함수
+    private String getFileFromS3(String bucketName, String fileKey) {
+        try {
+            // S3에서 객체 가져오기
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileKey)
+                    .build();
+
+            // S3 객체를 ResponseInputStream으로 가져오기
+            ResponseInputStream<GetObjectResponse> s3Object = s3Client.getObject(getObjectRequest);
+
+            // InputStream을 읽어들여서 문자열로 변환
+            String content = new BufferedReader(new InputStreamReader(s3Object, StandardCharsets.UTF_8))
+                    .lines()
+                    .collect(Collectors.joining("\n"));
+
+            return content;
+        } catch (Exception e) {
+            logger.error("Error fetching file from S3: " + e.getMessage(), e);
+            return "Error occurred while fetching the original file.";
+        }
     }
 }
