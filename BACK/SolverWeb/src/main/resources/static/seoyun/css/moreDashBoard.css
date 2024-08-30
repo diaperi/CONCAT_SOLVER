@@ -101,18 +101,21 @@
 }
 
 .moreDashBoard_top_left_down2_weather {
-    background-color: rgb(0, 102, 255);
     border-radius: 1vh;
     height: 13vh;
     min-width: 13vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
 }
 
-.moreDashBoard_top_left_down2_weather > span {
-    font-size: 7vh;
+.moreDashBoard_top_left_down2_weather > span > img {
+    height: 12vh;
+    min-width: 12vh;
+    border-radius: 1vh;
 }
+
 
 .moreDashBoard_top_left_down2_right {
     display: flex;
@@ -123,7 +126,8 @@
 
 .moreDashBoard_top_left_down2_right > span:nth-child(1) {
     margin-bottom: 2vh;
-    font-size: 3vh;
+    font-size: 1.5vh;
+    font-weight: 100;
 }
 
 .moreDashBoard_top_left_down2_right > span:nth-child(2) {
@@ -291,10 +295,12 @@
 
 .moreDashBoard_top_right4 {
     /* background-color: rgb(0, 101, 141); */
-    width: 80%;
+    width: 100%;
     padding-left: 2vh;
     padding-right: 2vh;
     margin-bottom: 3vh;
+    font-size: 1.5vh;
+    font-weight: 100;
 }
 
 .moreDashBoard_top_right5 {
@@ -392,6 +398,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 95%;
     flex-direction: column;
 }
 
@@ -448,7 +455,7 @@
 
 /* *******************************달력 ******************** */
 .calendar-box {
-    width: 90%;
+    width: 80%;
     /* background-color: rgba(0, 0, 0, 0.377); */
     border-radius: 0.8vh;
     color: rgb(206, 206, 206);

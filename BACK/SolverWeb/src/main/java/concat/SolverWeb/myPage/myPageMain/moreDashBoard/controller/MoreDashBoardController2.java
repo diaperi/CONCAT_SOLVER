@@ -98,13 +98,14 @@ public class MoreDashBoardController2 {
             String outputImagePathParticipant2 = String.format("src/main/resources/static/images/%s_participant2_%s_emotion_chart.png", userId, timestamp);
 
             // Python 스크립트를 호출하여 감정 분석을 수행합니다.
-            String participant1Image = s3Service.generateEmotionAnalysis(s3KeyTranscript, "참여자1", outputImagePathParticipant1);
-            String participant2Image = s3Service.generateEmotionAnalysis(s3KeyTranscript, "참여자2", outputImagePathParticipant2);
+            String participant1Image = s3Service.generateImageEmotionAnalysis(s3KeyTranscript, "참여자1", outputImagePathParticipant1);
+            String participant2Image = s3Service.generateImageEmotionAnalysis(s3KeyTranscript, "참여자2", outputImagePathParticipant2);
 
             if (participant1Image != null && participant2Image != null) {
                 Map<String, String> responseMap = new HashMap<>();
                 responseMap.put("participant1Image", String.format("/images/%s_participant1_%s_emotion_chart.png", userId, timestamp));
                 responseMap.put("participant2Image", String.format("/images/%s_participant2_%s_emotion_chart.png", userId, timestamp));
+                responseMap.put("date", timestamp.substring(0, 8)); // 날짜 정보 추가 (YYYYMMDD 형식)
                 return ResponseEntity.ok(responseMap);
             } else {
                 return ResponseEntity.status(500).build();
@@ -141,6 +142,35 @@ public class MoreDashBoardController2 {
             return ((SnsUserDTO) loggedInUser).getProviderId();
         } else {
             throw new IllegalArgumentException("Unexpected user type");
+        }
+    }
+
+
+    @GetMapping("/process-dialogue")
+    public ResponseEntity<Map<String, String>> processDialogue(
+            @RequestParam String date, HttpSession session) {
+        try {
+            Object loggedInUser = session.getAttribute("loggedInUser");
+            if (loggedInUser == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            String userId = getUserId(loggedInUser);
+
+            // 서비스 메서드 호출하여 대화 재구성 수행
+            Map<String, String> result = s3Service.processDialogue(userId, date);
+
+            if (result != null && !result.isEmpty()) {
+                return ResponseEntity.ok(result);
+            } else {
+                logger.error("Error: Received null or empty result from processDialogue method.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Map.of("error", "Failed to process dialogue."));
+            }
+        } catch (Exception e) {
+            logger.error("Error during processing dialogue", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "An error occurred while processing dialogue."));
         }
     }
 }
