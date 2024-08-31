@@ -91,7 +91,7 @@ public class TrashCanService {
             categorizedVideos.put("last3Weeks", last3WeeksVideos);
             categorizedVideos.put("last4Weeks", last4WeeksVideos);
 
-            logger.info("Classify the video list by date"); // 영상을 날짜별 분류
+            // logger.info("Classify the video list by date"); // 영상을 날짜별 분류
         } catch (Exception e) {
             logger.error("trash 영상 목록 가져오기 실패", e);
         }
