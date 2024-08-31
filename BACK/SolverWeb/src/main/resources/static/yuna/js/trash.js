@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.bucketBaseUrl) {
                     bucketBaseUrl = data.bucketBaseUrl;
-                    initializeTrash(); // bucketBaseUrl이 설정된 후 페이지 초기화
+                    initializeTrash(); // bucketBaseUrl 설정된 후 페이지 초기화
                 } else {
                     console.error('bucketBaseUrl을 가져오는 데 실패했습니다.');
                 }
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const itemBox = document.createElement('div');
                                 itemBox.className = 'trash_itemBox';
 
-                                // GPT 제목 추가
+                                // GPT 제목
                                 fetch(`/myPage/gptTitle?userId=${userId}&imageKey=${videoKey}`)
                                     .then(response => response.text())
                                     .then(title => {
@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
                             `;
                                         container.appendChild(itemBox);
-                                        // 버튼 클릭 리스너를 다시 추가합니다.
                                         addRecoverButtonListeners();
                                     })
                                     .catch(error => {
@@ -142,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
                             `;
                                         container.appendChild(itemBox);
-                                        // 버튼 클릭 리스너를 다시 추가합니다.
                                         addRecoverButtonListeners();
                                     });
                             });
@@ -209,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Fetch 실패:', error);
-                alert('복구 실패.');
+                alert('복구 실패');
             });
     }
 
