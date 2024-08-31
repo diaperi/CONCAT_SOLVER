@@ -106,11 +106,12 @@ section {
 }
 
 .trash_itemHead img {
-    width: 2.5vh;
-    height: 2.2vh;
+    width: 2.4vh;
+    height: 2.1vh;
 }
 
 .trash_itemHead p {
+    font-size: 13px;
     margin-left: 1.5vh;
     flex-grow: 1;
 }
@@ -118,8 +119,7 @@ section {
 .trash_itemClick img {
     filter: invert(25%) sepia(90%) saturate(3080%) hue-rotate(235deg) brightness(60%) contrast(60%);
     width: 0.6vh;
-    height: 2.3vh;
-    margin-left: auto;
+    height: 2.2vh;
 }
 
 .trash_itemBody {
@@ -261,8 +261,8 @@ section {
 
 .trash_recoverBtn {
     position: absolute;
-    top: -6.6vh;
-    left: -5.4vh;
+    top: -6.8vh;
+    left: -5.5vh;
     border: none;
     background: #fff;
     color: black;
