@@ -113,6 +113,9 @@ section {
     font-size: 13px;
     margin-left: 1.5vh;
     flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .trash_itemClick img {
@@ -260,8 +263,8 @@ section {
 
 .trash_recoverBtn {
     position: absolute;
-    top: -6.8vh;
-    left: -5.5vh;
+    top: -7.4vh;
+    left: -5.8vh;
     border: none;
     background: #fff;
     color: black;

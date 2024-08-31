@@ -164,7 +164,7 @@ public class TrashCanController {
     public ResponseEntity<Map<String, Object>> recoverVideo(@RequestBody Map<String, String> request, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         try {
-            String imageKey = request.get("videoKey");
+            String videoKey = request.get("videoKey");
 
             // 세션에서 로그인된 사용자 정보 가져오기
             Object loggedInUser = session.getAttribute("loggedInUser");
@@ -192,7 +192,7 @@ public class TrashCanController {
                 return ResponseEntity.ok(response);
             }
 
-            boolean isRecovered = trashCanService.recoverVideo(imageKey, userId);
+            boolean isRecovered = trashCanService.recoverVideo(videoKey, userId);
 
             if (isRecovered) {
                 response.put("success", true);
