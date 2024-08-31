@@ -1,9 +1,9 @@
 package concat.SolverWeb.myPage.trashCs.service;
 
+import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -110,62 +110,6 @@ public class TrashCanService {
                 .collect(Collectors.toList());
     }
 
-    // 매일 00시에 실행, test 1일로 설정
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void deleteOldTrashVideos() {
-        String userId = "";
-        String trashPrefix = getTrashPrefix(userId);
-        try {
-            LocalDate cutoffDate = LocalDate.now().minusDays(1);
-
-            ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
-                    .bucket(bucketName)
-                    .prefix(trashPrefix)
-                    .build();
-
-            ListObjectsV2Response response = s3Client.listObjectsV2(listObjects);
-
-            List<S3Object> allObjects = response.contents();
-
-            List<S3Object> oldObjects = allObjects.stream()
-                    .filter(s3Object -> {
-                        String key = s3Object.key();
-                        return key.endsWith(".jpg") || key.endsWith(".jpeg") || key.endsWith(".mp4");
-                    })
-                    .filter(s3Object -> {
-                        LocalDate objectDate = Instant.ofEpochMilli(s3Object.lastModified().toEpochMilli())
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate();
-                        return objectDate.isBefore(cutoffDate);
-                    })
-                    .toList();
-
-            // 삭제 처리
-            if (!oldObjects.isEmpty()) {
-                final int MAX_KEYS = 1000;
-                for (int i = 0; i < oldObjects.size(); i += MAX_KEYS) {
-                    List<ObjectIdentifier> objectIdentifiers = oldObjects.subList(i, Math.min(i + MAX_KEYS, oldObjects.size())).stream()
-                            .map(s3Object -> ObjectIdentifier.builder()
-                                    .key(s3Object.key())
-                                    .build())
-                            .toList();
-
-                    DeleteObjectsRequest deleteRequest = DeleteObjectsRequest.builder()
-                            .bucket(bucketName)
-                            .delete(d -> d.objects(objectIdentifiers))
-                            .build();
-
-                    DeleteObjectsResponse deleteResponse = s3Client.deleteObjects(deleteRequest);
-                    logger.info("휴지통 비우기를 성공했습니다. {}개", deleteResponse.deleted().size());
-                }
-            } else {
-                logger.info("삭제할 오래된 영상이 없습니다.");
-            }
-        } catch (Exception e) {
-            logger.error("휴지통 비우기 실패", e);
-        }
-    }
-
     // 휴지통 비우기
     public void deleteAllTrashVideos(String userId) {
         String trashPrefix = getTrashPrefix(userId);
@@ -238,7 +182,7 @@ public class TrashCanService {
                     .destinationKey(destinationVideoKey)
                     .build();
             s3Client.copyObject(videoCopyRequest);
-            logger.info("Successfully copied video");
+            // logger.info("Successfully copied video");
 
             // 이미지 복사
             CopyObjectRequest imageCopyRequest = CopyObjectRequest.builder()
@@ -248,7 +192,7 @@ public class TrashCanService {
                     .destinationKey(destinationImageKey)
                     .build();
             s3Client.copyObject(imageCopyRequest);
-            logger.info("Successfully copied image");
+            // logger.info("Successfully copied image");
 
             // mp4 파일 찾기
             ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
@@ -274,7 +218,7 @@ public class TrashCanService {
                         .destinationKey(mp4DestinationKey)
                         .build();
                 s3Client.copyObject(mp4CopyRequest);
-                logger.info("Successfully copied related video");
+                // logger.info("Successfully copied related video");
 
                 // mp4 원본 삭제
                 DeleteObjectRequest mp4DeleteRequest = DeleteObjectRequest.builder()
@@ -282,7 +226,7 @@ public class TrashCanService {
                         .key(mp4SourceKey)
                         .build();
                 s3Client.deleteObject(mp4DeleteRequest);
-                logger.info("Successfully deleted related video");
+                // logger.info("Successfully deleted related video");
             }
 
             // 원본 mp4 삭제
@@ -291,7 +235,7 @@ public class TrashCanService {
                     .key(sourceVideoKey)
                     .build();
             s3Client.deleteObject(deleteVideoRequest);
-            logger.info("Successfully deleted video");
+            // logger.info("Successfully deleted video");
 
             // 원본 이미지 삭제
             DeleteObjectRequest deleteImageRequest = DeleteObjectRequest.builder()
@@ -299,11 +243,11 @@ public class TrashCanService {
                     .key(sourceImageKey)
                     .build();
             s3Client.deleteObject(deleteImageRequest);
-            logger.info("Successfully deleted image");
+            // logger.info("Successfully deleted image");
 
             return true;
         } catch (Exception e) {
-            logger.error("Failed to recover video: {}", videoKey, e);
+            logger.error("Failed to recover video", e);
             return false;
         }
     }

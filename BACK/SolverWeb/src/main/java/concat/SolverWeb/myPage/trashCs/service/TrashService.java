@@ -77,14 +77,12 @@ public class TrashService {
                     .destinationBucket(bucketName)
                     .destinationKey(trashKey)
                     .build());
-            logger.info("Video copied successfully");
 
             // 원본 비디오 삭제
             s3Client.deleteObject(DeleteObjectRequest.builder()
                     .bucket(bucketName)
                     .key(videoKey)
                     .build());
-            logger.info("Video deleted successfully");
 
             return true;
         } catch (Exception e) {
@@ -109,14 +107,12 @@ public class TrashService {
                         .destinationBucket(bucketName)
                         .destinationKey(trashImageKey)
                         .build());
-                logger.info("Image copied successfully");
 
                 // 원본 이미지 삭제
                 s3Client.deleteObject(DeleteObjectRequest.builder()
                         .bucket(bucketName)
                         .key(imageKey)
                         .build());
-                logger.info("Image deleted successfully");
                 return true;
             } else {
                 logger.warn("Image does not exist: {}", imageKey);
