@@ -24,7 +24,7 @@
                 <div class="trash_itemBox" th:each="video : ${todayVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p th:text="${video.gptTitle}"></p>
+                        <p th:text="${title}"></p>
                         <div class="trash_itemClick">
                             <button class="trash_moreOptions">
                                 <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
@@ -48,7 +48,7 @@
                 <div class="trash_itemBox" th:each="video : ${thisWeekVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p th:text="${video.gptTitle}"></p>
+                        <p th:text="${title}"></p>
                         <div class="trash_itemClick">
                             <button class="trash_moreOptions">
                                 <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
@@ -67,14 +67,13 @@
             </div>
         </section>
 
-
         <section class="last-1week">
             <h2 class="trash_sectionTitle">1주 전</h2>
             <div class="trash_itemContainer">
                 <div class="trash_itemBox" th:each="video : ${last1WeekVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p th:text="${video.gptTitle}"></p>
+                        <p th:text="${title}"></p>
                         <div class="trash_itemClick">
                             <button class="trash_moreOptions">
                                 <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
@@ -99,7 +98,7 @@
                 <div class="trash_itemBox" th:each="video : ${last2WeeksVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p th:text="${video.gptTitle}"></p>
+                        <p th:text="${title}"></p>
                         <div class="trash_itemClick">
                             <button class="trash_moreOptions">
                                 <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
@@ -124,7 +123,7 @@
                 <div class="trash_itemBox" th:each="video : ${last3WeeksVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p th:text="${video.gptTitle}"></p>
+                        <p th:text="${title}"></p>
                         <div class="trash_itemClick">
                             <button class="trash_moreOptions">
                                 <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
@@ -149,7 +148,7 @@
                 <div class="trash_itemBox" th:each="video : ${last4WeeksVideos}">
                     <div class="trash_itemHead">
                         <img src="/yuna/img/trash_videoIcon.png" alt="비디오-아이콘">
-                        <p th:text="${video.gptTitle}"></p>
+                        <p th:text="${title}"></p>
                         <div class="trash_itemClick">
                             <button class="trash_moreOptions">
                                 <img src="/yuna/img/trash_3dotsIcon.png" alt="점3개">
@@ -185,5 +184,4 @@
     </div>
 </div>
 </body>
-
 </html>

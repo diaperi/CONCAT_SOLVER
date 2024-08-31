@@ -23,6 +23,9 @@ public class S3Config {
     @Value("${cloud.aws.region.static}")
     private String region;
 
+    @Value("${cloud.aws.s3.base.url}")
+    private String bucketBaseUrl;
+
     @Bean
     public S3Client s3Client() {
         return S3Client.builder()
@@ -30,5 +33,10 @@ public class S3Config {
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)))
                 .build();
+    }
+
+    @Bean
+    public String bucketBaseUrl() {
+        return bucketBaseUrl;
     }
 }

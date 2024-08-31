@@ -5,13 +5,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,13 +33,19 @@ public class TrashCanService {
         this.s3Client = s3Client;
     }
 
+    private String getTrashPrefix(String userId) {
+        return userId + "/trash/";
+    }
+
     // 날짜별 분류
-    public Map<String, Object> getTrashVideosByDate() {
+    public Map<String, Object> getTrashVideosByDate(String userId) {
         Map<String, Object> categorizedVideos = new HashMap<>();
+        String trashPrefix = getTrashPrefix(userId);
+
         try {
             ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
                     .bucket(bucketName)
-                    .prefix("trash/")
+                    .prefix(trashPrefix)
                     .build();
 
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjects);
@@ -102,13 +113,14 @@ public class TrashCanService {
     // 매일 00시에 실행, test 1일로 설정
     @Scheduled(cron = "0 0 0 * * ?")
     public void deleteOldTrashVideos() {
+        String userId = "";
+        String trashPrefix = getTrashPrefix(userId);
         try {
-            // 삭제 기준 날짜
             LocalDate cutoffDate = LocalDate.now().minusDays(1);
 
             ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
                     .bucket(bucketName)
-                    .prefix("trash/")
+                    .prefix(trashPrefix)
                     .build();
 
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjects);
@@ -126,7 +138,7 @@ public class TrashCanService {
                                 .toLocalDate();
                         return objectDate.isBefore(cutoffDate);
                     })
-                    .collect(Collectors.toList());
+                    .toList();
 
             // 삭제 처리
             if (!oldObjects.isEmpty()) {
@@ -155,11 +167,13 @@ public class TrashCanService {
     }
 
     // 휴지통 비우기
-    public void deleteAllTrashVideos() {
+    public void deleteAllTrashVideos(String userId) {
+        String trashPrefix = getTrashPrefix(userId);
+
         try {
             ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
                     .bucket(bucketName)
-                    .prefix("trash/")
+                    .prefix(trashPrefix)
                     .build();
 
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjects);
@@ -167,17 +181,14 @@ public class TrashCanService {
             List<S3Object> allObjects = response.contents();
 
             Map<String, List<S3Object>> groupedByTimestamp = allObjects.stream()
-                    .filter(s3Object -> {
-                        String key = s3Object.key();
-                        return key.endsWith(".jpg") || key.endsWith(".jpeg") || key.endsWith(".mp4");
-                    })
+                    .filter(s3Object -> s3Object.key().endsWith(".jpg") || s3Object.key().endsWith(".jpeg") || s3Object.key().endsWith(".mp4"))
                     .collect(Collectors.groupingBy(s3Object -> {
                         String key = s3Object.key();
                         return key.replaceAll(".*_(\\d{8}_\\d{6}).*", "$1");
                     }));
 
             // 삭제 처리
-            groupedByTimestamp.forEach((numberPart, objectsToDelete) -> {
+            groupedByTimestamp.forEach((timestamp, objectsToDelete) -> {
                 try {
                     if (!objectsToDelete.isEmpty()) {
                         final int MAX_KEYS = 1000;
@@ -207,15 +218,16 @@ public class TrashCanService {
         }
     }
 
-
     // 휴지통 영상 복구
     public boolean recoverVideo(String videoKey, String userId) {
+        String trashPrefix = getTrashPrefix(userId);
+
         try {
             String timestamp = videoKey.replaceAll(".*_(\\d{8}_\\d{6}).*", "$1");
-            String sourceVideoKey = "trash/" + videoKey;
+            String sourceVideoKey = userId + "/trash/" + videoKey;
             String destinationVideoKey = userId + "/videos/" + videoKey.substring(videoKey.lastIndexOf("/") + 1);
 
-            String sourceImageKey = "trash/first_frame_" + timestamp + ".jpg";
+            String sourceImageKey = userId + "/trash/first_frame_" + timestamp + ".jpg";
             String destinationImageKey = userId + "/videos/first_frame_" + timestamp + ".jpg";
 
             // 비디오 복사
@@ -241,13 +253,13 @@ public class TrashCanService {
             // mp4 파일 찾기
             ListObjectsV2Request listObjects = ListObjectsV2Request.builder()
                     .bucket(bucketName)
-                    .prefix("trash/")
+                    .prefix(trashPrefix)
                     .build();
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjects);
 
             List<S3Object> relatedMp4Files = response.contents().stream()
                     .filter(s3Object -> s3Object.key().endsWith(".mp4") && s3Object.key().contains(timestamp))
-                    .collect(Collectors.toList());
+                    .toList();
 
             // mp4 파일 복사 및 삭제
             for (S3Object mp4File : relatedMp4Files) {
@@ -294,5 +306,51 @@ public class TrashCanService {
             logger.error("Failed to recover video: {}", videoKey, e);
             return false;
         }
+    }
+
+    // GPT 제목
+    public String getGptTitle(String userId, String imageKey) {
+        try {
+            String timestamp = imageKey.replaceAll(".*_(\\d{8}_\\d{6}).*", "$1");
+            if (timestamp.isEmpty()) {
+                return "제목 없음";
+            }
+
+            String userFolderPrefix = userId + "/gpt/";
+
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            Optional<S3Object> gptFile = response.contents().stream()
+                    .filter(s -> s.key().contains(timestamp) && s.key().endsWith(".txt"))
+                    .findFirst();
+
+            if (gptFile.isPresent()) {
+                String key = gptFile.get().key();
+                GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(key)
+                        .build();
+
+                try (ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(getObjectRequest);
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(s3ObjectInputStream))) {
+
+                    String content = reader.lines().collect(Collectors.joining("\n"));
+                    Matcher matcher = Pattern.compile("<(.*?)>").matcher(content);
+
+                    if (matcher.find()) {
+                        return matcher.group(1); // 제목 반환
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Failed to retrieve GPT title from S3.", e);
+        }
+
+        return "제목 없음"; // 예외 발생 시 기본 제목 반환
     }
 }

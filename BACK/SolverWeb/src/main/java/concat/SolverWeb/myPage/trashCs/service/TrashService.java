@@ -35,8 +35,8 @@ public class TrashService {
 
             String videoKey = userId + "/videos/" + key;
             String imageKey = userId + "/videos/first_frame_" + timestamp + ".jpg";
-            String trashKey = "trash/" + key;
-            String trashImageKey = "trash/first_frame_" + timestamp + ".jpg";
+            String trashKey = userId + "/trash/" + key;
+            String trashImageKey = userId + "/trash/first_frame_" + timestamp + ".jpg";
 
             // 비디오 처리
             boolean videoMoved = moveVideoToTrash(videoKey, trashKey);
