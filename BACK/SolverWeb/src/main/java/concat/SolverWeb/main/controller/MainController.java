@@ -165,7 +165,7 @@ public class MainController {
     @Autowired
     private S3Service s3Service;
 
-    @CrossOrigin(origins = "http://192.168.137.107:5000")
+    @CrossOrigin(origins = "http://192.168.137.179:5000")
     @GetMapping("/mainPage")
     public String mainPage(HttpSession session, Model model) {
 
@@ -210,7 +210,7 @@ public class MainController {
         logger.info("로그인된 사용자 ID: {}", userId);
 
         // Flask 서버의 URL에 사용자 ID를 포함하여 전달
-        String videoFeedUrl = "http://192.168.137.107:5000/video_feed?user_id=" + userId;
+        String videoFeedUrl = "http://192.168.137.179:5000/video_feed?user_id=" + userId;
 
         // 모델에 데이터 추가
         model.addAttribute("videoFeedUrl", videoFeedUrl); // Flask 영상 URL 추가
@@ -223,7 +223,7 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate(requestFactory);
 
         // Flask 서버로 유저 ID 전송
-        String flaskUrl = "http://192.168.137.107:5000/receive_user_id";
+        String flaskUrl = "http://192.168.137.179:5000/receive_user_id";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
