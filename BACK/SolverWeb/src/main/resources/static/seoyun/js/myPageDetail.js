@@ -25,31 +25,31 @@ const spans = document.querySelectorAll('.myPageDetail_rightTop > span');
 const rightMains = document.querySelectorAll('.myPageDetail_rightMain');
 
 // 휴지통 버튼 클릭 시
-document.getElementById('trashBtn').addEventListener('click', function () {
-    const videoElement = document.getElementById('popup-video');
-    const videoUrl = videoElement.querySelector('source').src;
-    const queryParams = new URLSearchParams({ videoUrl }).toString();
-
-    fetch(`/myPage/moveToTrash?${queryParams}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Response Data:', data);
-            if (data.success) {
-                alert('삭제 성공');
-            } else {
-                alert('삭제 실패');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred.');
-        });
-});
+// document.getElementById('trashBtn').addEventListener('click', function () {
+//     const videoElement = document.getElementById('popup-video');
+//     const videoUrl = videoElement.querySelector('source').src;
+//     const queryParams = new URLSearchParams({ videoUrl }).toString();
+//
+//     fetch(`/myPage/moveToTrash?${queryParams}`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('Response Data:', data);
+//             if (data.success) {
+//                 alert('삭제 성공');
+//             } else {
+//                 alert('삭제 실패');
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//             alert('An error occurred.');
+//         });
+// });
 
 // 페이지 로드 시 저장된 상태를 불러옴
 // window.addEventListener('load', function () {
