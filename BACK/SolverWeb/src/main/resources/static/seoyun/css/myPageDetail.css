@@ -128,32 +128,69 @@ body{
 
 
 /* *************************** */
-.myPageDetail_trashBtn{
-    background-color: rgba(0, 0, 0, 0.74);
+/*.myPageDetail_trashBtn{*/
+/*    background-color: rgba(0, 0, 0, 0.74);*/
+/*    display: flex;*/
+/*    justify-content: flex-end;*/
+/*    position: fixed;*/
+/*    width: 27%;*/
+/*    height: 6vh;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.myPageDetail_trashBtn > img{*/
+/*    width: 4vh;*/
+/*    height:4vh;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*#trashBtn {*/
+/*    background: transparent;*/
+/*    border: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*#trashBtn img {*/
+/*    display: block;*/
+/*    width: auto;*/
+/*    height: auto;*/
+/*}*/
+
+/* *************************** */
+.myPageDetail_bottomActions {
     display: flex;
-    justify-content: flex-end;
-    position: fixed;
-    width: 27%;
-    height: 6vh;
+    justify-content: flex-end;  /* 오른쪽 정렬 */
     align-items: center;
+    height: 6vh;
+    background-color: rgba(0, 0, 0, 0.74);
 }
 
-.myPageDetail_trashBtn > img{
-    width: 4vh;
-    height:4vh;
+#readBtn {
+    background-color: #2D8EED;
+    color: white;
+    border: none;
+    padding: 1vh 2vh;
+    font-size: 1.5vh;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 2vh;  /* 쓰레기통 버튼과의 간격 */
+}
+
+#readBtn i {
+    margin-right: 1vh;
 }
 
 #trashBtn {
     background: transparent;
     border: none;
-    padding: 0;
-    margin: 0;
     cursor: pointer;
 }
 
 #trashBtn img {
-    display: block;
-    width: auto;
-    height: auto;
+    width: 4vh;
+    height: 4vh;
 }
+
