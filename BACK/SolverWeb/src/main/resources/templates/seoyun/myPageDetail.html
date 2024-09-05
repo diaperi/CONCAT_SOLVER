@@ -28,13 +28,17 @@
                     <span id="expandButton"><i class="fa-solid fa-angles-left"></i></span>
                 </div>
                 <div class="myPageDetail_rightMain">
-                    <span th:utext="${gptResponse}">해결책을 불러오는 중입니다...</span>
+                    <span id="gptResponse" th:utext="${gptResponse}">해결책을 불러오는 중입니다...</span>
                 </div>
-                <div class="myPageDetail_trashBtn">
+                <div class="myPageDetail_bottomActions">
+                    <button id="readBtn">
+                        <i class="fa-solid fa-volume-up"></i> 읽기
+                    </button>
                     <button id="trashBtn">
                         <img src="/seoyun/img/흰휴지통-아이콘2 1.png" alt="Trash Icon">
                     </button>
                 </div>
+
             </div>
         </div>
     </div>
