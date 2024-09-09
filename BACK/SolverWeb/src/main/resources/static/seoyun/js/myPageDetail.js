@@ -21,6 +21,65 @@ document.getElementById('expandButton').addEventListener('click', function () {
         closeButton.style.display = 'none';
     });
 });
+
+// Web Speech API로 gptResponse 읽기 기능 추가
+// 숫자를 한자식으로 변환하는 함수
+function convertNumberToKorean(text) {
+    const numberMap = {
+        '0': '공',
+        '1': '일',
+        '2': '이',
+        '3': '삼',
+        '4': '사',
+        '5': '오',
+        '6': '육',
+        '7': '칠',
+        '8': '팔',
+        '9': '구'
+    };
+
+    return text.replace(/\d/g, function(match) {
+        return numberMap[match];
+    });
+}
+
+// 이모티콘을 제거하는 함수
+function removeEmojis(text) {
+    return text.replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // 얼굴 이모티콘 제거
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // 기타 이모티콘 제거
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // 교통, 지도 기호 이모티콘 제거
+        .replace(/[\u{2600}-\u{26FF}]/gu, '')    // 다양한 기호 이모티콘 제거
+        .replace(/[\u{2700}-\u{27BF}]/gu, '');   // 기타 이모티콘 제거
+}
+
+// 읽기 버튼 기능 추가
+document.getElementById('readBtn').addEventListener('click', function () {
+    var gptText = document.getElementById('gptResponse').innerText; // 텍스트 가져오기
+
+    // 이모티콘 제거
+    var filteredText = removeEmojis(gptText);
+
+    // 숫자를 한자식으로 변환
+    var convertedText = convertNumberToKorean(filteredText);
+
+    if ('speechSynthesis' in window) {  // Web Speech API 지원 여부 확인
+        if (window.speechSynthesis.speaking) {
+            // 현재 음성 재생 중이면 중지
+            window.speechSynthesis.cancel();
+        } else {
+            // 음성 재생이 안 되고 있으면 새로 읽기 시작
+            var speech = new SpeechSynthesisUtterance(convertedText);
+            speech.lang = 'ko-KR'; // 한국어 설정
+            window.speechSynthesis.speak(speech); // 텍스트 음성으로 읽기
+        }
+    } else {
+        alert('이 브라우저는 음성 합성을 지원하지 않습니다.');
+    }
+});
+
+
+
+// 선택한 요소들에 대한 동작 추가 (기존 코드 유지)
 const spans = document.querySelectorAll('.myPageDetail_rightTop > span');
 const rightMains = document.querySelectorAll('.myPageDetail_rightMain');
 
