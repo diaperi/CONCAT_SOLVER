@@ -58,6 +58,103 @@ public class MoreDashBoardController {
         // S3에서 사용자별 최신 텍스트 파일 경로 가져오기
         Optional<String> transcriptKeyOpt = s3Service.getLatestTranscript(userId);
 
+        // S3에서 사용자별 최신 이미지 파일 정보 가져오기
+        Optional<S3Service.ImageInfo> latestImageOpt = s3Service.getLatestImage(userId);
+
+        // 사용자 이름과 ID를 모델에 추가
+        model.addAttribute("userId", userId);
+        model.addAttribute("userName", userName);
+
+        // 최신 텍스트 파일 경로를 모델에 추가
+        transcriptKeyOpt.ifPresent(transcriptKey -> model.addAttribute("latestTranscript", transcriptKey));
+
+        // 최신 이미지 파일 정보(있을 경우)를 모델에 추가
+        latestImageOpt.ifPresent(imageInfo -> model.addAttribute("latestImageUrl", imageInfo.getUrl()));
+
+        return "seoyun/dashBoard"; // 대시보드 뷰 리턴
+    }
+
+
+    // S3 키에서 타임스탬프를 추출하는 메서드
+    private String extractTimestampFromS3Key(String s3Key) {
+        Pattern pattern = Pattern.compile("negative_emotion_(\\d{8})_(\\d{6})_transcript\\.txt");
+        Matcher matcher = pattern.matcher(s3Key);
+        if (matcher.find()) {
+            return matcher.group(1) + "_" + matcher.group(2); // YYYYMMDD_HHmmss 형식
+        } else {
+            logger.error("S3 키에서 타임스탬프를 추출하지 못했습니다: " + s3Key);
+            return null;
+        }
+    }
+
+
+    @GetMapping("/text")
+    public String text(HttpSession session, Model model) {
+        Object loggedInUser = session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            logger.info("로그인된 사용자 정보가 없습니다.");
+            return "redirect:/user/login";
+        }
+
+        String userId;
+        String userName;
+        if (loggedInUser instanceof UserDTO) {
+            UserDTO user = (UserDTO) loggedInUser;
+            userId = user.getUserId();
+            userName = user.getUserName(); // 사용자 이름 가져오기
+        } else if (loggedInUser instanceof SnsUserDTO) {
+            SnsUserDTO snsUser = (SnsUserDTO) loggedInUser;
+            userId = snsUser.getProviderId();
+            userName = snsUser.getName(); // SNS 사용자 이름 가져오기
+        } else {
+            logger.warn("예상치 못한 사용자 유형입니다: {}", loggedInUser.getClass());
+            return "redirect:/user/login";
+        }
+
+        logger.info("로그인된 사용자: {}", loggedInUser.toString());
+
+        // S3에서 사용자별 최신 텍스트 파일 경로 가져오기
+        Optional<String> transcriptKeyOpt = s3Service.getLatestTranscript(userId);
+
+
+        // 사용자 이름과 ID를 모델에 추가
+        model.addAttribute("userId", userId);
+        model.addAttribute("userName", userName);
+
+        return "seoyun/text";
+    }
+
+
+    @GetMapping("/emotion")
+    public String emotion(HttpSession session, Model model) {
+        Object loggedInUser = session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            logger.info("로그인된 사용자 정보가 없습니다.");
+            return "redirect:/user/login";
+        }
+
+        String userId;
+        String userName;
+        if (loggedInUser instanceof UserDTO) {
+            UserDTO user = (UserDTO) loggedInUser;
+            userId = user.getUserId();
+            userName = user.getUserName(); // 사용자 이름 가져오기
+        } else if (loggedInUser instanceof SnsUserDTO) {
+            SnsUserDTO snsUser = (SnsUserDTO) loggedInUser;
+            userId = snsUser.getProviderId();
+            userName = snsUser.getName(); // SNS 사용자 이름 가져오기
+        } else {
+            logger.warn("예상치 못한 사용자 유형입니다: {}", loggedInUser.getClass());
+            return "redirect:/user/login";
+        }
+
+        logger.info("로그인된 사용자: {}", loggedInUser.toString());
+
+        // S3에서 사용자별 최신 텍스트 파일 경로 가져오기
+        Optional<String> transcriptKeyOpt = s3Service.getLatestTranscript(userId);
+
         if (transcriptKeyOpt.isPresent()) {
             String s3Key = transcriptKeyOpt.get();
 
@@ -105,18 +202,6 @@ public class MoreDashBoardController {
         model.addAttribute("userId", userId);
         model.addAttribute("userName", userName);
 
-        return "seoyun/moreDashBoard";
-    }
-
-    // S3 키에서 타임스탬프를 추출하는 메서드
-    private String extractTimestampFromS3Key(String s3Key) {
-        Pattern pattern = Pattern.compile("negative_emotion_(\\d{8})_(\\d{6})_transcript\\.txt");
-        Matcher matcher = pattern.matcher(s3Key);
-        if (matcher.find()) {
-            return matcher.group(1) + "_" + matcher.group(2); // YYYYMMDD_HHmmss 형식
-        } else {
-            logger.error("S3 키에서 타임스탬프를 추출하지 못했습니다: " + s3Key);
-            return null;
-        }
+        return "seoyun/emotion";
     }
 }

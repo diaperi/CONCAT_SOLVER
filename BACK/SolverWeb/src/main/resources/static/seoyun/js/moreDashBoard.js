@@ -13,10 +13,66 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevButton = document.getElementById("prev");
     const nextButton = document.getElementById("next");
 
+// 로딩 컨테이너 요소 생성
+    const loadingContainer = document.createElement('div');
+    loadingContainer.id = 'loading-container';
+    loadingContainer.style.position = 'fixed';
+    loadingContainer.style.top = '50%';
+    loadingContainer.style.left = '50%';
+    loadingContainer.style.transform = 'translate(-50%, -50%)';
+    loadingContainer.style.zIndex = '1000';
+    loadingContainer.style.display = 'none'; // 초기에는 숨김
+    loadingContainer.style.textAlign = 'center';
+
+    // 로딩 원 생성
+    const loadingCircle = document.createElement('div');
+    loadingCircle.id = 'loading-circle';
+    loadingCircle.style.width = '50px';
+    loadingCircle.style.height = '50px';
+    loadingCircle.style.border = '5px solid #f3f3f3';
+    loadingCircle.style.borderTop = '5px solid #3498db';
+    loadingCircle.style.borderRadius = '50%';
+    loadingCircle.style.animation = 'spin 1s linear infinite';
+    loadingCircle.style.margin = '0 auto';
+
+    // 로딩 메시지 생성
+    const loadingMessage = document.createElement('div');
+    loadingMessage.id = 'loading-message';
+    loadingMessage.style.marginTop = '15px';
+    loadingMessage.style.color = 'white';
+    loadingMessage.style.fontSize = '2vh';
+    loadingMessage.innerHTML = "솔버가 대화를 더 나은 방향으로 재구성 중 입니다...<br>조금만 기다려 주세요🥰";
+
+    // 로딩 컨테이너에 로딩 원과 메시지 추가
+    loadingContainer.appendChild(loadingCircle);
+    loadingContainer.appendChild(loadingMessage);
+
+    document.body.appendChild(loadingContainer);
+
+    // 로딩 애니메이션 정의 (JavaScript로 구현)
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }`;
+    document.head.appendChild(style);
+
+    function showLoading() {
+        loadingContainer.style.display = 'block';
+    }
+
+    function hideLoading() {
+        loadingContainer.style.display = 'none';
+    }
+
     function addDayClickListeners() {
         document.querySelectorAll('#calendar-body td').forEach(day => {
             day.addEventListener('click', function () {
                 const selectedDate = this.getAttribute('data-date').replace(/-/g, ''); // YYYYMMDD 형식으로 변환
+
+                showLoading(); // 로딩 화면 표시
 
                 // Ajax 요청을 통해 서버에 데이터 전송
                 $.ajax({
@@ -25,21 +81,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     data       : {date: selectedDate},
                     contentType: "application/json",
                     success    : function (response) {
-                        // 원본 텍스트 파일의 내용을 moreDashBoard_down3_openBox_top_span에 표시 (줄바꿈을 <br>로 변환)
+                        // 원본 텍스트 파일의 내용을 표시
                         document.querySelector('.moreDashBoard_down3_openBox_top_span').innerHTML = response.original.replace(/\n/g, "<br>");
 
-                        // 파이썬 처리 결과를 moreDashBoard_down3_openBox_down_span에 표시 (줄바꿈을 <br>로 변환)
+                        // 파이썬 처리 결과를 표시
                         document.querySelector('.moreDashBoard_down3_openBox_down_span').innerHTML = response.result.replace(/\n/g, "<br>");
+
+                        hideLoading(); // 로딩 화면 숨김
                     },
                     error      : function (error) {
                         console.error('Error:', error);
                         alert('대화 재구성 중 오류가 발생했습니다.');
+                        hideLoading(); // 로딩 화면 숨김
                     }
                 });
 
             });
         });
     }
+
+    addDayClickListeners();
+
 
     function showCalendar(month, year) {
         let firstDay = (new Date(year, month)).getDay();
@@ -183,7 +245,7 @@ $(document).ready(function () {
                         const dateItemHtml = `
                             <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
                                  data-gpt-file-key="gpt_response_${date}_${time}.txt"> <!-- 이 부분을 올바르게 설정 -->
-                                <span>📌</span>
+                                <span>-</span>
                                 <span>${date} ${time}</span>
                                 <span>${title}</span>
                             </div>

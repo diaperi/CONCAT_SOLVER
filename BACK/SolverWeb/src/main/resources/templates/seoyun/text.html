@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>moreDashBoard</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/seoyun/css/text.css}">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Sunflower:wght@300;500;700&display=swap"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="moreDashBoard_div1">
+    <div class="moreDashBoard_div2">
+        <!-- 아래쪽 상자 -->
+        <div class="moreDashBoard_down">
+            <div class="moreDashBoard_down3">
+                <span>솔버가 지난 대화를<br> 더 나은 방향으로<br> 재구성 해드릴게요.</span>
+
+                <div class="calendar-box">
+                    <div class="calendar-box_top">
+                        <span>대화 재구성 원하는 영상의 날짜를 클릭하세요.</span>
+                        <div class="calendar_foot">
+                            <button id="prev"><i class="fa-solid fa-angles-left"></i></button>
+                            <button id="next"><i class="fa-solid fa-angles-right"></i></button>
+                        </div>
+                    </div>
+                    <div id="calendar">
+                        <div id="calendar-header">
+                            <span id="month-year"></span>
+                        </div>
+                        <table id="calendar-body">
+                            <thead>
+                            <tr>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="moreDashBoard_down2">
+                <div class="moreDashBoard_down3_openBox">
+                    <div class="moreDashBoard_down3_openBox_top">
+                        <span>원본 대화 내용이예요.</span><br>
+                        <span class="moreDashBoard_down3_openBox_top_span">
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-angles-down"></i>
+                    <div class="moreDashBoard_down3_openBox_down">
+                        <span>이렇게 대화할 수 있어요.</span><br>
+                        <span class="moreDashBoard_down3_openBox_down_span">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-arrow">
+        <i class="fa-solid fa-angles-down"></i>
+    </div>
+</div>
+
+<script src="/seoyun/js/moreDashBoard.js"></script>
+<script src="/more/moreDashBoard.js"></script>
+<script>
+    const userId = /*[[${userId}]]*/ ''; // Thymeleaf를 통해 userId를 가져옵니다.
+</script>
+</body>
+</html>

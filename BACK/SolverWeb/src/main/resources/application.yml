@@ -1,8 +1,8 @@
 # 서버 포트 설정
 server:
-  #  port: 8098
+  port: 8098
   #  배포용 포트
-  port: 80
+#  port: 80
 
 server.servlet.session.tracking-modes: cookie
 
