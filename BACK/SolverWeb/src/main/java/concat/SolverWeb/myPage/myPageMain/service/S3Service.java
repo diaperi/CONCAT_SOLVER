@@ -699,35 +699,43 @@ public class S3Service {
             // S3에서 원본 텍스트 가져오기
             String originalContent = getFileFromS3(bucketName, latestFileKey);
 
-// Python 스크립트 실행 명령어 구성
+            // Python 스크립트 실행 명령어 구성
             List<String> commands = new ArrayList<>();
             commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
             commands.add("src/main/resources/scripts/recommendText.py"); // Python 스크립트의 경로
 
             ProcessBuilder pb = new ProcessBuilder(commands);
+
+            // 환경 변수 설정: PYTHONIOENCODING을 UTF-8로 설정
+            Map<String, String> env = pb.environment();
+            env.put("PYTHONIOENCODING", "UTF-8");
+
             pb.redirectErrorStream(true);
 
             Process process = pb.start();
 
-// 원본 텍스트를 UTF-8로 인코딩하여 파이썬 프로세스의 입력 스트림에 전달
+            // 원본 텍스트를 UTF-8로 인코딩하여 파이썬 프로세스의 입력 스트림에 전달
             try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8))) {
                 writer.write(originalContent);
                 writer.flush();
+            } catch (IOException e) {
+                logger.error("Error writing to Python process", e);
             }
 
-
             // Python 스크립트의 출력을 UTF-8로 읽어들임
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
-
             StringBuilder processedContent = new StringBuilder();
-            String result;
-            while ((result = reader.readLine()) != null) {
-                processedContent.append(result).append("\n");
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                String result;
+                while ((result = reader.readLine()) != null) {
+                    processedContent.append(result).append("\n");
+                }
+            } catch (IOException e) {
+                logger.error("Error reading from Python process", e);
             }
 
             String finalResult = processedContent.toString().trim();
 
-            // 결과를 반환할 Map 구성 (로그에 출력하지 않음)
+            // 결과를 반환할 Map 구성
             Map<String, String> responseMap = new HashMap<>();
             responseMap.put("original", originalContent);
             responseMap.put("result", finalResult);
@@ -764,4 +772,37 @@ public class S3Service {
             return "Error occurred while fetching the original file.";
         }
     }
+
+
+    //    마이페이지 대시보드  해당 아이디에 대한 최근 이미지 파일 가져오기
+    public Optional<ImageInfo> getLatestImage(String userId) {
+        String userFolderPrefix = userId + "/videos/";
+
+        ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(userFolderPrefix)
+                .build();
+
+        ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+        return response.contents().stream()
+                .filter(s -> s.key().endsWith(".jpg") || s.key().endsWith(".png")) // 이미지 파일 확장자 필터
+                .max(Comparator.comparing(S3Object::lastModified))
+                .map(s -> {
+                    // S3의 URL을 HTTPS로 변환하여 브라우저에서 접근 가능하게 만듭니다.
+                    String imageUrl = s3Client.utilities()
+                            .getUrl(builder -> builder.bucket(bucketName).key(s.key()))
+                            .toExternalForm(); // HTTPS URL로 변환
+
+                    return new ImageInfo(
+                            imageUrl,
+                            ZonedDateTime.ofInstant(s.lastModified(), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")),
+                            s.size(),
+                            s.key(),
+                            null // GPT 제목을 원할 경우 추가할 수 있음
+                    );
+                });
+    }
+
+
 }
