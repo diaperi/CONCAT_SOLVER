@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>emotion</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/seoyun/css/emotion.css}">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Sunflower:wght@300;500;700&display=swap"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="moreDashBoard_div1">
+    <div class="moreDashBoard_div2">
+        <div class="moreDashBoard_div3">
+            <div class="moreDashBoard_top2_text1">
+                <div class="moreDashBoard_top2_text">
+                    <span class="glowing-text">솔버가 감정을 현명하게 <br>다스릴 수 있도록 도와드릴게요.</span>
+                    <span>해당 날짜의 감정 통계와<br>감정에 대한 피드백을 확인할 수 있어요.</span>
+                </div>
+                <div class="moreDashBoard_top2_video">
+                    <video autoplay loop muted>
+                        <source src="/seoyun/img/9363795-uhd_2160_3840_24fps.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+        <div class="moreDashBoard_top">
+            <div class="moreDashBoard_top2">
+                <div class="moreDashBoard_top_right_box">
+                    <div class="moreDashBoard_top_right_box2">
+                        <div class="moreDashBoard_top_right1">
+                            <hr>
+                            <span id="formattedDate" th:text="${extractedTimestamp}"></span>
+                        </div>
+                        <div class="moreDashBoard_top_right2">
+                            <span>😀</span>
+                            <span>😮</span>
+                            <span>😭</span>
+                            <span>😠</span>
+                            <span>😱</span>
+                            <span>😑</span>
+                        </div>
+                        <div class="moreDashBoard_top_right3">
+                            <!-- 참여자1 영역 -->
+                            <div class="moreDashBoard_top_right3_circle1">
+                                <div>
+                                    <!-- 참여자1의 감정 분석 결과 이미지 -->
+                                    <img th:src="@{|/images/${userId}_participant1_${timestamp}_emotion_chart.png|}"
+                                         alt="참여자1 감정 분석 결과" class="circle" id="participant1EmotionChart">
+                                </div>
+                                <span>참여자1</span>
+                            </div>
+
+                            <!-- 참여자2 영역 -->
+                            <div class="moreDashBoard_top_right3_circle2">
+                                <div>
+                                    <!-- 참여자2의 감정 분석 결과 이미지 -->
+                                    <img th:src="@{|/images/${userId}_participant2_${timestamp}_emotion_chart.png|}"
+                                         alt="참여자2 감정 분석 결과" class="circle" id="participant2EmotionChart">
+                                </div>
+                                <span>참여자2</span>
+                            </div>
+                        </div>
+                        <div class="moreDashBoard_top_right4">
+                            <span th:utext="${textEmotionAnalysisResult}">
+                                감정 분석 결과를 로딩 중입니다...
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 위쪽 오른쪽 상자 -->
+            <div class="moreDashBoard_top_right">
+                <div class="moreDashBoard_top_right5">
+                    <div class="moreDashBoard_top_right5_date">
+                        <i id="prev-date-range" class="fa-solid fa-angles-left"></i>
+                        <span id="date-range-display">2024.08.25 ~ 2024.08.25</span>
+                        <i id="next-date-range" class="fa-solid fa-angles-right"></i>
+                    </div>
+                    <div class="moreDashBoard_top_right5_dateList" id="date-list-container">
+                        <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
+                             data-gpt-file-key="gpt_response_20240824_144249.txt"> <!-- GPT 파일 키 사용 -->
+                            <span>-</span>
+                            <span>${date} ${time}</span>
+                            <span>${title}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-arrow">
+        <i class="fa-solid fa-angles-down"></i>
+    </div>
+</div>
+
+
+<!-- <script src="/more/moreDashBoard.js"></script> -->
+<script src="/seoyun/js/moreDashBoard.js"></script>
+
+<script>
+    const scrollArrow = document.querySelector('.scroll-arrow');
+    const arrowIcon = scrollArrow.querySelector('i');
+    const topElement = document.querySelector('.moreDashBoard_div1');
+    const downElement = document.querySelector('.moreDashBoard_top_right5_dateList1');
+
+    scrollArrow.addEventListener('click', function () {
+        if (arrowIcon.classList.contains('fa-angles-down')) {
+            // 아래로 스크롤
+            downElement.scrollIntoView({behavior: 'smooth'});
+        } else {
+            // 위로 스크롤
+            topElement.scrollIntoView({behavior: 'smooth'});
+        }
+    });
+
+    window.addEventListener('scroll', function () {
+        // 현재 스크롤 위치가 화면의 중간을 지났는지 확인
+        if (window.scrollY > window.innerHeight / 2) {
+            // 버튼을 위로 가는 화살표로 변경
+            arrowIcon.classList.remove('fa-angles-down');
+            arrowIcon.classList.add('fa-angles-up');
+        } else {
+            // 버튼을 아래로 가는 화살표로 변경
+            arrowIcon.classList.remove('fa-angles-up');
+            arrowIcon.classList.add('fa-angles-down');
+        }
+    });
+</script>
+</body>
+</html>
+            
