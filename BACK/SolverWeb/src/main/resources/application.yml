@@ -2,7 +2,7 @@
 server:
   #  port: 8098
   #  배포용 포트
-  port: 80
+  port: 8000
 
 server.servlet.session.tracking-modes: cookie
 
