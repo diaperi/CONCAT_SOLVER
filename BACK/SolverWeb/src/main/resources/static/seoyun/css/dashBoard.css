@@ -1,0 +1,1032 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Gowun Batang", serif;
+}
+
+.gowun-batang-regular {
+    font-family: "Gowun Batang", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.gowun-batang-bold {
+    font-family: "Gowun Batang", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+.moreDashBoard_div1 {
+    background-color: rgb(0, 0, 0);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.moreDashBoard_div2 {
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    padding-top: 5vh;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* *********위쪽 상자********* */
+.moreDashBoard_top {
+    /* background-color: yellowgreen; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 110vh;
+    /* width: 80%; */
+    flex-direction: column;
+}
+
+
+/* ******* 위쪽 왼쪽 상자 *********** */
+.moreDashBoard_top_left {
+    /* background-color: slateblue; */
+    color: white;
+    font-weight: bold;
+    /* width: 47%; */
+    height: 100%;
+    min-width: 110vh;
+    margin-bottom: 40vh;
+}
+
+
+/* ********* 위쪽 왼쪽 위 상자 ********** */
+.moreDashBoard_top_left_top {
+    /* background-color: steelblue; */
+    height: 35vh;
+    padding-left: 2vh;
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: column;
+    padding-right: 2vh;
+    /* min-width: 96vh; */
+    font-weight: bold;
+    color: white;
+    margin-left: 3vh;
+    text-wrap: nowrap;
+}
+
+.moreDashBoard_top_left_top > span {
+    font-size: 4vh;
+    /* background-color: yellowgreen; */
+    margin-right: 5vh;
+}
+
+.dashBoard_video {
+    /* 기본 설정 */
+    margin-bottom: 5vh;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10vh;
+    position: relative; /* 가상 요소를 위한 상대 위치 */
+    /* background-color: yellowgreen; */
+    /* margin-left: 4vh; */
+}
+
+.dashBoard_video > video {
+    width: 63vh;
+}
+
+.dashBoard_video:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 사방에 그라데이션 적용 */
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 35%), /* 아래쪽 */ linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 35%), /* 위쪽 */ linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 35%), /* 오른쪽 */ linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 35%); /* 왼쪽 */
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 50%; /* 부모와 동일한 둥근 모양 */
+}
+
+.moreDashBoard_div3 {
+    display: flex;
+    /* justify-content: center; */
+    height: auto;
+    /* width: 60%; */
+    /* background-color: thistle; */
+    margin-top: 15vh;
+    justify-content: center;
+    min-width: 100vh;
+    align-items: center;
+    margin-bottom: 40vh;
+}
+
+/* ********* 위쪽 왼쪽 아래 상자 ********** */
+.moreDashBoard_top_left_down {
+    /* background-color: #050046; */
+    /* border: 1px solid rgb(92, 92, 92); */
+    font-size: 2vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    /* margin-top: 5vh; */
+    /* padding-bottom: 3vh; */
+    /* transition: background-color 0.5s, box-shadow 0.5s; transition 추가 */
+    color: rgb(255, 255, 255);
+    /* box-shadow: -1px 2px 20px 10px #ffffff28; */
+    width: 120vh;
+}
+
+.moreDashBoard_top_left_down > span:nth-child(1) {
+    /* background-color: #1f1f1f; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    border-radius: 1vh;
+}
+
+#quote {
+    /* color: white; */
+    font-weight: bold;
+}
+
+/* .moreDashBoard_top_left_down:hover{
+    box-shadow: -1px 2px 20px 10px #153add44;
+    background-color: #000000;
+} */
+
+
+.moreDashBoard_top_left_down2 {
+    /* background-color: rgba(255, 255, 255, 0.144); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1vh;
+    border-radius: 1vh;
+}
+
+.moreDashBoard_top_left_down3 {
+    /* background-color: rgb(68, 80, 45); */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.moreDashBoard_top_left_down2_weather {
+    background-color: black;
+    border-radius: 50%; /* 이미지도 둥글게 */
+    width: 70%;
+}
+
+.moreDashBoard_top_left_down2_weather > span > img {
+    /* height: 12vh;
+    min-width: 12vh; */
+    width: 99%;
+    height: auto;
+    display: block;
+    border: 1px solid black;
+    border-radius: 5vh;
+}
+
+.moreDashBoard_top_left_down2_weather > span {
+    position: relative; /* 가상 요소를 위한 상대 위치 */
+    display: inline-block;
+    height: auto;
+    border-radius: 50%;
+    text-wrap: nowrap;
+}
+
+.moreDashBoard_top_left_down2_weather > span:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* 가상 요소가 이미지 위에 나타나도록 설정 */
+    pointer-events: none; /* 이벤트가 가상 요소에 닿지 않도록 설정 */
+    /* border-radius: 50%; 둥근 모양 */
+    border-radius: 5vh;
+
+    /* 사방에 그라데이션 효과 적용 */
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%), /* 아래쪽 */ linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%), /* 위쪽 */ linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%), /* 오른쪽 */ linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%); /* 왼쪽 */
+}
+
+.moreDashBoard_top_left_down2_right {
+    display: flex;
+    flex-direction: column;
+    /* background-color: violet; */
+    width: 40%;
+    margin-left: 10vh
+}
+
+.moreDashBoard_top_left_down2_right > span:nth-child(1) {
+    margin-bottom: 6vh;
+    font-size: 3vh;
+    font-weight: bold;
+}
+
+.moreDashBoard_top_left_down2_right > span:nth-child(2) {
+    font-weight: bold;
+    font-size: 1.6vh;
+    margin-bottom: 1vh;
+}
+
+.moreDashBoard_top_left_down2_right > span:nth-child(3) {
+    font-weight: bold;
+    font-size: 2.2vh;
+}
+
+
+/* ******* 위쪽 오른쪽 상자 *********** */
+.moreDashBoard_top_right0 {
+    /* background-color: yellowgreen; */
+    width: 120vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+
+/* ******* 위쪽 오른쪽 상자 *********** */
+.moreDashBoard_top_right {
+    /* background-color: #554dbe; */
+    color: white;
+    font-weight: bold;
+    display: flex;
+    height: 40vh;
+    transition: background-color 0.3s, box-shadow 0.3s; /* transition 추가 */
+    align-items: center;
+    /* box-shadow: -1px 2px 20px 10px #ffffff28; */
+    justify-content: space-between;
+}
+
+
+.moreDashBoard_top_right_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* background-color: yellowgreen; */
+}
+
+.moreDashBoard_top_right_div > a {
+    text-decoration: none;
+    color: white;
+    font-size: 2.3vh;
+    font-weight: bold;
+    /* background-color: rgb(25, 27, 110); */
+    width: 16vh;
+    border-radius: 1vh;
+    margin-top: 9vh;
+    margin-left: 1.5vh;
+}
+
+
+.moreDashBoard_top_right_div > a {
+    font-size: 2.4vh;
+    color: #fff; /* 텍스트 기본 색상 */
+    /* text-align: center; */
+    line-height: 1.5;
+    text-shadow: 0 0 5px #000000, /* 안쪽 어두운 파랑 */ 0 0 10px #000000,
+    0 0 15px #b0b5ff, /* 바깥쪽 밝은 파랑 */ 0 0 20px #b0b5ff,
+    0 0 30px #b0b5ff,
+    0 0 40px #b0b5ff; /* 밝은 파랑으로 빛 효과 */
+    animation: glow 2s infinite; /* 애니메이션 추가 */
+}
+
+.moreDashBoard_top_right_div > a:hover {
+    text-shadow: 0 0 5px #000000, /* 안쪽 어두운 파랑 */ 0 0 10px #000000,
+    0 0 15px #ffffff, /* 바깥쪽 밝은 파랑 */ 0 0 20px #ffffff,
+    0 0 30px #ffffff,
+    0 0 40px #ffffff; /* 밝은 파랑으로 빛 효과 */
+    animation: glow2 2s infinite; /* 애니메이션 추가 */
+}
+
+@keyframes glow2 {
+    0% {
+        text-shadow: 0 0 5px #000000,
+        0 0 10px #000000,
+        0 0 15px #ffffff,
+        0 0 20px #ffffff,
+        0 0 30px #ffffff,
+        0 0 40px #ffffff;
+    }
+    50% {
+        text-shadow: 0 0 10px #000000,
+        0 0 20px #000000,
+        0 0 30px #ffffff,
+        0 0 40px #ffffff,
+        0 0 50px #ffffff,
+        0 0 40px #ffffff; /* 빛이 더 강해지는 효과 */
+    }
+    100% {
+        text-shadow: 0 0 5px #000000,
+        0 0 10px #000000,
+        0 0 15px #ffffff,
+        0 0 20px #ffffff,
+        0 0 30px #ffffff,
+        0 0 40px #ffffff; /* 처음 상태로 돌아감 */
+    }
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #000000,
+        0 0 10px #000000,
+        0 0 15px #b0b5ff,
+        0 0 20px #b0b5ff,
+        0 0 30px #b0b5ff,
+        0 0 40px #b0b5ff;
+    }
+    50% {
+        text-shadow: 0 0 10px #000000,
+        0 0 20px #000000,
+        0 0 30px #b0b5ff,
+        0 0 40px #b0b5ff,
+        0 0 50px #b0b5ff,
+        0 0 40px #b0b5ff; /* 빛이 더 강해지는 효과 */
+    }
+    100% {
+        text-shadow: 0 0 5px #000000,
+        0 0 10px #000000,
+        0 0 15px #b0b5ff,
+        0 0 20px #b0b5ff,
+        0 0 30px #b0b5ff,
+        0 0 40px #b0b5ff; /* 처음 상태로 돌아감 */
+    }
+}
+
+.moreDashBoard_top_right_img {
+    background-color: rgb(99, 99, 99);
+    width: 50%;
+    height: 100%;
+    border-radius: 1vh;
+    overflow: hidden;
+}
+
+/* .moreDashBoard_top_right:hover{
+    box-shadow: -1px 2px 20px 10px #153add44;
+    background-color: #000000;
+} */
+
+.moreDashBoard_top_right_div > span:nth-child(1) {
+    font-size: 3vh;
+}
+
+.moreDashBoard_top_right_box {
+    width: 90%;
+    border-radius: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5vh;
+}
+
+.moreDashBoard_top_right_box2 {
+    /* background-color: slateblue; */
+    width: 90%;
+    margin-top: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.moreDashBoard_top_right1 {
+    /* background-color: rgb(82, 152, 221); */
+    font-size: 1.9vh;
+    margin-bottom: 1vh;
+    position: relative;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.moreDashBoard_top_right1 > span {
+    background-color: black;
+    color: #d6d9dc;
+    font-size: 1.6vh;
+    background-color: #000000;
+    padding: 0 3vh;
+    position: relative;
+    z-index: 1;
+    line-height: 1; /* 텍스트가 중앙에 오도록 */
+}
+
+.moreDashBoard_top_right1 > hr {
+    width: 100%;
+    border: none;
+    border-top: 0.1vh solid #d6d9dc;
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 0;
+    top: 50%;
+}
+
+.moreDashBoard_top_right2 {
+    /* background-color: rgb(139, 56, 41); */
+    font-size: 3vh;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(1) {
+    border-bottom: 0.5vh solid #32CD32;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(2) {
+    border-bottom: 0.5vh solid #FFD700;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(3) {
+    border-bottom: 0.5vh solid #4682B4;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(4) {
+    border-bottom: 0.5vh solid #FF6347;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(5) {
+    border-bottom: 0.5vh solid #FF4500;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(6) {
+    border-bottom: 0.5vh solid #A9A9A9;
+}
+
+.moreDashBoard_top_right3 {
+    /* background-color: rgb(0, 79, 158); */
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5vh;
+}
+
+.moreDashBoard_top_right3_circle1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8vh;
+}
+
+.moreDashBoard_top_right3_circle1 > div {
+    height: 20vh;
+    width: 20vh;
+    background-color: violet;
+    border-radius: 50%;
+    margin-bottom: 2vh;
+}
+
+.moreDashBoard_top_right3_circle2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8vh;
+}
+
+.moreDashBoard_top_right3_circle2 > div {
+    height: 20vh;
+    width: 20vh;
+    background-color: rgb(130, 164, 238);
+    border-radius: 50%;
+    margin-bottom: 2vh;
+}
+
+.moreDashBoard_top_right4 {
+    /* background-color: rgb(0, 101, 141); */
+    width: 100%;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    margin-bottom: 3vh;
+    font-size: 1.5vh;
+    font-weight: 100;
+}
+
+.moreDashBoard_top_right5 {
+    /* background-color: rgb(0, 141, 127); */
+    width: 100%;
+    border: 0.3vh solid #686868;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
+.moreDashBoard_top_right5_date {
+    /* background-color: rgb(20, 65, 110); */
+    width: 70%;
+    justify-content: space-between;
+    display: flex;
+    font-size: 1.9vh;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+}
+
+.moreDashBoard_top_right5_date > i {
+    cursor: pointer;
+}
+
+.moreDashBoard_top_right5_dateList {
+    /* background-color: sienna; */
+    width: 90%;
+    font-size: 1.8vh;
+}
+
+.moreDashBoard_top_right5_dateList1 {
+    /* background-color: steelblue; */
+    margin-bottom: 1.5vh;
+    display: flex;
+}
+
+.moreDashBoard_top_right5_dateList1 > span:nth-child(1) {
+    /* background-color: tan; */
+    margin-right: 1vh;
+}
+
+.moreDashBoard_top_right5_dateList1 > span:nth-child(2) {
+    font-size: 1.5vh;
+    background-color: yellowgreen;
+    min-width: 12.5vh;
+}
+
+.moreDashBoard_top_right5_dateList1 > span:nth-child(3) {
+    /* background-color: rgb(92, 92, 27); */
+    padding-left: 1vh;
+    padding-right: 1vh;
+    margin-left: 1vh;
+    cursor: pointer;
+    font-size: 1.5vh;
+    /* background-color: yellowgreen; */
+    text-wrap: wrap;
+}
+
+
+/* ****************?****   아래쪽 상자   ****************** */
+
+.moreDashBoard_down {
+    /* background-color: rgba(180, 51, 51, 0.863); */
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 120vh;
+    margin-top: 50vh;
+    /* margin-bottom: 5vh; */
+    transition: background-color 0.3s, box-shadow 0.3s; /* transition 추가 */
+    cursor: pointer;
+    border-radius: 10vh;
+    height: 50vh;
+}
+
+.moreDashBoard_down_span {
+    font-size: 3vh;
+    position: relative;
+    /* background-color: yellowgreen; */
+    z-index: 999; /* 앞쪽에 위치 */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45%;
+}
+
+.moreDashBoard_down_span2 {
+    font-size: 3vh;
+    position: relative;
+    z-index: 999; /* 앞쪽에 위치 */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.moreDashBoard_down_span_a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.moreDashBoard_down_span2 > span {
+    z-index: 999; /* 앞쪽에 위치 */
+}
+
+.moreDashBoard_down_span2 > span:nth-child(2) {
+    font-size: 1.8vh;
+    margin-top: 5vh;
+}
+
+.moreDashBoard_top2_video {
+    position: absolute; /* 비디오를 뒤에 고정된 위치로 설정 */
+    top: 0;
+    left: 2;
+    width: 70%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* 뒤쪽에 위치 */
+    /* background-color: #32CD32; */
+    border-radius: 5vh;
+}
+
+.moreDashBoard_top2_video > video {
+    width: 100%;
+    height: 100%;
+    border-radius: 5vh;
+}
+
+/* 그라데이션 가상 요소 */
+.moreDashBoard_top2_video:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%);; /* 윗부분과 아래쪽 그라데이션 적용 */
+    pointer-events: none;
+    pointer-events: none;
+    z-index: 2; /* 영상 위에 표시되도록 z-index 설정 */
+}
+
+.moreDashBoard_down:nth-child(3) {
+    margin-bottom: 5vh;
+}
+
+/* .moreDashBoard_down:hover{
+    box-shadow: -1px 2px 20px 10px #153add44;
+    background-color: #000000d3;
+    border-radius: 10vh;
+} */
+
+.moreDashBoard_down > span {
+    margin-top: 2vh;
+    font-size: 2vh;
+}
+
+/* ************************ */
+.moreDashBoard_down_2 {
+    /* background-color: rgb(94, 52, 52); */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120vh;
+    border-radius: 10vh;
+    margin-top: 40vh;
+    /* margin-bottom: 5vh; */
+    /* transition: background-color 0.3s, box-shadow 0.3s; transition 추가 */
+    font-size: 3vh;
+    flex-direction: column;
+    /* box-shadow: -1px 2px 20px 10px #153add44; */
+    position: relative;
+    text-shadow: 10 10 10px #000000;
+}
+
+
+.moreDashBoard_down_2_video {
+    position: absolute; /* 비디오를 뒤에 고정된 위치로 설정 */
+    top: 0;
+    left: 2;
+    width: 85%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* 뒤쪽에 위치 */
+    /* background-color: #32CD32; */
+    border-radius: 5vh;
+}
+
+.moreDashBoard_down_2_video > video {
+    width: 100vh;
+    height: 100%;
+    border-radius: 5vh;
+}
+
+/* 그라데이션 가상 요소 */
+.moreDashBoard_down_2_video:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%),
+    linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 40%);; /* 윗부분과 아래쪽 그라데이션 적용 */
+    pointer-events: none;
+    pointer-events: none;
+    z-index: 2; /* 영상 위에 표시되도록 z-index 설정 */
+}
+
+.moreDashBoard_down_2 > span {
+    z-index: 99;
+}
+
+.moreDashBoard_down_2 > span:nth-child(1) {
+    margin-top: 10vh;
+}
+
+.moreDashBoard_down_2 > span:nth-child(3) {
+    margin-top: 17vh;
+    transition: background-color 0.3s, text-shadow 0.3s; /* transition 추가 */
+    text-shadow: 0px 0px 5px #000000;
+
+}
+
+.moreDashBoard_down_2 > span:nth-child(3) > a {
+    margin-top: 17vh;
+    padding: 1.5vh;
+    font-size: 2.3vh;
+    border-radius: 5vh;
+    transition: background-color 0.3s, text-shadow 0.3s; /* transition 추가 */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    text-shadow: 0px 0px 5px #000000;
+    text-decoration: none;
+}
+
+
+.moreDashBoard_down_2 > span:nth-child(3) > a:hover {
+    text-shadow: 0px 0px 10px #ffffff;
+    cursor: pointer;
+}
+
+.moreDashBoard_down_22 {
+    /* background-color: rgba(255, 255, 255, 0.144); */
+    width: 95%;
+    margin-top: 1vh;
+    border-radius: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+
+.moreDashBoard_down3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* background-color: yellowgreen; */
+    width: 95%;
+}
+
+.moreDashBoard_down3_openBox > i {
+    font-size: 3vh;
+    color: #919191;
+}
+
+.moreDashBoard_down3_openBox {
+    /* background-color: rgb(95, 95, 0); */
+    width: 95%;
+    margin-top: 3.5vh;
+    display: flex;
+    min-height: 30vh;
+    max-height: 30vh;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4vh;
+}
+
+.moreDashBoard_down3_openBox_top {
+    /* background-color: rgb(5, 0, 71); */
+    width: 47%;
+    overflow-y: scroll;
+    min-height: 30vh;
+    max-height: 30vh;
+    border-radius: 1vh;
+    padding: 1vh;
+    margin-right: 1vh;
+    color: #a5a5a5;
+}
+
+.moreDashBoard_down3_openBox_top::-webkit-scrollbar {
+    display: none;
+}
+
+.moreDashBoard_down3_openBox_down {
+    /* background-color: rgb(5, 0, 71); */
+    width: 47%;
+    overflow-y: scroll;
+    min-height: 30vh;
+    max-height: 30vh;
+    border-radius: 1vh;
+    padding: 1vh;
+    margin-left: 1vh;
+    color: #dadada;
+
+}
+
+.moreDashBoard_down3_openBox_down::-webkit-scrollbar {
+    display: none;
+}
+
+/* ***********************맨 아래 박스************************ */
+
+.moreDashBoard_top_right_box {
+    /* background-color: yellowgreen; */
+    min-width: 100vh;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 3 b 0vh;
+    align-items: center;
+    margin-bottom: 15vh;
+    width: 100vh;
+    margin-top: 65vh;
+}
+
+.moreDashBoard_top_right_box1 {
+    background-color: rgba(0, 0, 0, 0.863);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5vh;
+    height: 30vh;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s; /* transition 추가 */
+    width: 47%;
+    font-size: 2vh;
+}
+
+.moreDashBoard_top_right_box1:hover {
+    box-shadow: -1px 2px 20px 10px #153add44;
+    background-color: #000000d3;
+}
+
+.moreDashBoard_top_right_box1 > i {
+    margin-top: 3vh;
+    font-size: 10vh;
+    color: rgb(4, 0, 218);
+    margin-bottom: 2vh;
+}
+
+
+/* *******************************달력 ******************** */
+.calendar_box {
+    width: 50%;
+    /* background-color: rgba(192, 29, 29, 0.377); */
+    border-radius: 0.8vh;
+    color: rgb(206, 206, 206);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar {
+    width: 90%;
+    /* background-color: rgba(36, 87, 255, 0.089); */
+    /* margin-top: 1vh; Adjust margin for responsiveness */
+    border-radius: 0.8vh;
+    max-height: 45vh;
+    /* border: 0.2vh solid #a5a5a5; */
+    margin-top: 1vh;
+    margin-right: 7vh;
+}
+
+.calendar-box_top {
+    margin-top: 3vh; /* Adjust margin for responsiveness */
+    color: rgba(255, 255, 255, 0.664);
+    font-size: 1.4vh; /* Adjust font-size for responsiveness */
+    width: 87%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vh; /* Adjust margin for responsiveness */
+    padding-left: 2vh;
+    padding-top: 1vh;
+}
+
+#prev, #next {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2vh; /* Adjust icon size for responsiveness */
+    cursor: pointer;
+}
+
+#month-year {
+    font-size: 1.6vh; /* Adjust font-size for responsiveness */
+    font-weight: bold;
+}
+
+#calendar-body {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar-body th,
+#calendar-body td {
+    width: 14.28%;
+    text-align: center;
+    padding: 1.5vh; /* Adjust padding for responsiveness */
+    font-weight: bold;
+}
+
+#calendar-body td {
+    cursor: pointer;
+}
+
+#calendar-body td:hover {
+    background-color: #8b8b8b2f;
+    border-radius: 1vh;
+}
+
+.calendar_foot {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+    /* background-color: yellowgreen; */
+    margin-right: 3vh;
+}
+
+#calendar-body th:nth-child(1),
+#calendar-body td:nth-child(1) {
+    color: rgba(255, 0, 0, 0.842);
+}
+
+.today {
+    background-color: #8b8b8b2f;
+    color: white;
+    font-weight: bold;
+    border-radius: 1vh;
+}
+
+
+/* ***************************** */
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(15px);
+    }
+    60% {
+        transform: translateY(10px);
+    }
+}
+
+.scroll-arrow {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vh;
+    z-index: 1000;
+    font-size: 24px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 3vh;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+.scroll-arrow i {
+    cursor: pointer;
+}

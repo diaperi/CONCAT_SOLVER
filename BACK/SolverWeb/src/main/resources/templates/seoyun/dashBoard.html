@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/seoyun/css/dashBoard.css}">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Sunflower:wght@300;500;700&display=swap"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="moreDashBoard_div1">
+    <div class="moreDashBoard_div2">
+        <div class="moreDashBoard_div3" id="moreDashBoard_div3">
+            <div class="moreDashBoard_top_left_top">
+                <span th:text="' ' + ${userName} + ' 님,'"></span><br>
+                <span style="font-size: 2.5vh;">소중한 순간을 만들어가는 <br>여정을 시작해 보세요.</span> <br>
+                <span style="font-size: 2.5vh;">나와 가족의 행복을 위한<br> 작은 변화가 시작되는 곳입니다.</span>
+            </div>
+            <div class="dashBoard_video">
+                <video autoplay loop muted>
+                    <source src="/seoyun/img/A_self_rotating_light_bulb_with_light_glowing_inside_8d5d9c.mp4"
+                            type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="moreDashBoard_top">
+            <!-- 위쪽 왼쪽 상자 -->
+            <div class="moreDashBoard_top_left" id="moreDashBoard_top_left">
+                <div class="moreDashBoard_top_left_down">
+                    <div class="moreDashBoard_top_left_down2">
+                        <div class="moreDashBoard_top_left_down3">
+                            <div class="moreDashBoard_top_left_down2_weather">
+                                <span><img id="animalImage" src="" alt="가족"></span>
+                            </div>
+                            <div class="moreDashBoard_top_left_down2_right">
+                                <span>오늘 가족과 <br>함께할 작은 활동을<br> 추천해드릴게요.</span>
+                                <span id="quote">"가족은 우리가 세상을 살아가는 데 필요한 사랑의 원천입니다."</span>
+                                <span id="advice">이번주에는 서로 칭찬을 3회 이상 해보세요.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="moreDashBoard_top_right0" id="moreDashBoard_top_right0">
+                <!-- 위쪽 오른쪽 상자2 -->
+                <div class="moreDashBoard_top_right">
+                    <div class="moreDashBoard_top_right_div">
+                        <span>저장된 영상과 갈등에 대한 <br>피드백을 확인할 수 있어요.</span><br>
+                        <span>솔버가 갈등을 객관적이고 지혜롭게<br> 해결하는 방법을 알려드려요.</span><br>
+                        <a href="/myPage/myPageMain">영상 & 해결책 &nbsp;&nbsp;&nbsp;보러가기</a>
+                    </div>
+                    <div class="moreDashBoard_top_right_img">
+                        <img th:src="${latestImageUrl}" alt="Latest Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 아래쪽 상자 -->
+        <div class="moreDashBoard_down" id="moreDashBoard_down">
+
+            <div class="calendar_box">
+                <div id="calendar">
+                    <div id="calendar-header">
+                        <span id="month-year"></span>
+                        <div class="calendar_foot">
+                            <button id="prev"><i class="fa-solid fa-angles-left"></i></button>
+                            <button id="next"><i class="fa-solid fa-angles-right"></i></button>
+                        </div>
+                    </div>
+                    <table id="calendar-body">
+                        <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="moreDashBoard_down_span">
+                <a href="/moreDashBoard/emotion" class="moreDashBoard_down_span_a" id="emotion-link">
+                    <div class="moreDashBoard_down_span2">
+                            <span>솔버가 감정을 현명하게<br>다스릴 수 있도록 도와드릴게요.
+                            </span>
+                        <span>해당 날짜의 감정 통계와<br>
+                                감정에 대한 피드백을 확인할 수 있어요.<br>이곳을 클릭하세요.</span>
+                    </div>
+                    <div class="moreDashBoard_top2_video">
+                        <video autoplay loop muted>
+                            <source src="/seoyun/img/9363795-uhd_2160_3840_24fps.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        <!-- 아래쪽 상자 -->
+        <div class="moreDashBoard_down_2" id="moreDashBoard_down_2">
+            <span>지난 대화를 더 나은 방향으로 </span>
+            <span>재구성 할 수 있어요.</span>
+            <span><a href="/moreDashBoard/text">대화 재구성 하러 가기</a></span>
+            <div class="moreDashBoard_down_2_video">
+                <video autoplay loop muted>
+                    <source src="/seoyun/img/2268807-hd_1920_1080_24fps.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="moreDashBoard_top_right_box" id="moreDashBoard_top_right_box">
+            <div class="moreDashBoard_top_right_box1">
+                <span>회원정보</span>
+                <span>수정</span>
+                <i class="fa-regular fa-id-card"></i>
+                <span>바로가기</span>
+            </div>
+            <div class="moreDashBoard_top_right_box1">
+                <span>삭제된 영상 </span>
+                <span>보관함</span>
+                <i class="fa-regular fa-trash-can"></i>
+                <span>바로가기</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-arrow">
+        <i class="fa-solid fa-angles-down"></i>
+    </div>
+</div>
+
+<script src="/seoyun/js/dashBoard.js"></script>
+<!-- JavaScript 부분 -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const elements = [
+            document.getElementById("moreDashBoard_div3"),
+            document.getElementById("moreDashBoard_top_left"),
+            document.getElementById("moreDashBoard_top_right0"),
+            document.getElementById("moreDashBoard_down"),
+            document.getElementById("moreDashBoard_down_2"),
+            document.getElementById("moreDashBoard_top_right_box")
+        ];
+
+        // 요소 초기 스타일 설정
+        elements.forEach(el => {
+            if (el !== null) {
+                el.style.opacity = 0; // 초기에는 투명
+                el.style.transform = 'translateY(100px)'; // 초기에는 100px 아래에 위치
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out'; // 부드러운 애니메이션
+            }
+        });
+
+        function animateOnScroll() {
+            elements.forEach(el => {
+                if (el !== null) {
+                    const rect = el.getBoundingClientRect(); // 요소의 화면 내 위치를 가져옴
+                    const windowHeight = window.innerHeight;
+
+                    if (rect.top <= windowHeight && rect.bottom >= 0) {
+                        // 요소가 화면에 보일 때
+                        el.style.transform = 'translateY(0px)'; // 제자리로 이동
+                        el.style.opacity = 1; // 완전히 보이게
+                    } else {
+                        // 요소가 화면 밖으로 나갈 때 (아래쪽으로 이동)
+                        el.style.transform = 'translateY(100px)'; // 다시 아래로 이동
+                        el.style.opacity = 0; // 다시 숨김
+                    }
+                }
+            });
+        }
+
+        window.addEventListener("scroll", function () {
+            window.requestAnimationFrame(animateOnScroll);
+        });
+
+        // 초기 로드 시 애니메이션 적용
+        animateOnScroll();
+
+        // 여기부터 수정된 부분입니다.
+        const emotionLink = document.getElementById('emotion-link');
+
+        // 로딩 화면 요소 생성
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.id = 'loading-overlay';
+        loadingOverlay.style.position = 'fixed';
+        loadingOverlay.style.top = '0';
+        loadingOverlay.style.left = '0';
+        loadingOverlay.style.width = '100%';
+        loadingOverlay.style.height = '100%';
+        loadingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        loadingOverlay.style.zIndex = '1000';
+        loadingOverlay.style.display = 'none'; // 초기에는 숨김
+        loadingOverlay.style.alignItems = 'center';
+        loadingOverlay.style.justifyContent = 'center';
+        loadingOverlay.style.flexDirection = 'column';
+        loadingOverlay.style.color = 'white';
+        loadingOverlay.style.fontSize = '18px';
+        // 중복된 display 설정 제거
+
+        // 로딩 메시지와 스피너 추가
+        loadingOverlay.innerHTML = `
+            <div>
+                <div class="spinner" style="
+                    border: 8px solid #f3f3f3;
+                    border-top: 8px solid #3498db;
+                    border-radius: 50%;
+                    width: 60px;
+                    height: 60px;
+                    animation: spin 1s linear infinite;
+                    margin: 0 auto;
+                "></div>
+                <p style="margin-top: 20px; font-size: 2vh; color: white;">솔버가 해당 날짜의 감정 통계와 <br>감정에 대한 피드백을 만들고 있어요...<br>조금만 기다려 주세요🥰</p>
+            </div>
+        `;
+
+        // 스피너 애니메이션 정의
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(loadingOverlay);
+
+        // emotionLink 요소가 존재하는지 확인
+        if (emotionLink) {
+            emotionLink.addEventListener('click', function (event) {
+                event.preventDefault(); // 기본 동작 막기
+
+                // 로딩 화면 표시
+                loadingOverlay.style.display = 'flex';
+
+                // 페이지 이동
+                window.location.href = this.href;
+            });
+        } else {
+            console.error('emotion-link 요소를 찾을 수 없습니다.');
+        }
+
+    });
+</script>
+
+</body>
+</html>
