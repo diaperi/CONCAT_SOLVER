@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음성 높낮이 파악용 스펙트로그램</title>
+    <link rel="stylesheet" th:href="@{/hyeeun/css/training.css}">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+</head>
+<body>
+<!--<div th:replace="~{hyeeun/header :: header}"></div>-->
+
+<!--<div class="training_container">-->
+<!--    <h1>음성 높낮이 파악용 스펙트로그램</h1>-->
+<!--    <div id="sketch-holder"></div>-->
+<!--    <div class="button-container">-->
+<!--        <button id="stop-mic-btn" class="control-btn">마이크 멈추기</button>-->
+<!--        <button id="feedback-btn" class="control-btn" onclick="window.location.href='/train/feedback';">피드백 보기</button>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; p5.js 라이브러리 &ndash;&gt;-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>-->
+
+<!--<script>-->
+<!--    let mic, fft;-->
+
+<!--    function setup() {-->
+<!--        let canvas = createCanvas(800, 400);-->
+<!--        canvas.parent('sketch-holder');-->
+
+<!--        mic = new p5.AudioIn();-->
+<!--        mic.start(-->
+<!--            () => {-->
+<!--                console.log('마이크 시작됨');-->
+<!--            },-->
+<!--            (err) => {-->
+<!--                console.error('마이크 시작 오류:', err);-->
+<!--            }-->
+<!--        );-->
+
+<!--        fft = new p5.FFT();-->
+<!--        fft.setInput(mic);-->
+
+<!--        document.getElementById('stop-mic-btn').addEventListener('click', function() {-->
+<!--            mic.stop();-->
+<!--            console.log('마이크가 멈췄습니다.');-->
+<!--        });-->
+<!--    }-->
+
+<!--    function draw() {-->
+<!--        background(0);-->
+
+<!--        let spectrum = fft.analyze();-->
+<!--        console.log(spectrum);-->
+
+<!--        noStroke();-->
+<!--        fill(0, 255, 0);-->
+<!--        for (let i = 0; i < spectrum.length; i++) {-->
+<!--            let x = map(i, 0, spectrum.length, 0, width);-->
+<!--            let h = -height + map(spectrum[i], 0, 255, height, 0);-->
+<!--            rect(x, height, width / spectrum.length, h);-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>
+

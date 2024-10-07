@@ -29,6 +29,12 @@ spring:
       root: INFO
       concat.SolverWeb: INFO
 
+  #시나리오 STT
+  servlet:
+    multipart:
+      max-file-size: 500MB  # 원하는 최대 파일 크기로 설정
+      max-request-size: 500MB
+
   # spring data jpa 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -51,6 +57,9 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
+  web:
+    resources:
+      static-locations: classpath:/static/
 
 email:
   from:

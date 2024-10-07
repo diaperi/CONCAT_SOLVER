@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>myPageDetail</title>
+    <title>피드백</title>
     <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/seoyun/css/myPageDetail.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/feedback.css}">
     <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
 </head>
 <body>
 
-<div  th:replace="~{hyeeun/header :: header}"></div>
+<div th:replace="~{hyeeun/header :: header}"></div>
 
+<!--*********************************-->
 <div class="myPageDetail_container">
     <div class="myPageDetail_container2">
         <div class="myPageDetail_main">
@@ -24,12 +25,22 @@
             </div>
             <div class="myPageDetail_rightBox visible" id="myPageDetail_rightBox">
                 <div class="myPageDetail_rightTop">
-                    <span>해결책 제시</span>
+                    <span id="conversationBtn">대화내용</span>
+                    <span id="feedbackBtn">피드백</span>
                     <span id="expandButton"><i class="fa-solid fa-angles-left"></i></span>
                 </div>
                 <div class="myPageDetail_rightMain">
-                    <span id="gptResponse" th:utext="${gptResponse}">해결책을 불러오는 중입니다...</span>
+                    <span id="contentDisplay">내용을 불러오는 중입니다...</span>
+                    <!-- 참여자 선택 UI -->
+                    <div class="participant-select">
+                        <label for="participant">참여자 선택:</label>
+                        <select id="participant">
+                            <option value="participant1">참여자 1</option>
+                            <option value="participant2">참여자 2</option>
+                        </select>
+                    </div>
                 </div>
+
                 <div class="myPageDetail_bottomActions">
                     <button id="readBtn">
                         <i class="fa-solid fa-volume-up"></i> 읽기
@@ -43,8 +54,30 @@
     </div>
 </div>
 
+<script src="/hyeeun/js/feedback.js"></script>
+<script>
+    function goToMyPagePop() {
+        window.location.href = 'trains/myPagePop';
+    }
 
-<script src="/seoyun/js/myPageDetail.js"></script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var videoList = document.getElementById("video-list");
+        var noVideos = document.getElementById("no-videos");
+
+        if (videoList) { // Check if videoList is not null
+            if (videoList.children.length > 0) {
+                noVideos.style.display = "none";
+            } else {
+                videoList.style.display = "none";
+                noVideos.style.display = "block";
+            }
+        } else {
+            // Handle the case where videoList is not found in the DOM
+            noVideos.style.display = "block";
+        }
+    });
+
+</script>
 
 </body>
 </html>

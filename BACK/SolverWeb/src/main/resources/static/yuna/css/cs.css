@@ -20,12 +20,12 @@ body {
     width: 100%;
     min-height: 100vh;
     text-align: center;
-    background: linear-gradient(137.29deg, 
-        #03BED6 20.13%, 
-        #10B3DA 33.05%, 
-        #1DA4E1 45.02%, 
-        #249CE5 58.56%, 
-        #2D8EED 72.11%, 
+    background: linear-gradient(137.29deg,
+        #03BED6 20.13%,
+        #10B3DA 33.05%,
+        #1DA4E1 45.02%,
+        #249CE5 58.56%,
+        #2D8EED 72.11%,
         #3084F4 83.13%);
 }
 
@@ -175,3 +175,21 @@ body {
     font-size: 1.6em;
     font-weight: bold;
 }
+
+.cs_qna {
+    margin-bottom: 15px;
+}
+
+.answer {
+    display: none;
+    font-size: 14px;
+    color: #333;
+    padding-left: 30px; /* 답변이 질문보다 조금 더 안쪽으로 들어가게 설정 */
+    margin-top: 10px;
+}
+
+.question {
+    font-weight: bold;
+    font-size: 16px;
+}
+
