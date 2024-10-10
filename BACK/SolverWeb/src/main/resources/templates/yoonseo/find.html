@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디/비밀번호 찾기</title>
+    <link rel="stylesheet" href="/yoonseo/css/find.css">
+</head>
+
+<body>
+<header>
+    <div class="login-header-img">
+        <a href=""><img src="/yoonseo/img/1SOLVER솔버로고_배경없는_화이트버전 7.png"></a>
+    </div>
+</header>
+<div class="find_box">
+    <div class="find">
+        <div class="find_clostBtnBox">
+            <button class="close-button" onclick="goToLogin()">X</button>
+        </div>
+        <div class="find-img"><img src="/yoonseo/img/SOLVER_body.png"></div>
+        <div class="find-content"><span>아이디 / 비밀번호 찾기</span></div>
+        <br><span>가입 시 사용한 이메일 주소를 입력하면 가입정보를 보내드립니다.</span>
+        <div class="find-input-box">
+            <input type="email" id="email-input" placeholder="" required>
+        </div>
+        <div class="btn">
+            <button id="find-email-Button" disabled>이메일로 받기</button>
+        </div>
+        <section class="modal modal-section type-alert">
+            <div class="enroll_box">
+                <p class="menu_msg"><b>이메일을 발송했습니다.</b></p>
+                <p class="menu_msg2">이메일에서 계정 정보를 확인해주세요.</p>
+                <button class="btn ok_btn modal_close" onclick="redirectToLogin()">확인</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<script src="/yoonseo/js/find.js"></script>
+<script>
+    function redirectToLogin() {
+        window.location.href = "/user/login";
+    }
+</script>
+
+</body>
+
+</html>

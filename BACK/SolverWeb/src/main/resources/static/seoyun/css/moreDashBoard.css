@@ -1,0 +1,596 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.moreDashBoard_div1 {
+    background: linear-gradient(137.29deg,
+    #03BED6 20.13%,
+    #10B3DA 33.05%,
+    #1DA4E1 45.02%,
+    #249CE5 58.56%,
+    #2D8EED 72.11%,
+    #3084F4 83.13%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.moreDashBoard_div2 {
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: 60%;
+    /* background-color: thistle; */
+    margin-top: 5vh;
+    flex-direction: column;
+}
+
+
+/* *********위쪽 상자********* */
+.moreDashBoard_top {
+    /* background-color: yellowgreen; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 120vh;
+}
+
+
+/* ******* 위쪽 왼쪽 상자 *********** */
+.moreDashBoard_top_left {
+    /* background-color: slateblue; */
+    color: white;
+    font-weight: bold;
+    width: 42%;
+    height: 100%;
+}
+
+
+/* ********* 위쪽 왼쪽 위 상자 ********** */
+.moreDashBoard_top_left_top {
+    /* background-color: steelblue; */
+    height: 53vh;
+    padding-left: 2vh;
+    padding-right: 2vh;
+}
+
+.moreDashBoard_top_left_top > span {
+    font-size: 4vh;
+}
+
+
+/* ********* 위쪽 왼쪽 아래 상자 ********** */
+.moreDashBoard_top_left_down {
+    background-color: rgb(0, 0, 0);
+    font-size: 2vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vh;
+    margin-top: 5vh;
+    height: 28vh;
+    padding-bottom: 3vh;
+}
+
+.moreDashBoard_top_left_down > span {
+    margin-top: 2vh;
+}
+
+.moreDashBoard_top_left_down2 {
+    /* background-color: rgba(255, 255, 255, 0.144); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin-top: 1vh;
+    border-radius: 1vh;
+    height: 90%;
+}
+
+.moreDashBoard_top_left_down3 {
+    /* background-color: yellowgreen; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 90%;
+}
+
+.moreDashBoard_top_left_down2_weather {
+    border-radius: 1vh;
+    height: 13vh;
+    min-width: 13vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.moreDashBoard_top_left_down2_weather > span > img {
+    height: 12vh;
+    min-width: 12vh;
+    border-radius: 1vh;
+}
+
+
+.moreDashBoard_top_left_down2_right {
+    display: flex;
+    flex-direction: column;
+    /* background-color: violet; */
+    margin-left: 2vh;
+}
+
+.moreDashBoard_top_left_down2_right > span:nth-child(1) {
+    margin-bottom: 2vh;
+    font-size: 1.5vh;
+    font-weight: 100;
+}
+
+.moreDashBoard_top_left_down2_right > span:nth-child(2) {
+    font-size: 2vh;
+}
+
+
+/* ******* 위쪽 오른쪽 상자 *********** */
+.moreDashBoard_top_right {
+    background-color: rgb(0, 0, 0);
+    width: 52%;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1vh;
+}
+
+.moreDashBoard_top_right > span {
+    font-size: 2vh;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+}
+
+.moreDashBoard_top_right_box {
+    /* background-color: rgba(255, 255, 255, 0.144); */
+    width: 90%;
+    border-radius: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5vh;
+}
+
+.moreDashBoard_top_right_box2 {
+    /* background-color: slateblue; */
+    width: 90%;
+    margin-top: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.moreDashBoard_top_right1 {
+    /* background-color: rgb(82, 152, 221); */
+    font-size: 1.9vh;
+    margin-bottom: 1vh;
+    position: relative;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.moreDashBoard_top_right1 > span {
+    background-color: black;
+    color: #d6d9dc;
+    font-size: 1.6vh;
+    background-color: #000000;
+    padding: 0 3vh;
+    position: relative;
+    z-index: 1;
+    line-height: 1; /* 텍스트가 중앙에 오도록 */
+}
+
+.moreDashBoard_top_right1 > hr {
+    width: 100%;
+    border: none;
+    border-top: 0.1vh solid #d6d9dc;
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 0;
+    top: 50%;
+}
+
+.moreDashBoard_top_right2 {
+    /* background-color: rgb(139, 56, 41); */
+    font-size: 3vh;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.moreDashBoard_top_right3 {
+    /* background-color: rgb(0, 79, 158); */
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5vh;
+}
+
+.moreDashBoard_top_right3_circle1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8vh;
+}
+
+.moreDashBoard_top_right3_circle1 > div {
+    height: 20vh;
+    width: 20vh;
+    background-color: violet;
+    border-radius: 50%;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(1) {
+    border-bottom: 0.5vh solid #32CD32;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(2) {
+    border-bottom: 0.5vh solid #FFD700;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(3) {
+    border-bottom: 0.5vh solid #4682B4;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(4) {
+    border-bottom: 0.5vh solid #FF6347;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(5) {
+    border-bottom: 0.5vh solid #FF4500;
+}
+
+.moreDashBoard_top_right2 > span:nth-child(6) {
+    border-bottom: 0.5vh solid #A9A9A9;
+}
+
+
+.circle {
+    height: 25vh;
+    width: 25vh;
+}
+
+.moreDashBoard_top_right3_circle2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8vh;
+}
+
+.moreDashBoard_top_right3_circle2 > div {
+    height: 20vh;
+    width: 20vh;
+    background-color: rgb(130, 164, 238);
+    border-radius: 50%;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.moreDashBoard_top_right4 {
+    /* background-color: rgb(0, 101, 141); */
+    width: 100%;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    margin-bottom: 3vh;
+    font-size: 1.5vh;
+    font-weight: 100;
+}
+
+.moreDashBoard_top_right5 {
+    /* background-color: rgb(0, 141, 127); */
+    width: 100%;
+    border: 0.3vh solid #686868;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
+.moreDashBoard_top_right5_date {
+    /* background-color: rgb(20, 65, 110); */
+    width: 70%;
+    justify-content: space-between;
+    display: flex;
+    font-size: 1.9vh;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+}
+
+.moreDashBoard_top_right5_date > i {
+    cursor: pointer;
+}
+
+.moreDashBoard_top_right5_dateList {
+    /* background-color: sienna; */
+    width: 90%;
+    font-size: 1.8vh;
+}
+
+.moreDashBoard_top_right5_dateList1 {
+    /* background-color: steelblue; */
+    margin-bottom: 1.5vh;
+    display: flex;
+}
+
+.moreDashBoard_top_right5_dateList1 > span:nth-child(1) {
+    /* background-color: tan; */
+    margin-right: 1vh;
+}
+
+.moreDashBoard_top_right5_dateList1 > span:nth-child(2) {
+    font-size: 1.5vh;
+    min-width: 12.5vh;
+}
+
+.moreDashBoard_top_right5_dateList1 > span:nth-child(3) {
+    /* background-color: rgb(92, 92, 27); */
+    padding-left: 1vh;
+    padding-right: 1vh;
+    margin-left: 1vh;
+    cursor: pointer;
+    font-size: 1.5vh;
+    /* background-color: yellowgreen; */
+    text-wrap: wrap;
+}
+
+
+/* ****************?****   아래쪽 상자   ****************** */
+.moreDashBoard_down {
+    background-color: rgb(12, 11, 20);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120vh;
+    flex-direction: column;
+    border-radius: 1vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.moreDashBoard_down > span {
+    margin-top: 2vh;
+    font-size: 2vh;
+}
+
+.moreDashBoard_down2 {
+    /* background-color: rgba(255, 255, 255, 0.144); */
+    width: 95%;
+    margin-top: 1vh;
+    border-radius: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+
+.moreDashBoard_down3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    flex-direction: column;
+}
+
+.moreDashBoard_down3_openBox > i {
+    font-size: 3vh;
+    color: #919191;
+}
+
+.moreDashBoard_down3_openBox {
+    /* background-color: rgb(95, 95, 0); */
+    width: 95%;
+    margin-top: 3.5vh;
+    display: flex;
+    min-height: 30vh;
+    max-height: 30vh;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4vh;
+}
+
+.moreDashBoard_down3_openBox_top {
+    /* background-color: rgb(5, 0, 71); */
+    width: 47%;
+    overflow-y: scroll;
+    min-height: 30vh;
+    max-height: 30vh;
+    border-radius: 1vh;
+    padding: 1vh;
+    margin-right: 1vh;
+    color: #a5a5a5;
+}
+
+.moreDashBoard_down3_openBox_top::-webkit-scrollbar {
+    display: none;
+}
+
+.moreDashBoard_down3_openBox_down {
+    /* background-color: rgb(5, 0, 71); */
+    width: 47%;
+    overflow-y: scroll;
+    min-height: 30vh;
+    max-height: 30vh;
+    border-radius: 1vh;
+    padding: 1vh;
+    margin-left: 1vh;
+    color: #dadada;
+
+}
+
+.moreDashBoard_down3_openBox_down::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* *******************************달력 ******************** */
+.calendar-box {
+    width: 80%;
+    /* background-color: rgba(0, 0, 0, 0.377); */
+    border-radius: 0.8vh;
+    color: rgb(206, 206, 206);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar {
+    width: 90%;
+    /* background-color: rgba(36, 87, 255, 0.089); */
+    margin-top: 1vh; /* Adjust margin for responsiveness */
+    border-radius: 0.8vh;
+    max-height: 44vh;
+    border: 0.2vh solid #a5a5a5;
+}
+
+.calendar-box_top {
+    margin-top: 3vh; /* Adjust margin for responsiveness */
+    color: rgba(255, 255, 255, 0.664);
+    font-size: 1.4vh; /* Adjust font-size for responsiveness */
+    width: 87%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vh; /* Adjust margin for responsiveness */
+    padding-left: 2vh;
+    padding-top: 3vh; /* Adjust padding for responsiveness */
+}
+
+#prev, #next {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2.5vh; /* Adjust icon size for responsiveness */
+    cursor: pointer;
+}
+
+#month-year {
+    font-size: 1.6vh; /* Adjust font-size for responsiveness */
+    font-weight: bold;
+}
+
+#calendar-body {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar-body th,
+#calendar-body td {
+    width: 14.28%;
+    text-align: center;
+    padding: 1.5vh; /* Adjust padding for responsiveness */
+    font-weight: bold;
+}
+
+#calendar-body td {
+    cursor: pointer;
+}
+
+#calendar-body td:hover {
+    background-color: #8b8b8b2f;
+    border-radius: 1vh;
+}
+
+.calendar_foot {
+    display: flex;
+    width: 20%;
+    justify-content: space-between;
+}
+
+#calendar-body th:nth-child(1),
+#calendar-body td:nth-child(1) {
+    color: rgba(255, 0, 0, 0.842);
+}
+
+.today {
+    background-color: #8b8b8b2f;
+    color: white;
+    font-weight: bold;
+    border-radius: 1vh;
+}
+
+
+/* ***************************** */
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(15px);
+    }
+    60% {
+        transform: translateY(10px);
+    }
+}
+
+.scroll-arrow {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vh;
+    z-index: 1000;
+    font-size: 24px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 3vh;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+.scroll-arrow i {
+    cursor: pointer;
+}
+
+/* 기본 상태: 애니메이션이 적용되지 않은 상태 */
+.moreDashBoard_top_left_top {
+    opacity: 0; /* 애니메이션 시작 시에는 숨겨지게 설정 */
+    transform: translateY(40px); /* 애니메이션 시작 시에는 아래쪽으로 위치 설정 */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* 부드러운 트랜지션을 설정 */
+}
+
+/* 애니메이션이 적용될 때의 상태 */
+.fade-in-up {
+    opacity: 1; /* 애니메이션이 끝난 후에는 완전히 나타나도록 설정 */
+    transform: translateY(0); /* 애니메이션이 끝난 후에는 원래 위치로 복귀 */
+}
+

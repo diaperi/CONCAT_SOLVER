@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/yoonseo/css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<header>
+    <div class="login-header-img">
+        <a href=""><img src="/yoonseo/img/1SOLVER솔버로고_배경없는_화이트버전 7.png"></a>
+    </div>
+</header>
+<div class="login_container">
+    <div class="login_container2">
+        <div class="login_side">
+                <span class="login_intro1">
+                    사회적 문제인 가족 갈등 조정을 위한
+                    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;똑똑한 우리집 퍼실레이터
+                </span><br>
+            <span class="login_intro2"><b>&nbsp;&nbsp;&nbsp;솔버(SOLVER)로 갈등 해결하고<br>가정에서 행복한 대화를 나눠보세요!</b></span>
+            <div class="login-body-img"><img src="/yoonseo/img/solver_login.png"></div>
+        </div>
+        <div class="login_formBox">
+            <div class="login_formBox2">
+                <form action="" th:action="@{/user/login}" method="post" class="login_form" id="login_form">
+                    <div class="login-img"><img src="/yoonseo/img/SOLVER_login_body.png"></div>
+                    <div class="login-input-idbox">
+                        <input type="text" id="userId" name="userId" placeholder="아이디" required>
+                    </div>
+                    <div class="login-input-pwbox">
+                        <input type="password" id="userPw" name="userPw" placeholder="비밀번호" required>
+                    </div>
+                    <div class="login-check">
+                        <input type="checkbox"><span> 로그인 상태 유지</span>
+                    </div>
+                    <button type="submit" id="login_btn" form="login_form">로그인</button>
+                </form>
+                <div class="login_register">
+                    <a href="/user/find">아이디 찾기</a>
+                    |<a href="/user/find"> 비밀번호 찾기</a>
+                    |<a href="/user/sign"> 회원가입</a>
+                </div>
+
+                <div class="login_type">
+                    <div class="login_typeLine">
+                        <hr>
+                        <span class="or-text">간편 로그인</span>
+                    </div>
+                    <div class="login_typeIcon">
+                        <!-- 구글 로그인 버튼 -->
+                        <a href="/snslogin/oauth2/authorization/google">
+                            <button class="login-button" id="google-login" alt="구글 로그인">
+                                <img src="/yoonseo/img/google.png">
+                            </button>
+                        </a>
+
+                        <!-- 카카오 로그인 버튼 -->
+                        <a href="/snslogin/oauth2/authorization/kakao">
+                            <button class="login-button" id="kakao-login" alt="카카오 로그인">
+                                <img src="/yoonseo/img/kakaotalk.png">
+                            </button>
+                        </a>
+
+                        <!-- 네이버 로그인 버튼 -->
+                        <a href="/snslogin/oauth2/authorization/naver">
+                            <button class="login-button" id="naver-login" alt="네이버 로그인">
+                                <img src="/yoonseo/img/naver.jpg">
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 로딩 오버레이 (페이지 로딩 중 표시) -->
+<div id="loadingOverlay">
+    <div id="loadingMessage">
+        <div class="loader"></div>
+        <p>기기와의 연결을 확인하고 있어요...</p>
+        <p>연결이 확인되면 바로 카메라가 실행돼요.</p>
+        <p>얼굴이 카메라에 잡히면 녹화가 시작됩니다.</p>
+        <p>음소거 15초 후에 녹화가 저장되고 종료됩니다.</p>
+    </div>
+</div>
+
+<!--<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"-->
+<!--        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"-->
+<!--        crossorigin="anonymous"></script>-->
+<script src="/yoonseo/js/login.js"></script>
+<script>
+    $(document).ready(function () {
+        let message = "[[${msg}]]";
+        if (message != "") {
+            alert(message);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // 로그인 버튼 클릭 시 애니메이션 표시
+        const loginForm = document.getElementById('login_form');
+
+        loginForm.addEventListener('submit', function () {
+            // 로그인 버튼이 클릭된 후 로딩 애니메이션 표시
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        });
+    });
+
+</script>
+</body>
+
+</html>

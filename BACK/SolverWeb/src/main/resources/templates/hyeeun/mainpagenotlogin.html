@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mainpagenotlogin</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/hyeeun/css/mainpagenotlogin.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="mainpagenotlogin_container">
+    <div class="mainpagenotlogin_container2">
+        <div class="mainpagenotlogin_main">
+            <div class="mainpagenotlogin_videoBox slide-out-left" id="videoBox">
+                <div class="mainpagenotlogin_error-message">
+                    <p th:text="' ' + ${userName} + ' 님! 기기가 연결되지 않아 실시간 화면을 볼 수 없습니다.'"></p>
+                    <p>연결을 확인하고 페이지를 새로고침 해주세요.</p>
+                    <img src="/hyeeun/img/error.png" alt="Error Image">
+                </div>
+                <video id="myVideo" controls>
+                    <source src="video.mp4" type="video/mp4">
+                </video>
+                <span class="close-button" id="closeButton"><i class="fa-solid fa-x"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/hyeeun/js/mainpage.js"></script>
+
+</body>
+</html>
+

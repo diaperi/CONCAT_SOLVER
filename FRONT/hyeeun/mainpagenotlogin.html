@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mainpagenotlogin</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/hyeeun/css/mainpagenotlogin.css">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <div class="mainpagenotlogin_container">
+        <div class="mainpagenotlogin_container2">
+            <div class="mainpagenotlogin_main">
+                <div class="mainpagenotlogin_videoBox slide-out-left" id="videoBox">
+                    <div class="mainpagenotlogin_error-message">
+                        <p>기기가 연결되지 않아 실시간 화면을 볼 수 없습니다.</p>
+                        <p>와이파이 및 블루투스 연결을 확인하고 다시 시도해주세요.</p>
+                        <img src="img/error.png" alt="Error Image">
+                    </div>
+                    <video id="myVideo" controls>
+                        <source src="video.mp4" type="video/mp4">
+                    </video>
+                    <span class="close-button" id="closeButton"><i class="fa-solid fa-x"></i></span>
+                </div>
+                <!-- <div class="mainpagenotlogin_rightBox visible" id="myPageDetail_rightBox">
+                    <div class="mainpagenotlogin_rightTop">
+                        <span>대화내용</span>
+                        <span id="expandButton"><i class="fa-solid fa-angles-left"></i></span>
+                    </div>
+                    <div class="mainpagenotlogin_rightMain">
+                        <span>
+                            <p>실시간 화면이 보이면 자동으로</p>
+                            <p>대화를 생성합니다.</p>
+                        </span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/hyeeun/js/mainpage.js"></script>
+    <script>
+        // JavaScript to load the header
+        fetch('/hyeeun/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+
+</body>
+</html>
+

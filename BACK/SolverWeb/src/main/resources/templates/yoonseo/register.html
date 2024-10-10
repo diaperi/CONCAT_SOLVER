@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/yoonseo/css/register.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="register-header-img">
+        <a href=""><img src="/yoonseo/img/1SOLVER솔버로고_배경없는_화이트버전 7.png"></a>
+    </div>
+</header>
+<div class="register_box">
+    <div class="register">
+        <div class="register_clostBtnBox">
+            <button class="close-button2" onclick="goToRegister()"><<</button>
+            <button class="close-button" onclick="goToLogin()">X</button>
+        </div>
+        <div class="sign-content">
+            <div class="register-title"><span>회원가입</span></div>
+            <div class="register-img">
+                <div class="register-1"><img src="/yoonseo/img/number1.png"></div>
+                <div class="register-line"></div>
+                <div class="register-2"><img src="/yoonseo/img/number2.png"></div>
+            </div>
+            <form th:action="@{/user/register}" onsubmit="return checkInputs();" method="post" class="register_form">
+                <div class="user-info">
+                    <div class="user-info-name">
+                        이름
+                        <input type="text" id="nameInput"  name="name" />
+                    </div>
+                    <div class="user-info-id">
+                        아이디
+                        <input type="text" id="idInput" name="id" onblur="checkDuplicateId()" /><br>
+                        <div id="check-result"></div>
+
+                    </div>
+                    <div class="user-info-pw">
+                        비밀번호
+                        <input type="password" id="pwInput" name="password"/><br>
+                        <p>비밀번호는 6~20자를 입력해주세요</p>
+                    </div>
+                    <div class="user-info-pw-check">
+                        비밀번호 확인
+                        <input type="password"  id="pwCheckInput"/>
+                    </div>
+                        <div class="email-container">
+                            <div class="user-info-email">
+                                이메일
+                            <input type="email" id="emailInput" name="email" />
+                            <button type="button" id="verifyEmail" onclick="sendVerifyEmail()">인증 받기</button>
+                            </div>
+                            <p>이메일로 전송된 인증번호를 입력해야 가입이 완료됩니다.</p>
+                        </div>
+                    <div class="user-info-email-check">
+                        인증번호
+                        <input type="text" id="emailCheckInput" />
+                        <div id="emailCheckResult"></div>
+                    </div>
+                    <div class="btn">
+                        <button  type="submit" id="registerup" onclick="checkInputs()">가입</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/yoonseo/js/register.js"></script>
+</body>
+</html>

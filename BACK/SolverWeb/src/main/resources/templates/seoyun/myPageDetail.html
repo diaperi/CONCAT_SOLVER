@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myPageDetail</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/seoyun/css/myPageDetail.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+</head>
+<body>
+
+<div  th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="myPageDetail_container">
+    <div class="myPageDetail_container2">
+        <div class="myPageDetail_main">
+            <div class="myPageDetail_videoBox slide-out-left" id="videoBox">
+                <video id="popup-video" controls>
+                    <source th:src="${videoUrl}" id="popup-video-source" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <span class="close-button" id="closeButton"><i class="fa-solid fa-x"></i></span>
+            </div>
+            <div class="myPageDetail_rightBox visible" id="myPageDetail_rightBox">
+                <div class="myPageDetail_rightTop">
+                    <span>해결책 제시</span>
+                    <span id="expandButton"><i class="fa-solid fa-angles-left"></i></span>
+                </div>
+                <div class="myPageDetail_rightMain">
+                    <span id="gptResponse" th:utext="${gptResponse}">해결책을 불러오는 중입니다...</span>
+                </div>
+                <div class="myPageDetail_bottomActions">
+                    <button id="readBtn">
+                        <i class="fa-solid fa-volume-up"></i> 읽기
+                    </button>
+                    <button id="trashBtn">
+                        <img src="/seoyun/img/흰휴지통-아이콘2 1.png" alt="Trash Icon">
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/seoyun/js/myPageDetail.js"></script>
+
+</body>
+</html>

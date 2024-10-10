@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.cs_csContainer {
+    width: 100%;
+    min-height: 100vh;
+    text-align: center;
+    background: linear-gradient(137.29deg, 
+        #03BED6 20.13%, 
+        #10B3DA 33.05%, 
+        #1DA4E1 45.02%, 
+        #249CE5 58.56%, 
+        #2D8EED 72.11%, 
+        #3084F4 83.13%);
+}
+
+.cs_mainContainer {
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.cs_searchContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 2vh;
+}
+
+.cs_searchSection {
+    flex: 0 0 calc(60% - 20px);
+    padding: 6vh;
+    margin-left: 2vh;
+}
+
+.cs_searchSection h1 {
+    font-size: clamp(1.5em, 10vw, 3em);
+    color: #fff;
+    margin-bottom: 2vh;
+}
+
+.cs_searchBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 54vh;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1vh;
+}
+
+.cs_searchIcon {
+    width: 24px;
+    height: 24px;
+    margin-left: 1vh;
+    opacity: 0.5;
+}
+
+.cs_searchBar input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    margin: 1vh;
+}
+
+/*.cs_honeCam {*/
+/*    flex: 0 0 calc(40% - 20px);*/
+/*}*/
+
+.cs_honeCam img {
+    width: 44vh;
+    height: 44vh;
+}
+
+.cs_infoSectionHead {
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 100vh;
+    padding-bottom: 1vh;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.cs_infoSectionHead h1,
+.cs_infoSectionHead h2 {
+    font-size: 1.1em;
+    white-space: nowrap;
+}
+
+.cs_infoSectionHead h2 {
+    margin-left: 30vh;
+}
+
+.cs_infoContainer {
+    width: 90%;
+    padding: 1vh 2vh;
+    margin-left: auto;
+    font-size: 1em;
+    font-weight: bold;
+    color: #2B2B2B;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.cs_infoFaq {
+    margin-top: 1.4vh;
+    margin-right: 20vh;
+}
+
+.cs_infoFaq ul li {
+    display: flex;
+    align-items: center;
+}
+
+.cs_infoFaq ul li img {
+    width: 50px;
+    height: 50px;
+    margin: -3px 10px;
+}
+
+.cs_infoBoxContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 4vh;
+}
+
+.cs_infoBox {
+    background: #98F9FFB2;
+    padding: 0 4vh;
+    margin-top: 3.6vh;
+    margin-right: 2.6vh;
+    display: flex;
+    justify-content: center;
+    border-radius: 24px;
+    flex-direction: column;
+}
+
+.cs_infoBoxContent h1 {
+    color: #000000CC;
+    font-size: 1.5em;
+    padding-top: 2.5vh;
+}
+
+.cs_infoBoxContent p {
+    color: #363636CC;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 2.6vh;
+}
+
+#cs_num {
+    color: #0021C3;
+    font-size: 1.6em;
+    font-weight: bold;
+}

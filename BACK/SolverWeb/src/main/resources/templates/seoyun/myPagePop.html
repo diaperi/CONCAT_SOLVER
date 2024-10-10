@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myPagePop</title>
+    <link rel="stylesheet" href="/seoyun/css/myPagePop.css">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="myPagePop_container">
+    <div class="myPagePop_top">
+        <span>영상을 최신 업로드 순으로 볼 수 있어요. (우측 이미지와 캘린더 팝업 상단의 날짜를 클릭하면 영상에 대한 저장된 해결책 페이지가 나와요.)</span>
+        <i class="fa-regular fa-calendar-days"></i>
+    </div>
+    <div class="myPagePop_container2">
+        <div class="myPagePop_main">
+            <div class="myPagePop_list">
+                <!-- 영상이 없을 경우 메시지 표시 -->
+                <div id="no-videos" class="no-videos" style="display: none;">
+                    <span>저장된 영상이 없어요 🫠</span>
+                </div>
+                <!-- 영상이 있을 경우 이미지 리스트 표시 -->
+                <div th:unless="${#lists.isEmpty(latestImages)}" id="video-list" class="video-list">
+                    <div class="myPagePop_videoBox3" th:each="image : ${latestImages}">
+                        <a th:href="@{/myPage/myPageDetail(timestamp=${image.key.split('_')[2] + '_' + image.key.split('_')[3].substring(0, 6)})}">
+                            <img th:src="${image.url}" alt="Image">
+                        </a>
+                        <div class="myPagePop_videoBox4">
+                            <span>[ <span th:text="${image.gptTitle}"></span> ]</span>
+                            <span>[ 업로드일: <span th:text="${image.lastModifiedDate}"></span> ]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar-box">
+                <div class="calendar-box_top">
+                    <span>보고 싶은 영상의 날짜를 클릭하세요.</span>
+                </div>
+                <div id="calendar">
+                    <div id="calendar-header">
+                        <span id="month-year"></span>
+                    </div>
+                    <table id="calendar-body">
+                        <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="calendar_foot">
+                    <button id="prev"><i class="fa-solid fa-angles-left"></i></button>
+                    <button id="next"><i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="myPagePop_foot">
+            <span>이미지 위에서 마우스를 위/아래로 스크롤 해주세요.</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- 달력 클릭 시 나오는 팝업 -->
+<div id="overlay"></div>
+<div id="popup">
+    <div class="popupBox">
+        <div id="popup-date"></div>
+        <video id="popup-video" width="320" height="240" controls>
+            <source id="popup-video-source" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div id="close-popup"><i class="fa-solid fa-xmark"></i></div>
+</div>
+<input type="hidden" id="loggedInUserId" value="${loggedInUser.userId}">
+
+
+<script src="/seoyun/js/myPagePop.js"></script>
+<script>
+    function goToMyPagePop() {
+        window.location.href = '/myPage/myPagePop';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var videoList = document.getElementById("video-list");
+        var noVideos = document.getElementById("no-videos");
+
+        if (videoList) { // Check if videoList is not null
+            if (videoList.children.length > 0) {
+                noVideos.style.display = "none";
+            } else {
+                videoList.style.display = "none";
+                noVideos.style.display = "block";
+            }
+        } else {
+            // Handle the case where videoList is not found in the DOM
+            noVideos.style.display = "block";
+        }
+    });
+
+</script>
+</body>
+</html>

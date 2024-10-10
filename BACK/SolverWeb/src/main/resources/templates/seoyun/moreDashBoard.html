@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>moreDashBoard</title>
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/seoyun/css/moreDashBoard.css}">
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <!-- jQuery를 로드 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+
+<div class="moreDashBoard_div1">
+    <div class="moreDashBoard_div2">
+        <div class="moreDashBoard_top">
+            <!-- 위쪽 왼쪽 상자 -->
+            <div class="moreDashBoard_top_left">
+                <div class="moreDashBoard_top_left_top">
+                    <span th:text="' ' + ${userName} + ' 님,'"></span><br><br>
+                    <span style="font-size: 3vh;">소중한 순간을 만들어가는 <br>여정을 시작해 보세요.</span> <br><br>
+                    <span style="font-size: 3vh;">나와 가족의 행복을 위한 <br>작은 변화가 <br>시작되는 곳입니다.</span>
+                </div>
+                <div class="moreDashBoard_top_left_down">
+                    <span>가족 관계 개선을 위한 오늘의 노력</span>
+                    <div class="moreDashBoard_top_left_down2">
+                        <div class="moreDashBoard_top_left_down3">
+                            <div class="moreDashBoard_top_left_down2_weather">
+                                <span><img id="animalImage" src="" alt="가족"></span>
+                            </div>
+                            <div class="moreDashBoard_top_left_down2_right">
+                                <span id="quote">"가족은 우리가 세상을 살아가는 데 필요한 사랑의 원천입니다."</span>
+                                <span id="advice">이번주에는 서로 칭찬을 3회 이상 해보세요.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 위쪽 오른쪽 상자 -->
+            <div class="moreDashBoard_top_right">
+                <span>내가 참여한 대화의 감정 통계</span>
+                <div class="moreDashBoard_top_right_box">
+                    <div class="moreDashBoard_top_right_box2">
+                        <div class="moreDashBoard_top_right1">
+                            <hr>
+                            <span id="formattedDate" th:text="${extractedTimestamp}"></span>
+                        </div>
+                        <div class="moreDashBoard_top_right2">
+                            <span>😀</span>
+                            <span>😮</span>
+                            <span>😭</span>
+                            <span>😠</span>
+                            <span>😱</span>
+                            <span>😑</span>
+                        </div>
+                        <div class="moreDashBoard_top_right3">
+                            <!-- 참여자1 영역 -->
+                            <div class="moreDashBoard_top_right3_circle1">
+                                <div>
+                                    <!-- 참여자1의 감정 분석 결과 이미지 -->
+                                    <img th:src="@{|/images/${userId}_participant1_${timestamp}_emotion_chart.png|}"
+                                         alt="참여자1 감정 분석 결과" class="circle" id="participant1EmotionChart">
+                                </div>
+                                <span>참여자1</span>
+                            </div>
+
+                            <!-- 참여자2 영역 -->
+                            <div class="moreDashBoard_top_right3_circle2">
+                                <div>
+                                    <!-- 참여자2의 감정 분석 결과 이미지 -->
+                                    <img th:src="@{|/images/${userId}_participant2_${timestamp}_emotion_chart.png|}"
+                                         alt="참여자2 감정 분석 결과" class="circle" id="participant2EmotionChart">
+                                </div>
+                                <span>참여자2</span>
+                            </div>
+                        </div>
+
+
+                        <div class="moreDashBoard_top_right4">
+                            <span th:utext="${textEmotionAnalysisResult}">
+                                감정 분석 결과를 로딩 중입니다...
+                            </span>
+                        </div>
+                        <div class="moreDashBoard_top_right5">
+                            <div class="moreDashBoard_top_right5_date">
+                                <i id="prev-date-range" class="fa-solid fa-angles-left"></i>
+                                <span id="date-range-display">2024.08.25 ~ 2024.08.25</span>
+                                <i id="next-date-range" class="fa-solid fa-angles-right"></i>
+                            </div>
+                            <div class="moreDashBoard_top_right5_dateList" id="date-list-container">
+                                <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
+                                     data-gpt-file-key="gpt_response_20240824_144249.txt"> <!-- GPT 파일 키 사용 -->
+                                    <span>📌</span>
+                                    <span>${date} ${time}</span>
+                                    <span>${title}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 아래쪽 상자 -->
+        <div class="moreDashBoard_down">
+            <span>솔버가 재구성한 대화 </span>
+            <div class="moreDashBoard_down2">
+                <div class="moreDashBoard_down3">
+                    <div class="calendar-box">
+                        <div class="calendar-box_top">
+                            <span>대화 재구성 원하는 영상의 날짜를 클릭하세요.</span>
+                            <div class="calendar_foot">
+                                <button id="prev"><i class="fa-solid fa-angles-left"></i></button>
+                                <button id="next"><i class="fa-solid fa-angles-right"></i></button>
+                            </div>
+                        </div>
+                        <div id="calendar">
+                            <div id="calendar-header">
+                                <span id="month-year"></span>
+                            </div>
+                            <table id="calendar-body">
+                                <thead>
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="moreDashBoard_down3_openBox">
+                        <div class="moreDashBoard_down3_openBox_top">
+                                <span class="moreDashBoard_down3_openBox_top_span">
+                                </span>
+                        </div>
+                        <i class="fa-solid fa-angles-right"></i>
+                        <div class="moreDashBoard_down3_openBox_down">
+                                <span class="moreDashBoard_down3_openBox_down_span">
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-arrow">
+        <i class="fa-solid fa-angles-down"></i>
+    </div>
+</div>
+
+
+<!-- 로딩 스피너 -->
+<div id="loading-spinner" style="display: none;">
+    <div class="spinner"></div>
+</div>
+
+
+<script src="/seoyun/js/moreDashBoard.js"></script>
+<script>
+    const userId = /*[[${userId}]]*/ ''; // Thymeleaf를 통해 userId를 가져옵니다.
+</script>
+
+</body>
+</html>
