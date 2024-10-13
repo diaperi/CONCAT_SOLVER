@@ -48,6 +48,12 @@ public class S3Service {
         this.secretKey = dotenv.get("AWS_SECRET_ACCESS_KEY");
         this.region = dotenv.get("AWS_REGION");
         this.bucketName = dotenv.get("AWS_BUCKET_NAME");
+
+        // 로깅으로 값 확인
+        System.out.println("AccessKey: " + accessKey);
+        System.out.println("SecretKey: " + secretKey);
+        System.out.println("Region: " + region);
+        System.out.println("BucketName: " + bucketName);
     }
 
     @PostConstruct
