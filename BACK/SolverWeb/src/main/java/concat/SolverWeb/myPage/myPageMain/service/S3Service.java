@@ -41,30 +41,42 @@ public class S3Service {
     private String region;
     private String bucketName;
 
+    // 생성자에서 .env 파일 로드
     public S3Service() {
-        // .env 파일에서 환경 변수를 로드합니다.
-        Dotenv dotenv = Dotenv.load(); // .env 파일 로드
-        this.accessKey = dotenv.get("AWS_ACCESS_KEY_ID");
-        this.secretKey = dotenv.get("AWS_SECRET_ACCESS_KEY");
-        this.region = dotenv.get("AWS_REGION");
-        this.bucketName = dotenv.get("AWS_BUCKET_NAME");
+        try {
+            // .env 파일에서 환경 변수를 로드합니다.
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();  // .env 파일 로드, 없으면 무시
+            this.accessKey = dotenv.get("AWS_ACCESS_KEY_ID", System.getenv("AWS_ACCESS_KEY_ID"));
+            this.secretKey = dotenv.get("AWS_SECRET_ACCESS_KEY", System.getenv("AWS_SECRET_ACCESS_KEY"));
+            this.region = dotenv.get("AWS_REGION", System.getenv("AWS_REGION"));
+            this.bucketName = dotenv.get("AWS_BUCKET_NAME", System.getenv("AWS_BUCKET_NAME"));
 
-        // 로깅으로 값 확인
-        System.out.println("AccessKey: " + accessKey);
-        System.out.println("SecretKey: " + secretKey);
-        System.out.println("Region: " + region);
-        System.out.println("BucketName: " + bucketName);
+            // 로깅으로 값 확인
+            logger.info("AccessKey: {}", accessKey);
+            logger.info("SecretKey: {}", secretKey);
+            logger.info("Region: {}", region);
+            logger.info("BucketName: {}", bucketName);
+        } catch (Exception e) {
+            logger.error("Error loading environment variables from .env file", e);
+        }
     }
 
+    // PostConstruct로 S3Client 초기화
     @PostConstruct
     public void initialize() {
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
-        this.s3Client = S3Client.builder()
-                .region(Region.of(region))
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                .endpointOverride(URI.create("https://s3.ap-northeast-2.amazonaws.com"))
-                .build();
+        try {
+            AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
+            this.s3Client = S3Client.builder()
+                    .region(Region.of(region))
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                    .build();
+
+            logger.info("S3Client initialized successfully");
+        } catch (Exception e) {
+            logger.error("Error initializing S3Client", e);
+        }
     }
+
 
 //    @Value("${cloud.aws.credentials.accessKey}")
 //    private String accessKey;

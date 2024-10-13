@@ -72,6 +72,17 @@ email:
 #      bucket: diaperiwinklebucket2
 #      base:
 #        url: https://diaperiwinklebucket2.s3.ap-northeast-2.amazonaws.com/
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+    region:
+      static: ${AWS_REGION}
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+
+
 
 #SNS 로그인
 oauth2:
