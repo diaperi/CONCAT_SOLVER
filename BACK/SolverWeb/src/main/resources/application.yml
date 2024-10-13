@@ -1,8 +1,8 @@
 # 서버 포트 설정
 server:
-  #  port: 8098
+  port: 8098
   #  배포용 포트
-  port: 8080
+#  port: ${PORT:8080}
 
 server.servlet.session.tracking-modes: cookie
 
@@ -59,19 +59,19 @@ email:
 
 
 # AWS S3 설정 *********서윤 추가 *********
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIAVRUVSZXBHUUJZIOJ
-      secretKey: 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
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    s3:
-      bucket: diaperiwinklebucket2
-      base:
-        url: https://diaperiwinklebucket2.s3.ap-northeast-2.amazonaws.com/
+#cloud:
+#  aws:
+#    credentials:
+#      accessKey: AKIAVRUVSZXBHUUJZIOJ
+#      secretKey: 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
+#    region:
+#      static: ap-northeast-2
+#    stack:
+#      auto: false
+#    s3:
+#      bucket: diaperiwinklebucket2
+#      base:
+#        url: https://diaperiwinklebucket2.s3.ap-northeast-2.amazonaws.com/
 
 #SNS 로그인
 oauth2:
