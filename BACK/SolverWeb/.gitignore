@@ -8,6 +8,7 @@ build/
 /BACK/SolverWeb/build/
 /.git/
 .env
+*.jar
 
 ### STS ###
 .apt_generated
