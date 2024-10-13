@@ -7,7 +7,7 @@ build/
 #/BACK/SolverWeb/build/
 /BACK/SolverWeb/build/
 /.git/
-
+.env
 
 ### STS ###
 .apt_generated
