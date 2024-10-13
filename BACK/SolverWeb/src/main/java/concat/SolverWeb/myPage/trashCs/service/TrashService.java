@@ -16,7 +16,7 @@ public class TrashService {
 
     private final S3Client s3Client;
 
-    @Value("${cloud.aws.s3.bucket}")
+    @Value("diaperiwinklebucket2")
     private String bucketName;
 
     public TrashService(S3Client s3Client) {
