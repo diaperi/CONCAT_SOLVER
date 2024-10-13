@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 @Service
 public class S3Service {
     private static final Logger logger = LoggerFactory.getLogger(S3Service.class);
@@ -34,27 +36,69 @@ public class S3Service {
 
     private S3Client s3Client;
 
-    @Value("${cloud.aws.credentials.accessKey}")
     private String accessKey;
-
-    @Value("${cloud.aws.credentials.secretKey}")
     private String secretKey;
-
-    @Value("${cloud.aws.region.static}")
     private String region;
-
-    @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
 
+    // 생성자에서 .env 파일 로드
+    public S3Service() {
+        try {
+            // .env 파일에서 환경 변수를 로드합니다.
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();  // .env 파일 로드, 없으면 무시
+            this.accessKey = dotenv.get("AWS_ACCESS_KEY_ID", System.getenv("AWS_ACCESS_KEY_ID"));
+            this.secretKey = dotenv.get("AWS_SECRET_ACCESS_KEY", System.getenv("AWS_SECRET_ACCESS_KEY"));
+            this.region = dotenv.get("AWS_REGION", System.getenv("AWS_REGION"));
+            this.bucketName = dotenv.get("AWS_BUCKET_NAME", System.getenv("AWS_BUCKET_NAME"));
+
+            // 로깅으로 값 확인
+            logger.info("AccessKey: {}", accessKey);
+            logger.info("SecretKey: {}", secretKey);
+            logger.info("Region: {}", region);
+            logger.info("BucketName: {}", bucketName);
+        } catch (Exception e) {
+            logger.error("Error loading environment variables from .env file", e);
+        }
+    }
+
+    // PostConstruct로 S3Client 초기화
     @PostConstruct
     public void initialize() {
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
-        this.s3Client = S3Client.builder()
-                .region(Region.of(region))
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                .endpointOverride(URI.create("https://s3.ap-northeast-2.amazonaws.com"))
-                .build();
+        try {
+            AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
+            this.s3Client = S3Client.builder()
+                    .region(Region.of(region))
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                    .build();
+
+            logger.info("S3Client initialized successfully");
+        } catch (Exception e) {
+            logger.error("Error initializing S3Client", e);
+        }
     }
+
+
+//    @Value("${cloud.aws.credentials.accessKey}")
+//    private String accessKey;
+//
+//    @Value("${cloud.aws.credentials.secretKey}")
+//    private String secretKey;
+//
+//    @Value("${cloud.aws.region.static}")
+//    private String region;
+//
+//    @Value("${cloud.aws.s3.bucket}")
+//    private String bucketName;
+//
+//    @PostConstruct
+//    public void initialize() {
+//        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
+//        this.s3Client = S3Client.builder()
+//                .region(Region.of(region))
+//                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+//                .endpointOverride(URI.create("https://s3.ap-northeast-2.amazonaws.com"))
+//                .build();
+//    }
 
     // 파일 이름에 따라 타임스탬프 추출 방식을 결정하는 메서드
     private String extractTimestamp(String fileName) {

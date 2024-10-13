@@ -24,7 +24,7 @@ public class TrashCanScheduler {
     private final UserRepository userRepository;
     private final S3Client s3Client;
 
-    @Value("${cloud.aws.s3.bucket}")
+    @Value("diaperiwinklebucket2")
     private String bucketName;
 
     public TrashCanScheduler(UserRepository userRepository, S3Client s3Client) {
@@ -92,7 +92,7 @@ public class TrashCanScheduler {
                             .build();
 
                     DeleteObjectsResponse deleteResponse = s3Client.deleteObjects(deleteRequest);
-                    logger.info("오래된 영상을 삭제했습니다. {}개", deleteResponse.deleted().size()-1);
+                    logger.info("오래된 영상을 삭제했습니다. {}개", deleteResponse.deleted().size() - 1);
                 }
             } else {
                 logger.info("삭제할 오래된 영상이 없습니다.");
