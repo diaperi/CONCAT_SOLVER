@@ -1,14 +1,19 @@
 package concat.SolverWeb.myPage.trashCs.service;
 
 import concat.SolverWeb.user.yoonseo.repository.UserRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.Instant;
@@ -24,10 +29,50 @@ public class TrashCanService {
 
     private static final Logger logger = LoggerFactory.getLogger(TrashCanService.class);
 
-    private final S3Client s3Client;
+    private S3Client s3Client;
 
-    @Value("${cloud.aws.s3.bucket}")
+    //    @Value("${cloud.aws.s3.bucket}")
+//    private String bucketName;
+    private String accessKey;
+    private String secretKey;
+    private String region;
     private String bucketName;
+
+    // 생성자에서 .env 파일 로드
+    public TrashCanService() {
+        try {
+            // .env 파일에서 환경 변수를 로드합니다.
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();  // .env 파일 로드, 없으면 무시
+            this.accessKey = dotenv.get("AWS_ACCESS_KEY_ID", System.getenv("AWS_ACCESS_KEY_ID"));
+            this.secretKey = dotenv.get("AWS_SECRET_ACCESS_KEY", System.getenv("AWS_SECRET_ACCESS_KEY"));
+            this.region = dotenv.get("AWS_REGION", System.getenv("AWS_REGION"));
+            this.bucketName = dotenv.get("AWS_BUCKET_NAME", System.getenv("AWS_BUCKET_NAME"));
+
+            // 로깅으로 값 확인
+            logger.info("AccessKey: {}", accessKey);
+            logger.info("SecretKey: {}", secretKey);
+            logger.info("Region: {}", region);
+            logger.info("BucketName: {}", bucketName);
+        } catch (Exception e) {
+            logger.error("Error loading environment variables from .env file", e);
+        }
+    }
+
+    // PostConstruct로 S3Client 초기화
+    @PostConstruct
+    public void initialize() {
+        try {
+            AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
+            this.s3Client = S3Client.builder()
+                    .region(Region.of(region))
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                    .build();
+
+            logger.info("S3Client initialized successfully");
+        } catch (Exception e) {
+            logger.error("Error initializing S3Client", e);
+        }
+    }
 
     public TrashCanService(S3Client s3Client) {
         this.s3Client = s3Client;

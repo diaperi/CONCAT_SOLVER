@@ -23,7 +23,7 @@ public class TrashCanController {
     @Autowired
     private TrashCanService trashCanService;
 
-    @Value("${cloud.aws.s3.base.url}")
+    @Value("https://diaperiwinklebucket2.s3.ap-northeast-2.amazonaws.com/")
     private String bucketBaseUrl;
 
     // trash의 영상 목록을 날짜별로 반환
