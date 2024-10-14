@@ -28,6 +28,12 @@ public class TrashController {
         return "yuna/cs";
     }
 
+    // faq 페이지
+    @GetMapping("/faq")
+    public String faq() {
+        return "yuna/faq";
+    }
+
     // 마이페이지 휴지통 페이지 이동
     @GetMapping("/trash")
     public String trash() {
