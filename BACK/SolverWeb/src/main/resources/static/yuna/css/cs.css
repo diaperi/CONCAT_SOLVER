@@ -20,13 +20,13 @@ body {
     width: 100%;
     min-height: 100vh;
     text-align: center;
-    background: linear-gradient(137.29deg, 
-        #03BED6 20.13%, 
-        #10B3DA 33.05%, 
-        #1DA4E1 45.02%, 
-        #249CE5 58.56%, 
-        #2D8EED 72.11%, 
-        #3084F4 83.13%);
+    background: linear-gradient(137.29deg,
+    #03BED6 20.13%,
+    #10B3DA 33.05%,
+    #1DA4E1 45.02%,
+    #249CE5 58.56%,
+    #2D8EED 72.11%,
+    #3084F4 83.13%);
 }
 
 .cs_mainContainer {
@@ -45,6 +45,7 @@ body {
     flex: 0 0 calc(60% - 20px);
     padding: 6vh;
     margin-left: 2vh;
+    position: relative;
 }
 
 .cs_searchSection h1 {
@@ -54,7 +55,6 @@ body {
 }
 
 .cs_searchBar {
-    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
@@ -81,11 +81,7 @@ body {
     margin: 1vh;
 }
 
-/*.cs_honeCam {*/
-/*    flex: 0 0 calc(40% - 20px);*/
-/*}*/
-
-.cs_honeCam img {
+.cs_homeCam img {
     width: 44vh;
     height: 44vh;
 }
@@ -99,6 +95,11 @@ body {
     padding-bottom: 1vh;
     flex: 1;
     justify-content: flex-end;
+}
+
+.cs_infoSectionHead a {
+    color: white;
+    text-decoration: none;
 }
 
 .cs_infoSectionHead h1,

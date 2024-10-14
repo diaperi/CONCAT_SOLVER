@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLVER_faq</title>
+    <link rel="stylesheet" href="/yuna/css/faq.css">
+    <script src="/yuna/js/faq.js" defer></script>
+    <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+</head>
+<body>
+<div th:replace="~{hyeeun/header :: header}"></div>
+<div class="faq">
+    <div class="faqHeader">
+        <h1>자주 묻는 질문</h1>
+        <p>SOLVER 이용과 관련된 궁금한 사항을 검색해 보세요.</p>
+        <div class="faqSearch">
+            <img src="/yuna/img/faq_search.png" alt="검색-아이콘" class="faq_searchIcon">
+            <input type="text" placeholder="질문을 검색하세요." id="faqSearchInput">
+        </div>
+        <hr>
+    </div>
+
+    <div id="faqContainer"></div>
+    <div class="pagination" id="pagination"></div>
+</div>
+</body>
+</html>
