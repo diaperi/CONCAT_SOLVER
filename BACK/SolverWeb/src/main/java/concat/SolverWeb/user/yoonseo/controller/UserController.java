@@ -33,6 +33,11 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/login")
+    public String loginForm() {
+        return "yoonseo/login";
+    }
+
     @PostMapping("/register")
     public ModelAndView register(
             @RequestParam("name") String userName,
@@ -80,10 +85,6 @@ public class UserController {
         return "yoonseo/register";
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
-        return "yoonseo/login";
-    }
 
     @GetMapping("/find")
     public String findForm() {
