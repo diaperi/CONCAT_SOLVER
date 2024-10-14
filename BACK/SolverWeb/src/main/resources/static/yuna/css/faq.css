@@ -1,0 +1,117 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.faq {
+    margin: 6vh 10vh 2vh 10vh;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 15vh);
+}
+
+.faqHeader h1 {
+    font-size: 30px;
+    margin-bottom: 0;
+}
+
+.faqHeader p {
+    margin-top: 1vh;
+    margin-bottom: 3vh;
+}
+
+.faqHeader hr {
+    margin-top: 1.5vh;
+    border: none;
+    border-top: 2px solid #6e6e6e;
+}
+
+.faqAnswer {
+    background: #f5f5f5;
+    padding: 1vh 0;
+    transition: display 0.3s ease;
+}
+
+.faqContent hr {
+    margin: 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.arrow {
+    float: right;
+}
+
+.faqSearch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    /* 수정해야함*/
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1vh;
+}
+
+.faq_searchIcon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.3;
+}
+
+.faqSearch input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-weight: 300;
+    width: 100%;
+    margin-left: 1vh;
+}
+
+.faqContent p {
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.faqAnswer p {
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin: 5vh 0;
+    padding-bottom: 20px;
+    width: auto;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.faqHeader2 img {
+    width: 50px;
+    height: 50px;
+}
