@@ -1,9 +1,19 @@
 import sys
 import boto3
 import openai
+from dotenv import load_dotenv
+import os
+
+# .env 파일에서 환경 변수를 로드
+load_dotenv()
 
 # stdout의 인코딩을 UTF-8로 설정
 sys.stdout.reconfigure(encoding='utf-8')
+
+# 환경 변수로부터 AWS 자격 증명 확인
+print(f"AWS_ACCESS_KEY_ID: {os.getenv('AWS_ACCESS_KEY_ID')}")
+print(f"AWS_SECRET_ACCESS_KEY: {os.getenv('AWS_SECRET_ACCESS_KEY')}")
+print(f"AWS_REGION: {os.getenv('AWS_REGION')}")
 
 # AWS S3 클라이언트 생성
 s3_client = boto3.client('s3')
@@ -20,15 +30,16 @@ def get_file_from_s3(bucket_name, file_key):
         sys.exit(1)
 
 
-# OpenAI API 키 설정
-openai.api_key = 'sk-proj-VkwIsCz3wYHVv48cHSrpT3BlbkFJBurcyg1NTvLVnsCdby50'
+# GPT API 키 설정 (환경 변수에서 가져오기)
+openai_api_key = os.getenv('OPENAI_API_KEY')
+openai.api_key = openai_api_key
 
 
 # OpenAI 요청 처리 함수
 def process_dialogue(dialogue):
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant specializing in conflict resolution."},
                 {"role": "user", "content": dialogue},
