@@ -9,27 +9,29 @@
     <script src="/yuna/js/solver.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('solver_loginBtn').addEventListener('click', function () {
-                window.location.href = 'http://localhost:8098/user/login';
-            });
-        });
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     document.getElementById('solver_loginBtn').addEventListener('click', function () {
+        //         window.location.href = 'http://localhost:8098/user/login';
+        //     });
+        // });
     </script>
 </head>
 
 <body>
 <header>
     <div class="solver_headerContainer">
-        <div class="solver_logo">
-            <img src="/yuna/img/solver_logo.png">
-        </div>
+        <a href="/main/mainPage">
+            <div class="solver_logo">
+                <img src="/yuna/img/solver_logo.png">
+            </div>
+        </a>
         <nav class="solver_navMenu">
             <ul>
                 <li class="navAbout">브랜드</li>
                 <li class="navService">서비스</li>
                 <li class="navReview">리뷰</li>
                 <li>
-                    <button id="solver_loginBtn" type="button">로그인</button>
+                    <button id="solver_loginBtn" th:onclick="|window.location.href='@{/user/login}'|">로그인</button>
                 </li>
                 <li>
                     <button id="solver_registerBtn" th:onclick="|window.location.href='@{/user/register}'|">회원가입
