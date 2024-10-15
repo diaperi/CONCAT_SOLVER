@@ -12,7 +12,6 @@ sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', buffering=1)
 logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stderr)
 
 # OpenAI API Key 설정 (코드 내에서 직접 설정)
-api_key = 'sk-proj-VkwIsCz3wYHVv48cHSrpT3BlbkFJBurcyg1NTvLVnsCdby50'  # 여기에 실제 API 키를 입력하세요
 
 # 표준 입력으로부터 대화 내용 읽기
 try:

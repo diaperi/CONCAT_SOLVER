@@ -41,6 +41,9 @@ public class S3Service {
     private String region;
     private String bucketName;
 
+    private String openaiApiKey;
+
+
     // 생성자에서 .env 파일 로드
     public S3Service() {
         try {
@@ -65,11 +68,21 @@ public class S3Service {
     @PostConstruct
     public void initialize() {
         try {
+            // AWS 자격 증명 설정
             AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKey, secretKey);
             this.s3Client = S3Client.builder()
                     .region(Region.of(region))
                     .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                     .build();
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();  // .env 파일 로드, 없으면 무시
+
+            // OpenAI API 키 환경 변수에서 설정
+            this.openaiApiKey = dotenv.get("OPENAI_API_KEY", System.getenv("OPENAI_API_KEY"));
+            if (openaiApiKey == null || openaiApiKey.isEmpty()) {
+                logger.error("OPENAI_API_KEY is not set!");
+            } else {
+                logger.info("OPENAI_API_KEY: {}", openaiApiKey);
+            }
 
             logger.info("S3Client initialized successfully");
         } catch (Exception e) {
@@ -508,6 +521,7 @@ public class S3Service {
     }
 
     // 이미지 감정 분석 수행 메서드
+    // 이미지 감정 분석 수행 메서드
     public String generateImageEmotionAnalysis(String s3Key, String participant, String outputPath) {
         try {
             // Python 명령어와 인수를 설정
@@ -520,9 +534,23 @@ public class S3Service {
             commands.add(outputPath); // 결과 이미지 경로
 
             ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+            // 환경 변수 설정
+            Map<String, String> env = processBuilder.environment();
+            env.put("AWS_ACCESS_KEY_ID", accessKey);  // 자격 증명 전달
+            env.put("AWS_SECRET_ACCESS_KEY", secretKey);
+            env.put("AWS_REGION", region);
+
+            // 로그로 환경 변수 출력 (자격 증명 및 리전 정보)
+            logger.info("AWS_ACCESS_KEY_ID: {}", env.get("AWS_ACCESS_KEY_ID"));
+            logger.info("AWS_SECRET_ACCESS_KEY: {}", env.get("AWS_SECRET_ACCESS_KEY"));
+            logger.info("AWS_REGION: {}", env.get("AWS_REGION"));
+
+            // Python 스크립트 실행
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
+            // Python 스크립트의 출력 읽기
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -543,7 +571,91 @@ public class S3Service {
         }
     }
 
+//    public String generateImageEmotionAnalysis(String s3Key, String participant, String outputPath) {
+//        try {
+//            // Python 명령어와 인수를 설정
+//            List<String> commands = new ArrayList<>();
+//            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+//            commands.add("src/main/resources/scripts/emotionChart.py"); // Python 스크립트의 경로
+//            commands.add("diaperiwinklebucket2"); // S3 버킷 이름
+//            commands.add(s3Key); // S3 경로
+//            commands.add(participant); // 분석할 참여자
+//            commands.add(outputPath); // 결과 이미지 경로
+//
+//            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+//            processBuilder.redirectErrorStream(true);
+//            Process process = processBuilder.start();
+//
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                logger.info(line); // 스크립트 출력을 로깅합니다.
+//            }
+//
+//            int exitCode = process.waitFor();
+//            if (exitCode == 0) {
+//                logger.info("Python script executed successfully.");
+//                return outputPath;
+//            } else {
+//                logger.error("Python script execution failed with exit code: " + exitCode);
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            logger.error("Failed to execute Python script for emotion analysis.", e);
+//            return null;
+//        }
+//    }
+
     // 텍스트 감정 분석 수행 메서드
+//    public String generateTextEmotionAnalysis(String s3Key) {
+//        try {
+//            // Python 명령어와 인수를 설정
+//            List<String> commands = new ArrayList<>();
+//            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+//            commands.add("src/main/resources/scripts/emotionAdjust.py"); // Python 스크립트의 경로
+//            commands.add("diaperiwinklebucket2"); // S3 버킷 이름
+//            commands.add(s3Key); // S3 경로
+//
+//            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+//            processBuilder.redirectErrorStream(true);
+//            Process process = processBuilder.start();
+//
+//            // 여기서 UTF-8 인코딩을 지정하여 출력을 읽음
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
+//            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
+//
+//            StringBuilder output = new StringBuilder();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                output.append(line).append("\n");
+//            }
+//
+//            StringBuilder errorOutput = new StringBuilder();
+//            while ((line = errorReader.readLine()) != null) {
+//                errorOutput.append(line).append("\n");
+//            }
+//
+//            int exitCode = process.waitFor();
+//            if (exitCode == 0) {
+//                logger.info("Python script executed successfully.");
+//                String result = output.toString().trim();
+//
+//                // '.' 기준으로 줄 바꿈 처리
+//                result = result.replace(".", ".<br>");
+//
+//                logger.info("Script output: " + result);
+//                return result; // 텍스트 결과 반환
+//            } else {
+//                logger.error("Python script execution failed with exit code: " + exitCode);
+//                logger.error("Script error output: " + errorOutput.toString());
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            logger.error("Failed to execute Python script for text emotion analysis.", e);
+//            return null;
+//        }
+//    }
+
     public String generateTextEmotionAnalysis(String s3Key) {
         try {
             // Python 명령어와 인수를 설정
@@ -553,33 +665,47 @@ public class S3Service {
             commands.add("diaperiwinklebucket2"); // S3 버킷 이름
             commands.add(s3Key); // S3 경로
 
+            // ProcessBuilder를 사용하여 Python 스크립트를 실행
             ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+            // Java의 환경 변수를 Python에 전달
+            Map<String, String> env = processBuilder.environment();
+            env.put("AWS_ACCESS_KEY_ID", accessKey);  // 자격 증명 전달
+            env.put("AWS_SECRET_ACCESS_KEY", secretKey);
+            env.put("AWS_REGION", region);
+            env.put("OPENAI_API_KEY", openaiApiKey);  // GPT API 키 전달 (openaiApiKey 변수가 미리 설정되어 있어야 함)
+
+            // 로그로 자격 증명 출력
+            logger.info("AWS_ACCESS_KEY_ID: {}", env.get("AWS_ACCESS_KEY_ID"));
+            logger.info("AWS_SECRET_ACCESS_KEY: {}", env.get("AWS_SECRET_ACCESS_KEY"));
+            logger.info("AWS_REGION: {}", env.get("AWS_REGION"));
+            logger.info("OPENAI_API_KEY: {}", env.get("OPENAI_API_KEY")); // GPT 키도 로그로 출력
+
+            // UTF-8 인코딩을 지정하여 출력을 읽음
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
-            // 여기서 UTF-8 인코딩을 지정하여 출력을 읽음
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
 
             StringBuilder output = new StringBuilder();
+            StringBuilder errorOutput = new StringBuilder();
+
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");
             }
 
-            StringBuilder errorOutput = new StringBuilder();
             while ((line = errorReader.readLine()) != null) {
                 errorOutput.append(line).append("\n");
             }
 
+// 파이썬 스크립트 실행 결과 처리
             int exitCode = process.waitFor();
             if (exitCode == 0) {
                 logger.info("Python script executed successfully.");
                 String result = output.toString().trim();
-
-                // '.' 기준으로 줄 바꿈 처리
                 result = result.replace(".", ".<br>");
-
                 logger.info("Script output: " + result);
                 return result; // 텍스트 결과 반환
             } else {
@@ -709,7 +835,6 @@ public class S3Service {
     }
 
 
-    //    ***********대화재구성*********
     //    ***********대화재구성*********
     public Map<String, String> processDialogue(String userId, String date) {
         try {

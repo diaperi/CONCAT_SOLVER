@@ -20,9 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Button navigation
-    document.getElementById('solver_loginBtn').addEventListener('click', function () {
-        window.location.href = '../../../templates/yoonseo/login.html';
-    });
 
     document.getElementById('solver_registerBtn').addEventListener('click', function () {
         window.location.href = '/user/sign';
