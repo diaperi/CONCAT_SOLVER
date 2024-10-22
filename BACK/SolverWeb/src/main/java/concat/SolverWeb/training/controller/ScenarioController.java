@@ -36,7 +36,6 @@ public class ScenarioController {
 
     private static final Logger logger = LoggerFactory.getLogger(ScenarioController.class);
 
-    // **************************** 캐시 무효화 ******************************** //
     @PostMapping("/sc")
     public ResponseEntity<?> handleAudioUpload(@RequestParam("audioFile") MultipartFile audioFile) {
         try {
@@ -81,44 +80,6 @@ public class ScenarioController {
         }
     }
 
-    // **************************** 이미지 여러개로 저장 ******************************** //
-//    @PostMapping("/sc")
-//    public ResponseEntity<?> handleAudioUpload(@RequestParam("audioFile") MultipartFile audioFile) {
-//        try {
-//            // 1. 녹음 파일을 STT로 변환
-//            String sttResult = sttService.uploadAudioAndGetText(audioFile);
-//
-//            // 2. 타임스탬프를 사용해 고유한 파일 이름 생성
-//            String outputDirectory = "D:/CONCAT/CONCAT_SOLVER/BACK/SolverWeb/src/main/resources/static/media/";
-//            String timestamp = String.valueOf(System.currentTimeMillis());
-//            String melSpectrogramPath = Paths.get(outputDirectory, "fft_spectrogram_" + timestamp + ".png").toString();
-//
-//            // 3. 스펙트로그램 생성 및 저장
-//            String generatedSpectrogramPath = sttService.generateMelSpectrogram(audioFile.getBytes(), melSpectrogramPath);
-//
-//            // 4. GPT 서비스에 새로운 파일 경로 전달
-//            String feedback = gptService.getFeedback(sttResult, generatedSpectrogramPath);
-//
-//            // 5. 웹 경로도 타임스탬프를 포함하여 클라이언트에 반환
-//            String webMelSpectrogramPath = "/media/fft_spectrogram_" + timestamp + ".png";
-//
-//            // 응답으로 반환할 데이터 구성
-//            Map<String, Object> response = new HashMap<>();
-//            response.put("sttResult", sttResult);
-//            response.put("melSpectrogram", webMelSpectrogramPath);
-//            response.put("feedback", feedback);
-//
-//            // Cache-Control 헤더 추가 (캐시 무효화)
-//            return ResponseEntity.ok()
-//                    .cacheControl(CacheControl.noCache().mustRevalidate()) // 캐시를 사용하지 않도록 설정
-//                    .body(response);
-//        } catch (Exception e) {
-//            logger.error("파일 처리 중 오류 발생: ", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(Collections.singletonMap("error", "파일 처리 중 오류가 발생했습니다."));
-//        }
-//    }
-    // *********************************************************************** //
     @GetMapping("/getScenario")
     public ResponseEntity<?> getScenario() {
         try {
