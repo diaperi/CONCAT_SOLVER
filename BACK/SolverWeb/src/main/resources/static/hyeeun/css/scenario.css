@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Gowun Batang", serif;
+}
+
+
+body {
+    background-color: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.container .click{
+    width: 180px;
+    height: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.container .box{
+    background-color: gray;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: #AAAAAA;
+}
+
+p {
+    font-size: 1rem;
+    color: #CCCCCC;
+}
+
+.scroll-box {
+    height: 450px;
+    width: 100%;
+    margin: 10px auto;
+    background-color: #333;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0;
+}
+
+/* 왼쪽 말풍선 */
+.bubble {
+    background-color: #007BFF;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    color: white;
+    width: fit-content;
+    max-width: 80%;
+    position: relative;
+    float: left; /* 왼쪽으로 정렬 */
+    clear: both; /* 이전 요소와 겹치지 않도록 보장 */
+}
+
+.bubble::after {
+    content: "";
+    position: absolute;
+    left: -10px; /* 꼬리 위치를 왼쪽으로 설정 */
+    top: 50%;
+    transform: translateY(-50%); /* 꼬리를 세로 가운데로 맞춤 */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #007BFF; /* 말풍선 색상 */
+}
+
+/* 오른쪽 말풍선 */
+.bubble2 {
+    background-color: #007BFF;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    color: white;
+    width: fit-content;
+    max-width: 80%;
+    position: relative;
+    float: right; /* 오른쪽으로 정렬 */
+    clear: both; /* 이전 요소와 겹치지 않도록 보장 */
+}
+
+.bubble2::after {
+    content: "";
+    position: absolute;
+    right: -20px; /* 꼬리 위치를 오른쪽으로 설정 */
+    top: 50%;
+    transform: translateY(-50%); /* 꼬리를 세로 가운데로 맞춤 */
+    width: 0;
+    height: 0;
+    border-left: 10px solid #007BFF; /* 꼬리를 오른쪽으로 향하게 설정 */
+    border-right: 10px solid transparent;
+    /* border-top: 10px solid transparent; */
+    border-bottom: 10px solid transparent;
+}
+
+
+.send-container {
+    width: 100%;
+    padding: 10px;
+    background-color: lightgray;
+    border-top: 1px solid #444;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    /*align-items: center;*/
+    gap: 10px;
+    position: relative;
+    bottom: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    /*margin: 0;*/
+}
+
+.icon-container {
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    height: 100%; /* 부모 요소의 높이에 맞게 설정 */
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.information {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#melSpectrogram {
+    width: 300px;
+    height: auto; /* 비율을 유지하면서 세로 크기 자동 조정 */
+}

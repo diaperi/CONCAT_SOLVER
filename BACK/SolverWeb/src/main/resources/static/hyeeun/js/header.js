@@ -10,6 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const mypageDropdown = document.getElementById('train-dropdown');
+
+    // 드롭다운 외부 클릭 시 닫기
+    window.addEventListener('click', (e) => {
+        const mypageBtn = document.getElementById('train-btn');
+        if (!mypageBtn.contains(e.target) && !mypageDropdown.contains(e.target)) {
+            mypageDropdown.style.display = 'none';
+        }
+    });
+});
+
 // document.getElementById('logout-btn').addEventListener('click', function(event) {
 //     event.preventDefault(); // 기본 동작 방지
 //

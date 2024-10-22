@@ -27,6 +27,22 @@ dependencies {
 
     implementation 'io.github.cdimascio:dotenv-java:3.0.0' // spring-dotenv 라이브러리
 
+    // Spring WebFlux (비동기 HTTP 통신을 위한 라이브러리)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Spring WebSocket (웹소켓 통신을 위한 라이브러리)
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // XChart (차트 그리기 위한 라이브러리)
+    implementation 'org.knowm.xchart:xchart:3.8.0'
+
+    // JTransforms (FFT 계산을 위한 라이브러리)
+    implementation 'com.github.wendykierp:JTransforms:3.1'
+
+    // JFreeChart 라이브러리 (차트 생성 및 이미지 저장용)
+    implementation 'org.jfree:jfreechart:1.5.3'
+
+
 // 비밀번호 암호화 때문에 추가한거 1개 (윤서)
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

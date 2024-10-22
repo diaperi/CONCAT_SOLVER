@@ -21,7 +21,8 @@ body {
 .header_navbar .header_menu {
     display: flex;
     align-items: center; /* 아이템을 수직으로 중앙에 정렬 */
-    gap: 20px;
+    /*gap: 2px;*/
+    margin-left: auto; /* 메뉴를 오른쪽 끝으로 밀어냅니다 */
 }
 
 .header_navbar .header_menu a, .header_navbar .header_menu span {
@@ -38,6 +39,7 @@ body {
     transition: color 0.3s;
 }
 
+/**********************/
 /* 드롭다운 스타일 */
 .dropdown {
     position: relative;
@@ -52,7 +54,7 @@ body {
     display: none;
     position: absolute;
     background-color: #000000;
-    width: 150px; /* 드롭다운의 너비 */
+    width: 140px; /* 드롭다운의 너비 */
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     top: 100%; /* 드롭다운을 버튼 바로 아래에 위치시킴 */
@@ -79,6 +81,47 @@ body {
     display: block;
 }
 
+/**********************/
+/* 드롭다운2 스타일 */
+.dropdown2 {
+    position: relative;
+    display: inline-block;
+}
+
+#train-btn{
+    display: inline-block;
+}
+
+.dropdown2-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    width: 140px; /* 드롭다운의 너비 */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%; /* 드롭다운을 버튼 바로 아래에 위치시킴 */
+    left: 50%; /* 드롭다운 메뉴를 부모 요소의 왼쪽에서 50% 이동 */
+    transform: translateX(-50%); /* 드롭다운 메뉴를 가로축에서 가운데 정렬 */
+    padding-top: 22px; /* 위쪽에 간격 추가 */
+}
+
+.dropdown2-content a {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-size: 14px; /* 드롭다운 메뉴 글씨 크기 조정 */
+}
+
+.dropdown2-content a:hover {
+    background-color: #575757;
+}
+
+/* 마우스 오버 시 드롭다운 표시 */
+.dropdown2:hover .dropdown2-content {
+    display: block;
+}
 
 /**********************/
 #loading-spinner {
