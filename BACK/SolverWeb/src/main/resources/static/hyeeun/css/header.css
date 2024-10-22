@@ -23,6 +23,7 @@ body {
     align-items: center; /* 아이템을 수직으로 중앙에 정렬 */
     /*gap: 2px;*/
     margin-left: auto; /* 메뉴를 오른쪽 끝으로 밀어냅니다 */
+    gap: 20px;
 }
 
 .header_navbar .header_menu a, .header_navbar .header_menu span {
