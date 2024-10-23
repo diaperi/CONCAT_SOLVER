@@ -10,11 +10,6 @@ load_dotenv()
 # stdout의 인코딩을 UTF-8로 설정
 sys.stdout.reconfigure(encoding='utf-8')
 
-# 환경 변수로부터 AWS 자격 증명 확인
-print(f"AWS_ACCESS_KEY_ID: {os.getenv('AWS_ACCESS_KEY_ID')}")
-print(f"AWS_SECRET_ACCESS_KEY: {os.getenv('AWS_SECRET_ACCESS_KEY')}")
-print(f"AWS_REGION: {os.getenv('AWS_REGION')}")
-
 # AWS S3 클라이언트 생성
 s3_client = boto3.client('s3')
 
@@ -26,7 +21,8 @@ def get_file_from_s3(bucket_name, file_key):
         dialogue = response['Body'].read().decode('utf-8')
         return dialogue
     except Exception as e:
-        print(f"Error fetching file from S3: {e}", file=sys.stderr)
+        # 에러가 발생한 경우만 stderr로 출력
+        sys.stderr.write(f"Error fetching file from S3: {e}\n")
         sys.exit(1)
 
 
@@ -56,7 +52,7 @@ def process_dialogue(dialogue):
         )
         return response.choices[0].message['content'].strip()
     except Exception as e:
-        print(f"Error processing dialogue with OpenAI: {e}", file=sys.stderr)
+        sys.stderr.write(f"Error processing dialogue with OpenAI: {e}\n")
         sys.exit(1)
 
 
@@ -66,10 +62,14 @@ if __name__ == "__main__":
         bucket_name = sys.argv[1]
         file_key = sys.argv[2]
 
+        # S3에서 대화 파일 가져오기
         dialogue = get_file_from_s3(bucket_name, file_key)
+
+        # OpenAI를 통한 감정 분석 및 결과 반환
         result = process_dialogue(dialogue)
 
+        # 결과만 출력
         print(result)
     except Exception as e:
-        print(f"Error in main execution: {e}", file=sys.stderr)
+        sys.stderr.write(f"Error in main execution: {e}\n")
         sys.exit(1)

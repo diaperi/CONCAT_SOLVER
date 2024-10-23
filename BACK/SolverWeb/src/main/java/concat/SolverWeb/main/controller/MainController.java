@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.*;
 
 
 import org.springframework.web.client.RestTemplate;
@@ -233,19 +233,30 @@ public class MainController {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(userIdMap, headers);
 
+
         try {
-            // Flask 서버에 유저 ID 전송 시도
+            // Flask 서버로 유저 ID 전송 시도
             ResponseEntity<String> response = restTemplate.exchange(flaskUrl, HttpMethod.POST, request, String.class);
             logger.info("Flask 응답: {}", response.getBody());
 
+        } catch (ResourceAccessException e) {
+            // Flask 서버에 접근할 수 없을 때 (타임아웃 등)
+            logger.error("Flask 서버에 접근할 수 없습니다: ", e);
+            return "redirect:/main/mainPageNotLogin";
+
         } catch (Exception e) {
-            // Flask 서버로의 요청 실패 시 예외 처리
-            logger.error("Flask 서버로의 요청 실패: ", e);
-            // 라즈베리파이 기기와의 통신에 실패하면 다른 페이지로 리다이렉트
-            return "hyeeun/mainPageNotLogin";
+            // 모든 예외 처리 (500 오류 포함)
+            logger.error("예기치 못한 오류가 발생했습니다: ", e);
+            return "redirect:/main/mainPageNotLogin";
         }
 
+
         return "hyeeun/mainPage";
+    }
+
+    @GetMapping("/mainPageNotLogin")
+    public String mainPagyeNotLogin() {
+        return "hyeeun/mainpagenotlogin";
     }
 }
 
