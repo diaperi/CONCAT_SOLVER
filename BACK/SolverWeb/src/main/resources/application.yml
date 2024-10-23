@@ -29,6 +29,7 @@ spring:
       root: INFO
       concat.SolverWeb: INFO
 
+
   # spring data jpa 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
