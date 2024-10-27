@@ -11,15 +11,25 @@ server.servlet.session.tracking-modes: cookie
 # database 연동 설정
 spring:
   datasource:
+    # Supabase URL
     url: jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+
+    thymeleaf:
+      cache: false
+      logging:
+        level:
+          root: INFO
+          concat.SolverWeb: INFO
+
+  # spring data jpa 설정
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   security:
     user:
