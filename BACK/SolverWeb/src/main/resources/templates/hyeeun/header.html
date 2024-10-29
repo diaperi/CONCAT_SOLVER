@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>헤더</title>
     <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR&family=Sunflower:wght@300;500;700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <div th:fragment="header">
@@ -14,7 +18,7 @@
         </a>
         <div class="header_menu">
             <a href="/main/mainPage">실시간 화면</a>
-            <div class = dropdown2>
+            <div class=dropdown2>
                 <span id="train-btn"><a href="/scenario/sc">감정 조절 훈련</a></span>
             </div>
             <div class="dropdown">

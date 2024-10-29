@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: "IBM Plex Sans KR", serif;
 }
 
 .header_navbar {
@@ -89,7 +89,7 @@ body {
     display: inline-block;
 }
 
-#train-btn{
+#train-btn {
     display: inline-block;
 }
 
