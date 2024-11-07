@@ -1,3 +1,4 @@
+// 주석 처리 - 주파수 스펙트로그램 관련 코드
 package concat.SolverWeb.training.service;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -11,13 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,66 +123,68 @@ public class GPTService {
         }
     }
 
+
+// ******************************************************************************************* //
     // 이미지 파일을 Base64로 인코딩하는 메서드
-    public String encodeImageToBase64(String absoluteImagePath) {
-        try {
-            // 절대 경로에서 파일을 읽어오기
-            File file = new File(absoluteImagePath);
-
-            // 파일 존재 여부 확인
-            if (!file.exists()) {
-                throw new RuntimeException("파일이 존재하지 않습니다: " + absoluteImagePath);
-            }
-
-            // 파일을 Base64로 인코딩
-            byte[] fileContent = Files.readAllBytes(file.toPath());
-            return Base64.getEncoder().encodeToString(fileContent);
-        } catch (IOException e) {
-            logger.error("이미지 인코딩 중 오류 발생: {}", e.getMessage());
-            throw new RuntimeException("이미지 인코딩 중 오류가 발생했습니다: " + absoluteImagePath, e);
-        }
-    }
-
-    // FFT 스펙트로그램 이미지에서 특징을 추출하는 메서드
-    public String extractFeaturesFromImage(String melSpectrogramPath) {
-        try {
-            // 이미지 파일을 읽어오기
-            BufferedImage image = ImageIO.read(new File(melSpectrogramPath));
-            int width = image.getWidth();
-            int height = image.getHeight();
-
-            // 이미지 픽셀을 순회하며 에너지를 계산
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    Color color = new Color(image.getRGB(x, y));
-                    int brightness = (color.getRed() + color.getGreen() + color.getBlue()) / 3; // 밝기 계산
-                }
-            }
-
-            // 특징을 포함한 문자열을 반환
-            return "";
-
-        } catch (IOException e) {
-            logger.error("특징 추출 중 오류 발생: {}", e.getMessage());
-            throw new RuntimeException("특징 추출 중 오류가 발생했습니다: " + melSpectrogramPath, e);
-        }
-    }
+//    public String encodeImageToBase64(String absoluteImagePath) {
+//        try {
+//            // 절대 경로에서 파일을 읽어오기
+//            File file = new File(absoluteImagePath);
+//
+//            // 파일 존재 여부 확인
+//            if (!file.exists()) {
+//                throw new RuntimeException("파일이 존재하지 않습니다: " + absoluteImagePath);
+//            }
+//
+//            // 파일을 Base64로 인코딩
+//            byte[] fileContent = Files.readAllBytes(file.toPath());
+//            return Base64.getEncoder().encodeToString(fileContent);
+//        } catch (IOException e) {
+//            logger.error("이미지 인코딩 중 오류 발생: {}", e.getMessage());
+//            throw new RuntimeException("이미지 인코딩 중 오류가 발생했습니다: " + absoluteImagePath, e);
+//        }
+//    }
+//
+//    // FFT 스펙트로그램 이미지에서 특징을 추출하는 메서드
+//    public String extractFeaturesFromImage(String melSpectrogramPath) {
+//        try {
+//            // 이미지 파일을 읽어오기
+//            BufferedImage image = ImageIO.read(new File(melSpectrogramPath));
+//            int width = image.getWidth();
+//            int height = image.getHeight();
+//
+//            // 이미지 픽셀을 순회하며 에너지를 계산
+//            for (int x = 0; x < width; x++) {
+//                for (int y = 0; y < height; y++) {
+//                    Color color = new Color(image.getRGB(x, y));
+//                    int brightness = (color.getRed() + color.getGreen() + color.getBlue()) / 3; // 밝기 계산
+//                }
+//            }
+//
+//            // 특징을 포함한 문자열을 반환
+//            return "";
+//
+//        } catch (IOException e) {
+//            logger.error("특징 추출 중 오류 발생: {}", e.getMessage());
+//            throw new RuntimeException("특징 추출 중 오류가 발생했습니다: " + melSpectrogramPath, e);
+//        }
+//    }
 
 
     // STT 결과와 FFT 스펙트로그램 이미지에 대한 피드백을 생성하는 메서드
     public String getFeedback(String sttResult, String melSpectrogramPath) {
-        // 이미지 경로를 Base64로 인코딩
-        String melSpectrogramBase64 = encodeImageToBase64(melSpectrogramPath);
-
-        // 이미지에서 특징 추출
-        String features = extractFeaturesFromImage(melSpectrogramPath);
-
-        // 이미지 크기에 따라 max_tokens 계산
-        int maxTokens = calculateMaxTokensBasedOnImageSize(melSpectrogramPath);
+//        // 이미지 경로를 Base64로 인코딩
+//        String melSpectrogramBase64 = encodeImageToBase64(melSpectrogramPath);
+//
+//        // 이미지에서 특징 추출
+//        String features = extractFeaturesFromImage(melSpectrogramPath);
+//
+//        // 이미지 크기에 따라 max_tokens 계산
+//        int maxTokens = calculateMaxTokensBasedOnImageSize(melSpectrogramPath);
 
         // 프롬프트 생성
-        String prompt = String.format("다음 문장에 대한 피드백을 제공하세요: %s\n 위의 문장 피드백과 관련지어 주파수 분석을 통해 감정을 분류한 후, 감정 조절 방법에 대한 피드백을 제공해 주세요.: %s",
-                sttResult, features);
+        String prompt = String.format("다음 문장에 대한 피드백을 제공하세요. 이때 감정을 잘 표출하는 방법에 대한 내용도 넣어 주세요.: %s\n ",
+                sttResult);
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", "gpt-4o");
@@ -196,7 +192,7 @@ public class GPTService {
             put("role", "user");
             put("content", prompt);
         }}});
-        requestBody.put("max_tokens", maxTokens);
+//        requestBody.put("max_tokens", maxTokens);
         requestBody.put("temperature", 0.7);
 
         HttpHeaders headers = new HttpHeaders();
@@ -232,14 +228,14 @@ public class GPTService {
     }
 
     // 이미지 크기에 따라 max_tokens 계산
-    private int calculateMaxTokensBasedOnImageSize(String melSpectrogramPath) {
-        File file = new File(melSpectrogramPath);
-        long fileSizeInBytes = file.length();
-        if (fileSizeInBytes < 100 * 1024) { // 100KB
-            return 300;
-        } else {
-            return 500;
-        }
-    }
+//    private int calculateMaxTokensBasedOnImageSize(String melSpectrogramPath) {
+//        File file = new File(melSpectrogramPath);
+//        long fileSizeInBytes = file.length();
+//        if (fileSizeInBytes < 100 * 1024) { // 100KB
+//            return 300;
+//        } else {
+//            return 500;
+//        }
+//    }
 }
 

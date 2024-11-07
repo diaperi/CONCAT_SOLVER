@@ -1,10 +1,11 @@
+// 주석 처리 - 주파수 스펙트로그램 관련 코드
 let mediaRecorder;
 let audioChunks = [];
 
 const startBtn = document.getElementById('startBtn');
 const recordBtn = document.getElementById('recordBtn');
 const sendBtn = document.getElementById('sendBtn');
-const melSpectrogram = document.getElementById('melSpectrogram');
+// const melSpectrogram = document.getElementById('melSpectrogram');
 
 // 시나리오 시작 버튼 클릭 시 갈등 시나리오와 GPT 대화 가져오기
 startBtn.addEventListener('click', () => {
@@ -66,7 +67,7 @@ recordBtn.addEventListener('click', async () => {
             document.getElementById('sttResult').innerHTML = `STT 결과: ${data.sttResult}`;
 
             // 이미지 로드 대기 및 확인
-            await loadImageWithCheck(data.melSpectrogram);
+            // await loadImageWithCheck(data.melSpectrogram);
             // 피드백 표시
             document.getElementById('feedback').textContent = data.feedback;
 
@@ -85,36 +86,36 @@ sendBtn.addEventListener('click', () => {
 });
 
 // 이미지 로드 확인 함수
-async function loadImageWithCheck(melSpectrogramPath) {
-    const imgContainer = document.getElementById('melSpectrogram').parentNode;
-
-    // 이전 이미지 제거
-    const oldImg = document.getElementById('melSpectrogram');
-    if (oldImg) {
-        imgContainer.removeChild(oldImg);
-    }
-
-    const newImg = document.createElement('img');
-    newImg.id = 'melSpectrogram';
-
-    // 캐시를 피하기 위한 타임스탬프 추가
-    const timestamp = new Date().getTime();
-    newImg.src = `${melSpectrogramPath}&t=${timestamp}`;
-    newImg.alt = 'FFT 스펙트로그램 이미지';
-
-    // 이미지 로드 대기
-    return new Promise((resolve, reject) => {
-        newImg.onload = function() {
-            console.log('이미지 로드 완료');
-            imgContainer.appendChild(newImg);  // 새 이미지를 추가
-            resolve();
-        };
-        newImg.onerror = function() {
-            console.error('이미지 로드 중 오류 발생');
-            reject(new Error('이미지 로드 오류'));
-        };
-    });
-}
+// async function loadImageWithCheck(melSpectrogramPath) {
+//     const imgContainer = document.getElementById('melSpectrogram').parentNode;
+//
+//     // 이전 이미지 제거
+//     const oldImg = document.getElementById('melSpectrogram');
+//     if (oldImg) {
+//         imgContainer.removeChild(oldImg);
+//     }
+//
+//     const newImg = document.createElement('img');
+//     newImg.id = 'melSpectrogram';
+//
+//     // 캐시를 피하기 위한 타임스탬프 추가
+//     const timestamp = new Date().getTime();
+//     newImg.src = `${melSpectrogramPath}&t=${timestamp}`;
+//     newImg.alt = 'FFT 스펙트로그램 이미지';
+//
+//     // 이미지 로드 대기
+//     return new Promise((resolve, reject) => {
+//         newImg.onload = function() {
+//             console.log('이미지 로드 완료');
+//             imgContainer.appendChild(newImg);  // 새 이미지를 추가
+//             resolve();
+//         };
+//         newImg.onerror = function() {
+//             console.error('이미지 로드 중 오류 발생');
+//             reject(new Error('이미지 로드 오류'));
+//         };
+//     });
+// }
 
 
 // Blob을 AudioBuffer로 변환하는 함수
