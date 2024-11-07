@@ -3,6 +3,10 @@ import logging
 import requests
 import json
 import os
+from dotenv import load_dotenv
+
+# .env 파일에서 환경 변수를 로드
+load_dotenv()
 
 # stdout과 stdin의 인코딩을 UTF-8로 설정
 sys.stdin = open(sys.stdin.fileno(), mode='r', encoding='utf-8', buffering=1)
@@ -11,13 +15,18 @@ sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', buffering=1)
 # 로그 설정 (레벨을 WARNING으로 변경하고 출력 스트림을 stderr로 설정)
 logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stderr)
 
-# OpenAI API Key 설정 (코드 내에서 직접 설정)
+# OpenAI API Key 설정 (환경 변수에서 가져오기)
+openai_api_key = os.getenv('OPENAI_API_KEY')
+
+if openai_api_key is None:
+    logging.error("OPENAI_API_KEY is not set in the environment variables.")
+    sys.exit(1)
 
 # 표준 입력으로부터 대화 내용 읽기
 try:
     dialogue = sys.stdin.read().strip()
     # Java로부터 전달된 대화 내용을 로그로 출력 (INFO 레벨이므로 출력되지 않음)
-    logging.info(f"Original dialogue received from Java:\n{dialogue}")
+    logging.info(f"Original dialogue received:\n{dialogue}")
 
 except Exception as e:
     logging.error(f"Error reading input: {e}")
@@ -28,12 +37,12 @@ except Exception as e:
 def process_dialogue(dialogue):
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': f'Bearer {api_key}'
+        'Authorization': f'Bearer {openai_api_key}'
     }
 
     # OpenAI API에 전달할 payload
     payload = {
-        'model': 'gpt-4',
+        'model': 'gpt-4o',
         'messages': [
             {
                 'role': 'system',
@@ -62,7 +71,7 @@ def process_dialogue(dialogue):
 
         # 응답 처리
         response_data = response.json()
-        # OpenAI 응답에서 결과 추출 (로그 출력 생략)
+        # OpenAI 응답에서 결과 추출
         return response_data['choices'][0]['message']['content'].strip()
 
     except requests.exceptions.RequestException as e:
@@ -73,7 +82,7 @@ def process_dialogue(dialogue):
 # 메인 실행 부분
 if __name__ == '__main__':
     try:
-        # Java로부터 받은 대화를 처리
+        # 받은 대화를 처리
         result = process_dialogue(dialogue)
 
         # 최종 결과 출력

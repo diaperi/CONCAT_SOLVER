@@ -9,29 +9,23 @@ server.servlet.session.tracking-modes: cookie
 
 
 # database 연동 설정
-#hyeeun
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # AWS RDS URL
-    url: jdbc:mysql://solver-db.clc60kwem0qc.ap-northeast-2.rds.amazonaws.com:3306/SOLVER-DB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    # Supabase URL
+    url: jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-  #    url: jdbc:mysql://localhost:3306/db_solver?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-  #    username: user_solver
-  #    password: solver
-  #    username: root
-  #    password: root
-  thymeleaf:
-    cache: false
-  logging:
-    level:
-      root: INFO
-      concat.SolverWeb: INFO
+
+    thymeleaf:
+      cache: false
+      logging:
+        level:
+          root: INFO
+          concat.SolverWeb: INFO
 
   # spring data jpa 설정
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: true
     hibernate:
@@ -56,7 +50,6 @@ email:
   from:
     address: concatsolver@naver.com
     name: CONCAT
-
 
 
 cloud:
