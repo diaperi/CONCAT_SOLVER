@@ -157,38 +157,23 @@ public class GPTService {
             int width = image.getWidth();
             int height = image.getHeight();
 
-            // 주파수 대역별 에너지를 계산하는 변수
-            double totalEnergy = 0;
-            double[] frequencyBands = new double[10]; // 10개의 주파수 대역
-
             // 이미지 픽셀을 순회하며 에너지를 계산
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     Color color = new Color(image.getRGB(x, y));
                     int brightness = (color.getRed() + color.getGreen() + color.getBlue()) / 3; // 밝기 계산
-                    totalEnergy += brightness;
-
-                    // 주파수 대역별로 에너지를 누적
-                    int bandIndex = (int) ((double) y / height * frequencyBands.length);
-                    if (bandIndex < frequencyBands.length) {
-                        frequencyBands[bandIndex] += brightness;
-                    }
                 }
             }
 
-            // 총 에너지와 주파수 대역별 에너지를 문자열로 생성
-            StringBuilder featuresBuilder = new StringBuilder();
-            featuresBuilder.append("총 에너지: ").append(totalEnergy).append("\n");
-            for (int i = 0; i < frequencyBands.length; i++) {
-                featuresBuilder.append("주파수 대역 ").append(i + 1).append(": ").append(frequencyBands[i]).append("\n");
-            }
+            // 특징을 포함한 문자열을 반환
+            return "";
 
-            return featuresBuilder.toString();
         } catch (IOException e) {
             logger.error("특징 추출 중 오류 발생: {}", e.getMessage());
             throw new RuntimeException("특징 추출 중 오류가 발생했습니다: " + melSpectrogramPath, e);
         }
     }
+
 
     // STT 결과와 FFT 스펙트로그램 이미지에 대한 피드백을 생성하는 메서드
     public String getFeedback(String sttResult, String melSpectrogramPath) {
@@ -202,8 +187,8 @@ public class GPTService {
         int maxTokens = calculateMaxTokensBasedOnImageSize(melSpectrogramPath);
 
         // 프롬프트 생성
-        String prompt = String.format("다음 문장에 대한 피드백을 제공하세요: %s\n주파수 대역 특징: %s\n위의 문장 피드백과 관련지어 FFT 스펙트로그램을 Base64 인코딩 한 정보의 주파수 대역 변화만으로 감정을 나눠서 감정 변화에 대한 피드백을 제공하세요.: %s",
-                sttResult, features, melSpectrogramBase64.substring(0, 1000));
+        String prompt = String.format("다음 문장에 대한 피드백을 제공하세요: %s\n 위의 문장 피드백과 관련지어 주파수 분석을 통해 감정을 분류한 후, 감정 조절 방법에 대한 피드백을 제공해 주세요.: %s",
+                sttResult, features);
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", "gpt-4o");
