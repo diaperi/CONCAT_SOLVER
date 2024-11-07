@@ -30,7 +30,6 @@ recordBtn.addEventListener('click', async () => {
     mediaRecorder.start();
     audioChunks = [];
 
-    // 녹음 시작 알림 메시지
     alert("녹음이 시작되었습니다.");
 
     mediaRecorder.addEventListener('dataavailable', event => {
@@ -48,60 +47,32 @@ recordBtn.addEventListener('click', async () => {
         formData.append('audioFile', wavBlob, 'audio.wav'); // WAV 파일로 전송
 
         // STT 서버로 파일 전송
-        // STT 결과가 도착한 후 FFT 스펙트로그램 이미지 처리
-        fetch('/scenario/sc', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Cache-Control': 'no-cache' // 요청에 캐시 무시 지시
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                    return;
+        try {
+            const response = await fetch('/scenario/sc', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Cache-Control': 'no-cache' // 요청에 캐시 무시 지시
                 }
+            });
+            const data = await response.json();
 
-                // STT 결과 표시
-                document.getElementById('sttResult').innerHTML = `STT 결과: ${data.sttResult}`;
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
 
-                // FFT 스펙트로그램 이미지가 생성될 시간을 기다림 (예: 2초 대기)
-                setTimeout(() => {
-                    // 이미지가 생성되었는지 확인하고 처리
-                    if (data.melSpectrogram) {
-                        const imgContainer = document.getElementById('melSpectrogram').parentNode;
-                        const oldImg = document.getElementById('melSpectrogram');
+            // STT 결과 표시
+            document.getElementById('sttResult').innerHTML = `STT 결과: ${data.sttResult}`;
 
-                        // 기존 이미지 태그가 있을 경우 삭제
-                        if (oldImg) {
-                            imgContainer.removeChild(oldImg);
-                        }
+            // 이미지 로드 대기 및 확인
+            await loadImageWithCheck(data.melSpectrogram);
+            // 피드백 표시
+            document.getElementById('feedback').textContent = data.feedback;
 
-                        // 새로운 이미지 태그 생성
-                        const newImg = document.createElement('img');
-                        newImg.id = 'melSpectrogram';
-                        newImg.src = data.melSpectrogram;  // 타임스탬프 없이 이미지 바로 로드
-                        newImg.alt = 'FFT 스펙트로그램 이미지';
-
-                        // 새로운 이미지 태그를 DOM에 추가
-                        imgContainer.appendChild(newImg);
-                    } else {
-                        document.getElementById('melSpectrogram').alt = 'FFT 스펙트로그램 이미지를 불러올 수 없습니다.';
-                    }
-                }, 5000);  // 5초 대기 후 이미지 전송 시도
-
-                // 피드백을 네 번째 버블에 표시
-                setTimeout(() => {
-                    // 피드백 표시 코드
-                    document.getElementById('feedback').textContent = data.feedback;
-                }, 10000);  // 10초 대기
-
-                // 디버깅: STT 결과와 피드백 로그 확인
-                console.log("STT Result:", data.sttResult);
-                console.log("Feedback:", data.feedback);
-            })
-            .catch(error => console.error('Error:', error));
+        } catch (error) {
+            console.error('Error:', error);
+        }
     });
 });
 
@@ -112,6 +83,39 @@ sendBtn.addEventListener('click', () => {
         alert("녹음이 종료되었습니다.");
     }
 });
+
+// 이미지 로드 확인 함수
+async function loadImageWithCheck(melSpectrogramPath) {
+    const imgContainer = document.getElementById('melSpectrogram').parentNode;
+
+    // 이전 이미지 제거
+    const oldImg = document.getElementById('melSpectrogram');
+    if (oldImg) {
+        imgContainer.removeChild(oldImg);
+    }
+
+    const newImg = document.createElement('img');
+    newImg.id = 'melSpectrogram';
+
+    // 캐시를 피하기 위한 타임스탬프 추가
+    const timestamp = new Date().getTime();
+    newImg.src = `${melSpectrogramPath}&t=${timestamp}`;
+    newImg.alt = 'FFT 스펙트로그램 이미지';
+
+    // 이미지 로드 대기
+    return new Promise((resolve, reject) => {
+        newImg.onload = function() {
+            console.log('이미지 로드 완료');
+            imgContainer.appendChild(newImg);  // 새 이미지를 추가
+            resolve();
+        };
+        newImg.onerror = function() {
+            console.error('이미지 로드 중 오류 발생');
+            reject(new Error('이미지 로드 오류'));
+        };
+    });
+}
+
 
 // Blob을 AudioBuffer로 변환하는 함수
 async function blobToAudioBuffer(blob) {

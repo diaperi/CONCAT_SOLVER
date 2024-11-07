@@ -45,7 +45,6 @@ public class SnsAuthController {
     private final String naverClientSecret = dotenv.get("NAVER_CLIENT_SECRET");
     private final String naverRedirectUri = dotenv.get("NAVER_REDIRECT_URI");
 
-
     private final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
     private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private final String NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
