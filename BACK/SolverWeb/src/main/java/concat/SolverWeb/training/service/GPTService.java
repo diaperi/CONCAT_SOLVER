@@ -23,7 +23,7 @@ public class GPTService {
     // Dotenv을 사용하여 .env 파일에서 API 키 로드
     private final String apiKey;
 
-    // 기본 URL
+    // 기본 URL.
     private final String baseUrl = "https://api.openai.com/v1/chat/completions";
 
     public GPTService() {
