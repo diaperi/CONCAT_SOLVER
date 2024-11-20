@@ -1,4 +1,3 @@
-// 주석 처리 - 주파수 스펙트로그램 관련 코드
 package concat.SolverWeb.training.controller;
 
 import concat.SolverWeb.training.service.GPTService;
@@ -41,31 +40,15 @@ public class ScenarioController {
                 // 1. 녹음 파일을 STT로 변환
                 String sttResult = sttService.uploadAudioAndGetText(audioFile);
 
-                // 2. 고정된 스펙트로그램 파일 이름 설정
-//                String outputDirectory = "D:/CONCAT/CONCAT_SOLVER/BACK/SolverWeb/src/main/resources/static/media/";
-//                String melSpectrogramPath = Paths.get(outputDirectory, "fft_spectrogram.png").toString();
+                // 2. 피드백 생성
+                String feedback = gptService.getFeedback(sttResult);
 
-                /* 스펙트로그램 생성 및 저장 - 주석 처리 시작 */
-                // 3. 스펙트로그램 생성 및 저장
-                // sttService.generateMelSpectrogram(audioFile.getBytes(), melSpectrogramPath);
-
-                // 4. 이미지 생성 완료 여부 확인
-                // File generatedImage = new File(melSpectrogramPath);
-                // if (generatedImage.exists()) {
-
-                // 5. 웹 경로 설정
-                // String webMelSpectrogramPath = "/media/fft_spectrogram.png?&=" + System.currentTimeMillis();
-
-                // 6. 피드백 생성 (스펙트로그램 이미지 관련 코드 제외)
-                String feedback = gptService.getFeedback(sttResult, null);
-
-                // 7. 응답으로 반환할 데이터 구성
+                // 3. 응답으로 반환할 데이터 구성
                 Map<String, Object> response = new HashMap<>();
                 response.put("sttResult", sttResult);
-                response.put("melSpectrogram", ""); // 스펙트로그램 이미지 경로 대신 빈 문자열 할당
                 response.put("feedback", feedback);
 
-                // 8. Cache-Control 헤더 추가 (캐시 무효화)
+                // 4. Cache-Control 헤더 추가 (캐시 무효화)
                 return ResponseEntity.ok()
                         .cacheControl(CacheControl.noCache().mustRevalidate())
                         .body(response);
@@ -107,4 +90,5 @@ public class ScenarioController {
         return "hyeeun/trains/scenario";  // 시나리오 페이지에 해당하는 템플릿 이름
     }
 }
+
 
