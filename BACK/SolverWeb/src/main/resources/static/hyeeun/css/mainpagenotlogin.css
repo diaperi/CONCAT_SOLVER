@@ -7,18 +7,19 @@
 
 
 .mainpagenotlogin_container {
-    background: linear-gradient(
-            to bottom,
-            #03BED6 0%,
-            #10B3DA 25%,
-            #1DA4E1 50%,
-            #249CE5 75%,
-            #2D8EED 100%,
-            #3084F4 100%
-    );
+    /*background: linear-gradient(*/
+    /*        to bottom,*/
+    /*        #03BED6 0%,*/
+    /*        #10B3DA 25%,*/
+    /*        #1DA4E1 50%,*/
+    /*        #249CE5 75%,*/
+    /*        #2D8EED 100%,*/
+    /*        #3084F4 100%*/
+    /*);*/
     display: flex;
     justify-content: center;
     height: 89.3vh;
+    margin-top: 15vh;
 }
 
 .mainpagenotlogin_container2 {
@@ -129,6 +130,7 @@
     text-align: center;
     font-size: 1.5vh;
     z-index: 2;
+    margin-top: 10vh;
 }
 
 .mainpagenotlogin_error-message img {

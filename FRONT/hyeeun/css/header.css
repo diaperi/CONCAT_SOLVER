@@ -1,57 +1,357 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
     text-decoration: none;
-    color: white;
-    font-weight: bold;
 }
 
 body {
-    margin: 0;
+    background-color: #FBFBFB;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
 }
+
+.header_logo {
+
+    z-index: 999;
+    cursor: pointer;
+    transition: opacity 0.3s ease; /* 이미지 사라짐 애니메이션 */
+}
+
+.header_navbar > a > img {
+    height: 4.5vh;
+    cursor: pointer;
+    margin-left: 10vh;
+    margin-bottom: 1vh;
+}
+
+.right_menu {
+    /* background-color: cadetblue; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 9vh;
+    margin-right: 10vh;
+}
+
+.header_logo > i {
+    font-size: 4vh;
+    transition: transform 0.4s ease; /* 회전 애니메이션 속도 */
+    z-index: 999999999;
+}
+
+/* 마우스 오버 시 한쪽으로 회전 */
+.header_logo > i:hover {
+    transform: rotate(30deg); /* 시계 방향으로 15도 회전 */
+}
+
 .header_navbar {
     display: flex;
+    height: 6vh;
+    padding-top: 1vh;
     justify-content: space-between;
     align-items: center;
-    /* background-color: #000000; */
-    padding: 1px 44px; 
-    border-bottom: 0.1vh solid rgba(255, 255, 255, 0.356);
-    height: 10.5vh;
+    width: 100%;
+    z-index: 9999999;
+    border-bottom: 1px solid rgba(146, 146, 146, 0.219);
+    /*position: fixed;*/
+    background-color: #FBFBFB;
 }
-.header_navbar img {
-    height: 16vh; 
-    width: 16vh; 
+
+.header_menu {
+    display: flex;
+    background-color: #1f1f1f;
+    height: 6vh;
+    /*border-radius: 1.5vh;*/
+    width: 30vh;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 4.5vh;
+    padding-right: 4.5vh;
+    position: fixed;
+    top: 1vh;
+    right: 7vh; /* 초기에는 header_logo의 오른쪽 바깥에 숨김 */
+    opacity: 0;
+    transition: all 0.5s ease; /* 애니메이션 효과 */
+    margin-right: 13vh;
+}
+
+/* .show 클래스가 있을 때 header_menu가 슬라이드되어 고정됨 */
+.header_menu.show {
+    right: 11vh; /* 왼쪽으로 슬라이드 */
+    opacity: 1; /* 메뉴 표시 */
+}
+
+
+/* ****************************** */
+
+.header_menu > a > i {
+    color: white;
+    font-size: 2.2vh;
+    transition: opacity 0.3s ease;
+}
+
+.icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 2.2vh;
+    color: white;
+}
+
+/* 아이콘에 마우스를 올렸을 때 텍스트 표시 */
+.icon i {
+    transition: opacity 0.3s ease;
+}
+
+.icon-text {
+    position: absolute;
+    opacity: 0;
+    font-size: 1.5vh;
+    color: white;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+/* 마우스 오버 시 아이콘 숨기고 텍스트 표시 */
+.icon:hover i {
+    opacity: 0;
+}
+
+.icon:hover .icon-text {
+    opacity: 1;
+}
+
+
+/**********************/
+/* 드롭다운 스타일 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    /* background-color: yellowgreen; */
+}
+
+
+#mypage-btn {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 2.2vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.4vh;
+    margin-top: 0.5vh;
+}
+
+
+.mypage-btn > i {
+    color: black;
+    font-size: 3vh;
+}
+
+
+/* 드롭다운 메뉴 스타일 */
+.dropdown-content {
+    display: none; /* 기본 숨기기 */
+    position: absolute;
+    background-color: #1f1f1f;
+    width: 110px;
+    padding: 10px;
+    /*border-radius: 8px;*/
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    top: 6vh; /* 버튼 바로 아래 */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+/* 드롭다운 메뉴가 활성화될 때 display 변경 */
+.dropdown-content.show {
+    display: block;
+}
+
+
+/* 말풍선 삼각형 추가 */
+.dropdown-content::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #1f1f1f transparent;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-size: 14px; /* 드롭다운 메뉴 글씨 크기 조정 */
+}
+
+.dropdown-content a:hover {
+    background-color: #575757;
+}
+
+
+/* *********************************************************** */
+.detailBox {
+    /* background-color: yellowgreen; */
+    margin-top: 10vh;
+    display: flex;
+    width: 65%;
+    min-width: 130vh;
+    /* height: 70vh; */
+    /* overflow: hidden; */
+}
+
+.detailVideo {
+    /* background-color: yellowgreen; */
+}
+
+.myPageDetail_bottomActions {
+    /* background-color: yellow; */
+    margin-left: 2vh;
+    display: flex;
+    margin-top: 6vh;
+}
+
+#readBtn {
+    font-size: 3vh;
+    background-color: white;
+    border: none;
+    margin-left: 2vh;
     cursor: pointer;
 }
-.header_navbar .header_menu {
+
+#readBtn > i {
+    color: rgb(0, 0, 0);
+}
+
+#trashBtn {
+    border: none;
+    font-size: 3vh;
+    cursor: pointer;
+}
+
+#trashBtn > i {
+    color: rgb(0, 0, 0);
+}
+
+
+#myVideo {
+    width: 65vh;
+    height: 60vh;
+    margin-right: 3vh;
+}
+
+.line {
+    background-color: #f0f0f0;
+    width: 0.5vh;
+}
+
+.detailSolve {
+    /* background-color: #f0f0f07c; */
+    /* margin-right: 3vh;
+    overflow-x: hidden;
+    overflow-y: scroll; */
+    height: auto;
+    /* overflow-y: scroll;/ */
+}
+
+.detailSolve > span {
+    font-size: 2vh;
+}
+
+
+/* 스크롤바 너비 설정 */
+::-webkit-scrollbar {
+    width: 8px; /* 세로 스크롤바 너비 */
+    height: 8px; /* 가로 스크롤바 높이 */
+}
+
+/* 스크롤바 트랙 */
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* 트랙 배경색 */
+    border-radius: 10px; /* 트랙의 둥근 모서리 */
+}
+
+/* 스크롤바 핸들 */
+::-webkit-scrollbar-thumb {
+    background-color: #1f1f1f; /* 핸들 색상 */
+    border-radius: 10px; /* 핸들의 둥근 모서리 */
+    border: 2px solid #f0f0f0; /* 핸들 외곽 테두리 */
+}
+
+/* 스크롤바 핸들에 호버 효과 */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #8c8caa; /* 호버 시 색상 변경 */
+}
+
+
+/* *************** */
+.accordion {
+    width: 100%;
+    margin-top: 1vh;
+}
+
+.accordion-item {
+    margin-bottom: 5px;
+    margin-bottom: 3vh;
+}
+
+.accordion-button {
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    color: #b8b8b8;
+    font-weight: bold;
+    font-size: 1.5vh;
+}
+
+.accordion-content {
+    display: none;
+    padding: 15px;
+    background-color: #f3f3f3;
+    color: rgb(48, 48, 48);
+    width: 80%;
+    margin-top: 1vh;
+}
+
+/* ********************* */
+.summary {
+    color: #b8b8b8;
+    font-weight: bold;
+    font-size: 1.5vh;
     display: flex;
-    gap: 25px;
-    align-items: center;
-    /* background-color: #3084F4; */
+    flex-direction: column;
+    margin-left: 3vh;
+    /* background-color: yellowgreen; */
 }
 
-a>i{
-    font-size: 2.5vh;
-}
-.header_navbar .header_menu a {
-    color: white;
-    text-decoration: none;
-    font-size: 17px;
+.title {
+    color: black;
+    font-size: 2vh;
+    margin-bottom: 2vh;
 }
 
-.header_menu a:hover {
-    color: #3084F4;
-    transition: color 0.3s;
-}
-a>i:hover {
-    color: #3084F4;
-    transition: color 0.3s;
+.summary2 {
+    color: rgb(58, 58, 58);
+    font-size: 1.8vh;
+    margin-top: 3vh;
+    width: 90%;
+    /* background-color: wheat; */
+    margin-bottom: 10vh;
 }
 
-.header_menu2{
-    /* background-color: #3084F4; */
-    width: 8vh;
-    display: flex;
-    justify-content: space-between;
+hr {
+    border: 1px solid #e6e6e6;
+    width: 90%;
+    margin-bottom: 3vh;
 }

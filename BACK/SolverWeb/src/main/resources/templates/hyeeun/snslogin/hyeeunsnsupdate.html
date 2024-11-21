@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원정보수정 페이지</title>
     <link rel="stylesheet" href="/hyeeun/css/mypage_change.css"> <!-- CSS 파일 링크 -->
+    <script src="https://kit.fontawesome.com/a06d7ad725.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- JQuery 추가 -->
 </head>
@@ -25,7 +26,7 @@
                 <input type="hidden" name="providerid" th:value="${user.providerId}">
                 <div class="mypage_change_inputBox">
                     <label>이름</label>
-                    <input type="text"  th:field="*{name}" name="snsName" readonly><br>
+                    <input type="text" th:field="*{name}" name="snsName" readonly><br>
                 </div>
                 <div class="mypage_change_inputBox">
                     <label>이메일</label>
@@ -71,8 +72,8 @@
                 }
 
                 $.ajax({
-                    type: "POST",
-                    url: `/snslogin/delete/${userProviderId}`,  // URL 수정
+                    type   : "POST",
+                    url    : `/snslogin/delete/${userProviderId}`,  // URL 수정
                     success: function (response) {
                         if (response === "ok") {
                             alert("회원 탈퇴가 완료되었습니다.");
@@ -81,7 +82,7 @@
                             alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
                         }
                     },
-                    error: function (err) {
+                    error  : function (err) {
                         console.error("Error during deletion:", err);
                         alert("오류가 발생했습니다. 다시 시도해주세요.");
                     }
@@ -94,6 +95,7 @@
                 }
             }
         </script>
+        <script src="/hyeeun/js/header.js"></script>
     </div>
 </div>
 </body>

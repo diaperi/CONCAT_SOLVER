@@ -26,17 +26,18 @@
     align-items: center;
     width: 100%; /* Adjust width for responsiveness */
     height: 89.5vh;    box-sizing: border-box;
-    background: linear-gradient(137.29deg,
-    #03BED6 20.13%,
-    #10B3DA 33.05%,
-    #1DA4E1 45.02%,
-    #249CE5 58.56%,
-    #2D8EED 72.11%,
-    #3084F4 83.13%);
+    margin-top: 5vh;
+    /*background: linear-gradient(137.29deg,*/
+    /*#03BED6 20.13%,*/
+    /*#10B3DA 33.05%,*/
+    /*#1DA4E1 45.02%,*/
+    /*#249CE5 58.56%,*/
+    /*#2D8EED 72.11%,*/
+    /*#3084F4 83.13%);*/
 }
 
 .myPagePop_container2 {
-    margin-top: 8vh; /* Adjust margin for responsiveness */
+    margin-top: 10vh; /* Adjust margin for responsiveness */
     width: 70%;
 }
 
@@ -79,11 +80,13 @@
 .myPagePop_videoBox3 {
     width: 100%;
     border-radius: 1vh;
-    margin-bottom: 8vh; /* Adjust margin for responsiveness */
+    margin-bottom: 5vh; /* Adjust margin for responsiveness */
     overflow: hidden;
-    min-height: 57vh; /* Adjust min-height for responsiveness */
+    min-height: 50vh; /* Adjust min-height for responsiveness */
     position: relative;
     cursor: pointer;
+    margin-right: 2vh;
+    border: 1px solid black;
 }
 
 .myPagePop_videoBox3 >a> img {
@@ -205,7 +208,7 @@
 .myPagePop_foot {
     margin-top: 4vh; /* Adjust margin for responsiveness */
     font-size: 1.4vh; /* Adjust font-size for responsiveness */
-    color: rgba(255, 255, 255, 0.76);
+    color: black;
     font-weight: bold;
     width: 45%;
     display: flex;

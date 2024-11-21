@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -234,13 +235,21 @@ public class MyPageController {
             model.addAttribute("videoUrl", "");
             model.addAttribute("gptTitle", "제목 없음");
         }
-
-        Optional<String> gptResponse = s3Service.getGptResponseByVideoTimestamp(userId, timestamp);
-        if (gptResponse.isPresent()) {
-            model.addAttribute("gptResponse", gptResponse.get());
+        // AI 동영상 정보 가져오기
+        Optional<ImageInfo> aiVideo = s3Service.getAIVideoByTimestamp(userId, timestamp);
+        if (aiVideo.isPresent()) {
+            model.addAttribute("aiVideoUrl", aiVideo.get().getUrl());
+            model.addAttribute("aiVideoKey", aiVideo.get().getKey());
         } else {
-            model.addAttribute("gptResponse", "해결책을 찾을 수 없습니다.");
+            model.addAttribute("aiVideoUrl", "");
+            model.addAttribute("aiVideoKey", "");
         }
+
+        Map<String, Object> gptResponse = s3Service.getGptResponseByVideoTimestamp(userId, timestamp);
+        model.addAttribute("gptTitle", gptResponse.getOrDefault("gptTitle", "제목 없음"));
+        model.addAttribute("gptSummary", gptResponse.getOrDefault("gptSummary", "요약 없음"));
+        model.addAttribute("participants", gptResponse.getOrDefault("participants", Collections.emptyMap()));
+
         return "seoyun/myPageDetail";
     }
 
