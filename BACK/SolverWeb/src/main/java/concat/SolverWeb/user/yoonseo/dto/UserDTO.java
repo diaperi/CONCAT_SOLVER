@@ -20,6 +20,7 @@ public class UserDTO {
     private LocalDateTime enrollDate; // 가입일
     private LocalDateTime updateDate; // 수정일
     private Character isSecession;  // 탈퇴여부 (Y or N)
+    private String isVerified;  // 전화번호 인증 여부
 
     public static UserDTO toUserDTO(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
@@ -32,6 +33,7 @@ public class UserDTO {
         userDTO.setEnrollDate(userEntity.getEnrollDate());
         userDTO.setUpdateDate(userEntity.getUpdateDate());
         userDTO.setIsSecession(userEntity.getIsSecession());
+        userDTO.setIsVerified(userEntity.getIsVerified());
         return userDTO;
     }
 }
