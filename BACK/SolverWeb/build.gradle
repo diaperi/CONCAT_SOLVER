@@ -42,6 +42,7 @@ dependencies {
     // JFreeChart 라이브러리 (차트 생성 및 이미지 저장용)
     implementation 'org.jfree:jfreechart:1.5.3'
 
+    implementation 'org.springframework.boot:spring-boot-devtools'
 
 // 비밀번호 암호화 때문에 추가한거 1개 (윤서)
 
@@ -54,7 +55,7 @@ dependencies {
     implementation 'org.mindrot:jbcrypt:0.4' // Bcrpyt
     implementation 'org.postgresql:postgresql:42.6.0' // PostgreSQL
     implementation 'io.github.cdimascio:dotenv-java:2.2.0'
-    
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

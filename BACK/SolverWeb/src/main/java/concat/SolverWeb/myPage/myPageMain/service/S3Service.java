@@ -320,6 +320,7 @@ public class S3Service {
                 .findFirst();
     }
 
+
     // 특정 영상 파일의 타임스탬프에 해당하는 텍스트 파일 가져오기
     public Optional<String> getTranscriptByVideoTimestamp(String userId, String timestamp) {
         try {
@@ -356,7 +357,8 @@ public class S3Service {
     }
 
     // 특정 영상 파일의 타임스탬프에 해당하는 GPT 응답 파일 가져오기
-    public Optional<String> getGptResponseByVideoTimestamp(String userId, String timestamp) {
+    public Map<String, Object> getGptResponseByVideoTimestamp(String userId, String timestamp) {
+        Map<String, Object> responseMap = new HashMap<>();
         try {
             String userFolderPrefix = userId + "/gpt/";
             ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
@@ -380,22 +382,120 @@ public class S3Service {
                         .lines()
                         .collect(Collectors.joining("\n"));
 
-                // 제목 끝의 '>' 뒤에 <br> 태그 추가
-                String formattedContent = content.replaceAll(">([^\\s])", "><br><br>$1");
+                // . 뒤에 <br><br> 추가
+                content = content.replaceAll("\\.(?!\\s*$)", ".<br><br>");
 
-                // .을 기준으로 <br> 태그 추가
-                formattedContent = formattedContent.replaceAll("\\.", ".<br><br>");
+                // 제목, 요약, 참여자 솔루션 파싱
+                String[] sections = content.split("\n\n");
 
-                // formattedContent를 반환합니다.
-                return Optional.of(formattedContent);
-            } else {
-                return Optional.empty();
+                // 첫 번째 줄은 제목
+                responseMap.put("gptTitle", sections.length > 0 ? sections[0].trim() : "제목 없음");
+
+                // 두 번째 섹션은 요약
+                responseMap.put("gptSummary", sections.length > 1 ? sections[1].trim() : "요약 없음");
+
+                // 참여자별 솔루션 파싱
+                Map<String, String> participantSolutions = new LinkedHashMap<>();
+                for (int i = 2; i < sections.length; i++) {
+                    String section = sections[i].trim();
+                    if (section.startsWith("참여자")) {
+                        String participantKey = "🧑 참여자" + (participantSolutions.size() + 1);
+                        participantSolutions.put(participantKey, section);
+                    }
+                }
+                responseMap.put("participants", participantSolutions);
+
+                return responseMap;
             }
         } catch (Exception e) {
             logger.error("Failed to retrieve the GPT response content from S3.", e);
+        }
+        return responseMap;
+    }
+
+    // 특정 영상 파일의 타임스탬프에 해당하는 동영상 파일 가져오기(AIVIDEO)
+    public Optional<ImageInfo> getAIVideoByTimestamp(String userId, String timestamp) {
+        try {
+            // S3 버킷 내 사용자 폴더 경로 설정
+            String userFolderPrefix = userId + "/aiVideo/";
+
+            // S3에서 파일 목록 가져오기
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            // 타임스탬프와 확장자(.mp4)에 해당하는 파일 필터링
+            Optional<S3Object> matchingVideo = response.contents().stream()
+                    .filter(s -> s.key().contains(timestamp) && s.key().endsWith(".mp4"))
+                    .findFirst();
+
+            if (matchingVideo.isPresent()) {
+                // 매칭된 파일이 존재하면 S3 객체 키 가져오기
+                S3Object videoObject = matchingVideo.get();
+                String key = videoObject.key();
+                long size = videoObject.size(); // 파일 크기
+                String lastModifiedDate = videoObject.lastModified().toString(); // 마지막 수정 시간
+
+                // 동영상 URL 생성
+                String videoUrl = s3Client.utilities().getUrl(GetUrlRequest.builder()
+                        .bucket(bucketName)
+                        .key(key)
+                        .build()).toExternalForm();
+
+                // 결과 객체 생성 및 반환
+                return Optional.of(new ImageInfo(videoUrl, lastModifiedDate, size, key, "AI 동영상")); // gptTitle은 "AI 동영상"으로 설정
+            } else {
+                return Optional.empty(); // 매칭되는 동영상이 없을 경우
+            }
+        } catch (Exception e) {
+            logger.error("Failed to retrieve the video content from S3.", e);
             return Optional.empty();
         }
     }
+
+
+//    public Optional<String> getGptResponseByVideoTimestamp(String userId, String timestamp) {
+//        try {
+//            String userFolderPrefix = userId + "/gpt/";
+//            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+//                    .bucket(bucketName)
+//                    .prefix(userFolderPrefix)
+//                    .build();
+//            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+//            Optional<S3Object> matchingGptResponse = response.contents().stream()
+//                    .filter(s -> s.key().contains(timestamp) && s.key().endsWith(".txt"))
+//                    .findFirst();
+//
+//            if (matchingGptResponse.isPresent()) {
+//                String key = matchingGptResponse.get().key();
+//                GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+//                        .bucket(bucketName)
+//                        .key(key)
+//                        .build();
+//
+//                ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(getObjectRequest);
+//                String content = new BufferedReader(new InputStreamReader(s3ObjectInputStream))
+//                        .lines()
+//                        .collect(Collectors.joining("\n"));
+//
+//                // 제목 끝의 '>' 뒤에 <br> 태그 추가
+//                String formattedContent = content.replaceAll(">([^\\s])", "><br><br>$1");
+//
+//                // .을 기준으로 <br> 태그 추가
+//                formattedContent = formattedContent.replaceAll("\\.", ".<br><br>");
+//
+//                // formattedContent를 반환합니다.
+//                return Optional.of(formattedContent);
+//            } else {
+//                return Optional.empty();
+//            }
+//        } catch (Exception e) {
+//            logger.error("Failed to retrieve the GPT response content from S3.", e);
+//            return Optional.empty();
+//        }
+//    }
 
     // 최신 영상 파일을 가져오기 위한 메서드
     public Optional<ImageInfo> getLatestVideo(String userId) {
@@ -426,35 +526,35 @@ public class S3Service {
     }
 
     // S3 폴더를 10초마다 감시하는 스케줄러
-    @Scheduled(fixedDelay = 10000)  // 10초마다 실행
-    public void checkForNewFiles() {
-        String userId = "yourUserId"; // 사용자의 ID를 여기서 가져오거나 세션에서 처리
-
-        // S3에서 최신 파일을 가져옴
-        Optional<ImageInfo> latestVideo = getLatestVideo(userId);
-
-        if (latestVideo.isPresent()) {
-            String videoTimestamp = extractTimestamp(latestVideo.get().getKey());
-
-            // 기존에 처리한 파일인지 확인
-            if (!processedFiles.contains(videoTimestamp)) {
-                Optional<String> transcriptContent = getTranscriptByVideoTimestamp(userId, videoTimestamp);
-                Optional<String> gptContent = getGptResponseByVideoTimestamp(userId, videoTimestamp);
-
-                if (transcriptContent.isPresent() && !processedFiles.contains(transcriptContent.get())) {
-                    logger.info("New transcript content detected.");
-                    processedFiles.add(transcriptContent.get());
-                    // 여기서 텍스트 파일을 처리합니다 (예: 클라이언트로 전송 등)
-                }
-
-                if (gptContent.isPresent() && !processedFiles.contains(gptContent.get())) {
-                    logger.info("New GPT response content detected.");
-                    processedFiles.add(gptContent.get());
-                    // 여기서 GPT 결과를 처리합니다 (예: 클라이언트로 전송 등)
-                }
-            }
-        }
-    }
+//    @Scheduled(fixedDelay = 10000)  // 10초마다 실행
+//    public void checkForNewFiles() {
+//        String userId = "yourUserId"; // 사용자의 ID를 여기서 가져오거나 세션에서 처리
+//
+//        // S3에서 최신 파일을 가져옴
+//        Optional<ImageInfo> latestVideo = getLatestVideo(userId);
+//
+//        if (latestVideo.isPresent()) {
+//            String videoTimestamp = extractTimestamp(latestVideo.get().getKey());
+//
+//            // 기존에 처리한 파일인지 확인
+//            if (!processedFiles.contains(videoTimestamp)) {
+//                Optional<String> transcriptContent = getTranscriptByVideoTimestamp(userId, videoTimestamp);
+//                Optional<String> gptContent = getGptResponseByVideoTimestamp(userId, videoTimestamp);
+//
+//                if (transcriptContent.isPresent() && !processedFiles.contains(transcriptContent.get())) {
+//                    logger.info("New transcript content detected.");
+//                    processedFiles.add(transcriptContent.get());
+//                    // 여기서 텍스트 파일을 처리합니다 (예: 클라이언트로 전송 등)
+//                }
+//
+//                if (gptContent.isPresent() && !processedFiles.contains(gptContent.get())) {
+//                    logger.info("New GPT response content detected.");
+//                    processedFiles.add(gptContent.get());
+//                    // 여기서 GPT 결과를 처리합니다 (예: 클라이언트로 전송 등)
+//                }
+//            }
+//        }
+//    }
 
     public static class ImageInfo {
         private String url;

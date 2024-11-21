@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healing Meditation</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        iframe {
+            margin-top: 50px;
+            width: 560px;
+            height: 315px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>솔버와 함께 평온한 마음을 찾아보세요</h1>
+    <div id="player"></div>
+
+    <script>
+        // YouTube API 키 (반드시 발급받은 키로 대체해야 함)
+        const API_KEY = "AIzaSyCtNiXXND6UJg-Tmn4u1bWUaH0dP9X9jqw";
+        const SEARCH_QUERY = "힐링 명상"; // 검색할 키워드
+        const MAX_RESULTS = 10; // 가져올 동영상 수
+
+        // YouTube 검색 및 동영상 랜덤 선택
+        async function fetchRandomHealingVideo() {
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(SEARCH_QUERY)}&type=video&maxResults=${MAX_RESULTS}&key=${API_KEY}`);
+            const data = await response.json();
+            const videoItems = data.items;
+
+            if (videoItems.length > 0) {
+                // 랜덤으로 동영상 ID 선택
+                const randomIndex = Math.floor(Math.random() * videoItems.length);
+                return videoItems[randomIndex].id.videoId;
+            } else {
+                console.error("No videos found for the given query.");
+                return null;
+            }
+        }
+
+        // YouTube IFrame Player API 로드 및 자동 재생 설정
+        function loadYouTubePlayer(videoId) {
+            const playerScript = document.createElement("script");
+            playerScript.src = "https://www.youtube.com/iframe_api";
+            document.body.appendChild(playerScript);
+
+            window.onYouTubeIframeAPIReady = () => {
+                new YT.Player("player", {
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 1, // 자동 재생
+                        mute: 0, // 음소거
+                        controls: 1, // 재생 컨트롤러 표시
+                        rel: 0, // 관련 동영상 표시 안 함
+                        modestbranding: 1 // YouTube 로고 최소화
+                    }
+                });
+            };
+        }
+
+        // 페이지 로드 시 실행
+        window.onload = async () => {
+            const videoId = await fetchRandomHealingVideo();
+            if (videoId) {
+                loadYouTubePlayer(videoId);
+            } else {
+                document.body.innerHTML = "<h1>동영상을 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</h1>";
+            }
+        };
+    </script>
+</body>
+</html>
