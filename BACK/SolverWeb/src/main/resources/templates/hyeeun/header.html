@@ -5,26 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>헤더</title>
     <link rel="stylesheet" th:href="@{/hyeeun/css/header.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR&family=Sunflower:wght@300;500;700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
-<div th:fragment="header">
-    <div class="header_navbar">
-        <a href="/main/mainPage">
-            <img src="/hyeeun/img/solver_logo.png" alt="로고">
-        </a>
+<div class="header_navbar" th:fragment="header">
+    <a href="/main/mainPage">
+        <img src="/hyeeun/img/blackLogo.png">
+    </a>
+    <div class="right_menu">
         <div class="header_menu">
-            <a href="/main/mainPage">실시간 화면</a>
-            <div class = dropdown2>
-                <span id="train-btn"><a href="/scenario/sc">감정 조절 훈련</a></span>
-            </div>
-            <div class="dropdown">
-                <span id="mypage-btn"><a href="/moreDashBoard/dashBoard">마이페이지</a></span>
-                <div class="dropdown-content" id="mypage-dropdown">
-                    <a href="/myPage/myPageMain">저장된 영상</a>
-                    <a href="/change/update">회원정보수정</a>
-                    <a href="/myPage/trash">휴지통</a>
-                    <a href="/myPage/cs">고객센터</a>
-                </div>
+            <!-- 감정 대화 훈련 아이콘 -->
+            <a href="/scenario/sc" class="icon">
+                <i class="fa-regular fa-face-grin-squint"></i>
+                <span class="icon-text">감정대화훈련</span>
+            </a>
+
+            <!-- 해결책 보기 아이콘 -->
+            <a href="/myPage/myPageMain" class="icon">
+                <i class="fa-regular fa-lightbulb"></i>
+                <span class="icon-text">갈등 솔루션</span>
+            </a>
+
+            <!-- 마이페이지 드롭다운 -->
+            <a href="/moreDashBoard/text" class="icon">
+                <i class="fa-regular fa-comments"></i>
+                <span class="icon-text">대화의 재구성</span>
+            </a>
+
+            <!-- 로그아웃 아이콘 -->
+            <a href="/moreDashBoard/emotion" class="icon">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span class="icon-text">감정 통계</span>
+            </a>
+        </div>
+        <div class="header_logo">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="dropdown">
+                <span id="mypage-btn">
+                    <a href="#" onclick="toggleDropdown(event)" class="mypage-btn">
+                        <i class="fa-regular fa-circle-user"></i>
+                    </a>
+                </span>
+            <div class="dropdown-content" id="mypage-dropdown">
+                <a href="/change/update">회원정보 수정</a>
+                <a href="/myPage/trash">휴지통</a>
+                <a href="/myPage/cs">고객센터</a>
+                <a href="/myPage/cs">로그아웃</a>
             </div>
         </div>
     </div>

@@ -1,26 +1,26 @@
-document.getElementById('expandButton').addEventListener('click', function () {
-    var videoBox = document.getElementById('videoBox');
-    var video = document.getElementById('popup-video');
-    var closeButton = document.getElementById('closeButton');
-    var myPageDetailRightBox = document.getElementById('myPageDetail_rightBox');
-
-    videoBox.classList.add('fullscreen-video');
-    videoBox.classList.remove('slide-out-left');
-    videoBox.classList.add('slide-in-right');
-    myPageDetailRightBox.classList.remove('visible');
-    myPageDetailRightBox.classList.add('hidden');
-
-    closeButton.style.display = 'block';
-
-    closeButton.addEventListener('click', function () {
-        videoBox.classList.remove('fullscreen-video');
-        videoBox.classList.remove('slide-in-right');
-        videoBox.classList.add('slide-out-left');
-        myPageDetailRightBox.classList.remove('hidden');
-        myPageDetailRightBox.classList.add('visible');
-        closeButton.style.display = 'none';
-    });
-});
+// document.getElementById('expandButton').addEventListener('click', function () {
+//     var videoBox = document.getElementById('videoBox');
+//     var video = document.getElementById('popup-video');
+//     var closeButton = document.getElementById('closeButton');
+//     var myPageDetailRightBox = document.getElementById('myPageDetail_rightBox');
+//
+//     videoBox.classList.add('fullscreen-video');
+//     videoBox.classList.remove('slide-out-left');
+//     videoBox.classList.add('slide-in-right');
+//     myPageDetailRightBox.classList.remove('visible');
+//     myPageDetailRightBox.classList.add('hidden');
+//
+//     closeButton.style.display = 'block';
+//
+//     closeButton.addEventListener('click', function () {
+//         videoBox.classList.remove('fullscreen-video');
+//         videoBox.classList.remove('slide-in-right');
+//         videoBox.classList.add('slide-out-left');
+//         myPageDetailRightBox.classList.remove('hidden');
+//         myPageDetailRightBox.classList.add('visible');
+//         closeButton.style.display = 'none';
+//     });
+// });
 
 // Web Speech API로 gptResponse 읽기 기능 추가
 // 숫자를 한자식으로 변환하는 함수
@@ -54,7 +54,7 @@ function removeEmojis(text) {
 
 // 읽기 버튼 기능 추가
 document.getElementById('readBtn').addEventListener('click', function () {
-    var gptText = document.getElementById('gptResponse').innerText; // 텍스트 가져오기
+    var gptText = document.getElementById('summary').innerText; // 텍스트 가져오기
 
     // 이모티콘 제거
     var filteredText = removeEmojis(gptText);
@@ -151,3 +151,10 @@ document.getElementById('trashBtn').addEventListener('click', function () {
 //     console.error('rightMains[1] does not exist.');
 // }
 //
+
+document.querySelectorAll('.accordion-item').forEach(button => {
+    button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    });
+});

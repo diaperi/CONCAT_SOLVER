@@ -20,13 +20,15 @@ body {
     width: 100%;
     min-height: 100vh;
     text-align: center;
-    background: linear-gradient(137.29deg,
-    #03BED6 20.13%,
-    #10B3DA 33.05%,
-    #1DA4E1 45.02%,
-    #249CE5 58.56%,
-    #2D8EED 72.11%,
-    #3084F4 83.13%);
+    /*background: linear-gradient(137.29deg,*/
+    /*#03BED6 20.13%,*/
+    /*#10B3DA 33.05%,*/
+    /*#1DA4E1 45.02%,*/
+    /*#249CE5 58.56%,*/
+    /*#2D8EED 72.11%,*/
+    /*#3084F4 83.13%);*/
+    background-color: #FBFBFB;
+    margin-top: 10vh;
 }
 
 .cs_mainContainer {

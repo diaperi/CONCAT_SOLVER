@@ -6,8 +6,9 @@
 
 
 body {
-    background-color: #121212;
-    color: white;
+
+    color: black;
+    background-color: #FBFBFB;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -18,16 +19,17 @@ body {
     max-width: 600px;
     margin: 0 auto;
     padding-top: 20px;
+    margin-top: 15vh;
 }
 
-.container .click{
+.container .click {
     width: 180px;
     height: 30px;
     margin-bottom: 20px;
     font-size: 16px;
 }
 
-.container .box{
+.container .box {
     background-color: gray;
     border-radius: 10px;
     width: 100%;
@@ -43,12 +45,12 @@ h1 {
 h2 {
     font-size: 1.4rem;
     margin-bottom: 20px;
-    color: #AAAAAA;
+    color: black;
 }
 
 p {
     font-size: 1rem;
-    color: #CCCCCC;
+    color: black;
 }
 
 .scroll-box {
@@ -64,13 +66,13 @@ p {
     margin-bottom: 0;
 }
 
-/* 왼쪽 말풍선 */
+/* 왼쪽 말풍선 - 첫 대화, 다음 대화 */
 .bubble {
-    background-color: #007BFF;
+    background-color: #E9E9EB !important;
     padding: 10px;
     margin: 10px 0;
     border-radius: 20px;
-    color: white;
+    color: black !important;
     width: fit-content;
     max-width: 80%;
     position: relative;
@@ -88,16 +90,16 @@ p {
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #007BFF; /* 말풍선 색상 */
+    border-top: 10px solid #E9E9EB; /* 말풍선 색상 */
 }
 
-/* 오른쪽 말풍선 */
+/* 오른쪽 말풍선 - 사용자 녹음 */
 .bubble2 {
-    background-color: #007BFF;
+    background-color: #3478F2 !important;
     padding: 10px;
     margin: 10px 0;
     border-radius: 20px;
-    color: white;
+    color: white !important;
     width: fit-content;
     max-width: 80%;
     position: relative;
@@ -108,38 +110,69 @@ p {
 .bubble2::after {
     content: "";
     position: absolute;
-    right: -20px; /* 꼬리 위치를 오른쪽으로 설정 */
+    left: -10px; /* 꼬리 위치를 왼쪽으로 설정 */
     top: 50%;
     transform: translateY(-50%); /* 꼬리를 세로 가운데로 맞춤 */
     width: 0;
     height: 0;
-    border-left: 10px solid #007BFF; /* 꼬리를 오른쪽으로 향하게 설정 */
+    border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    /* border-top: 10px solid transparent; */
-    border-bottom: 10px solid transparent;
+    border-top: 10px solid #3478F2; /* 말풍선 색상 */
+}
+
+/* 왼쪽 말풍선 - 피드백 */
+.bubble3 {
+    background-color: #7BD46B !important;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    color: white !important;
+    width: fit-content;
+    max-width: 80%;
+    position: relative;
+    float: left; /* 왼쪽으로 정렬 */
+    clear: both; /* 이전 요소와 겹치지 않도록 보장 */
+}
+
+.bubble3::after {
+    content: "";
+    position: absolute;
+    left: -10px; /* 꼬리 위치를 왼쪽으로 설정 */
+    top: 50%;
+    transform: translateY(-50%); /* 꼬리를 세로 가운데로 맞춤 */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #7BD46B; /* 말풍선 색상 */
 }
 
 
 .send-container {
     width: 100%;
     padding: 10px;
-    background-color: lightgray;
-    border-top: 1px solid #444;
-    display: flex;
-    justify-content: center; /* 수평 가운데 정렬 */
-    /*align-items: center;*/
-    gap: 10px;
+    background-color: #000000;
+    border: 1px solid #606060;
+    display: flex; /* Flexbox 활성화 */
+    justify-content: space-between; /* 아이템을 양쪽 끝에 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 10px; /* 아이콘 사이에 추가 간격 설정 */
     position: relative;
     bottom: 0;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
-    /*margin: 0;*/
 }
 
 .icon-container {
-    justify-content: center; /* 수평 가운데 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
-    height: 100%; /* 부모 요소의 높이에 맞게 설정 */
+    display: flex;
+    justify-content: center; /* 아이콘 컨테이너 내부 수평 정렬 */
+    align-items: center; /* 아이콘 컨테이너 내부 수직 정렬 */
+}
+
+.send-container p {
+    color: white;
+    text-align: center;
+    font-size : 20px;
 }
 
 .icon {
@@ -148,12 +181,8 @@ p {
     object-fit: cover;
 }
 
+
 .information {
     margin-top: 20px;
     font-size: 18px;
-}
-
-#melSpectrogram {
-    width: 300px;
-    height: auto; /* 비율을 유지하면서 세로 크기 자동 조정 */
 }

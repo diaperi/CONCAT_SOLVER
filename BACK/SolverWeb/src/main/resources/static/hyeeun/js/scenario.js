@@ -4,7 +4,7 @@ let audioChunks = [];
 const startBtn = document.getElementById('startBtn');
 const recordBtn = document.getElementById('recordBtn');
 const sendBtn = document.getElementById('sendBtn');
-const melSpectrogram = document.getElementById('melSpectrogram');
+
 
 // 시나리오 시작 버튼 클릭 시 갈등 시나리오와 GPT 대화 가져오기
 startBtn.addEventListener('click', () => {
@@ -62,13 +62,35 @@ recordBtn.addEventListener('click', async () => {
                 return;
             }
 
-            // STT 결과 표시
-            document.getElementById('sttResult').innerHTML = `STT 결과: ${data.sttResult}`;
+            // 새로운 STT 결과와 피드백 요소 추가
+            const scrollBox = document.querySelector('.scroll-box');
 
-            // 이미지 로드 대기 및 확인
-            await loadImageWithCheck(data.melSpectrogram);
-            // 피드백 표시
-            document.getElementById('feedback').textContent = data.feedback;
+            // STT 결과 표시할 새로운 div 생성
+            const newUserResponse = document.createElement('div');
+            newUserResponse.classList.add('bubble2', 'userResponse');
+            const newSttResult = document.createElement('div');
+            newSttResult.classList.add('sttResult');
+            newSttResult.innerHTML = `STT 결과: ${data.sttResult}`;
+            newUserResponse.appendChild(newSttResult);
+
+            // <피드백>과 <다음 대화>를 분리
+            const feedbackText = data.feedback.split("\n\n")[0] || "<피드백 없음>";
+            const nextConversationText = data.feedback.split("\n\n")[1] || "<다음 대화 없음>";
+
+            // 피드백 표시할 새로운 div 생성
+            const newFeedback = document.createElement('div');
+            newFeedback.classList.add('bubble3', 'feedback');
+            newFeedback.textContent = feedbackText;
+
+            // 다음 대화 표시할 새로운 div 생성
+            const newNextConversation = document.createElement('div');
+            newNextConversation.classList.add('bubble', 'nextConversation');
+            newNextConversation.textContent = nextConversationText;
+
+            // scroll-box에 새로운 요소 추가
+            scrollBox.appendChild(newUserResponse);
+            scrollBox.appendChild(newFeedback);
+            scrollBox.appendChild(newNextConversation);
 
         } catch (error) {
             console.error('Error:', error);
@@ -83,39 +105,6 @@ sendBtn.addEventListener('click', () => {
         alert("녹음이 종료되었습니다.");
     }
 });
-
-// 이미지 로드 확인 함수
-async function loadImageWithCheck(melSpectrogramPath) {
-    const imgContainer = document.getElementById('melSpectrogram').parentNode;
-
-    // 이전 이미지 제거
-    const oldImg = document.getElementById('melSpectrogram');
-    if (oldImg) {
-        imgContainer.removeChild(oldImg);
-    }
-
-    const newImg = document.createElement('img');
-    newImg.id = 'melSpectrogram';
-
-    // 캐시를 피하기 위한 타임스탬프 추가
-    const timestamp = new Date().getTime();
-    newImg.src = `${melSpectrogramPath}&t=${timestamp}`;
-    newImg.alt = 'FFT 스펙트로그램 이미지';
-
-    // 이미지 로드 대기
-    return new Promise((resolve, reject) => {
-        newImg.onload = function() {
-            console.log('이미지 로드 완료');
-            imgContainer.appendChild(newImg);  // 새 이미지를 추가
-            resolve();
-        };
-        newImg.onerror = function() {
-            console.error('이미지 로드 중 오류 발생');
-            reject(new Error('이미지 로드 오류'));
-        };
-    });
-}
-
 
 // Blob을 AudioBuffer로 변환하는 함수
 async function blobToAudioBuffer(blob) {
