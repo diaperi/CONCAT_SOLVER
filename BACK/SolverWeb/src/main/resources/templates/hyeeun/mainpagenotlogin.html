@@ -14,7 +14,6 @@
 <div class="mainpagenotlogin_container">
     <div class="mainpagenotlogin_container2">
         <div class="mainpagenotlogin_main">
-            <div class="mainpagenotlogin_videoBox slide-out-left" id="videoBox">
                 <div class="mainpagenotlogin_error-message">
                     <p th:text="' ' + ${userName} + ' 님! 기기가 연결되지 않아 실시간 화면을 볼 수 없습니다.'"></p>
                     <p>연결을 확인하고 페이지를 새로고침 해주세요.</p>
@@ -23,14 +22,22 @@
                 <video id="myVideo" controls>
                     <source src="video.mp4" type="video/mp4">
                 </video>
-                <span class="close-button" id="closeButton"><i class="fa-solid fa-x"></i></span>
             </div>
         </div>
     </div>
 </div>
 
-<script src="/hyeeun/js/mainpage.js"></script>
 
+<script>
+    const originalConsoleError = console.error;
+    console.error = function (message, ...optionalParams) {
+        if (message.includes('404 (Not Found)') && message.includes('video.mp4')) {
+            return; // 오류를 무시
+        }
+        originalConsoleError.call(console, message, ...optionalParams);
+    };
+</script>
+<script src="/hyeeun/js/header.js"></script>
 </body>
 </html>
 

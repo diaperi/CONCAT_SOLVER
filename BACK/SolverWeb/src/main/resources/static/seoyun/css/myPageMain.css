@@ -7,26 +7,26 @@
 }
 
 .myPageMain_container {
-    background: linear-gradient(137.29deg,
-    #03BED6 20.13%,
-    #10B3DA 33.05%,
-    #1DA4E1 45.02%,
-    #249CE5 58.56%,
-    #2D8EED 72.11%,
-    #3084F4 83.13%);
+    /*background: linear-gradient(137.29deg,*/
+    /*#03BED6 20.13%,*/
+    /*#10B3DA 33.05%,*/
+    /*#1DA4E1 45.02%,*/
+    /*#249CE5 58.56%,*/
+    /*#2D8EED 72.11%,*/
+    /*#3084F4 83.13%);*/
     display: flex;
     justify-content: center;
 }
 
 .myPageMain_container2 {
-    margin-top: 4vh;
+    margin-top: 10vh;
     width: 50%;
 }
 
 .myPageMain_top {
     display: flex;
     flex-direction: column;
-    color: white;
+    color: black;
     font-size: 2.8vh;
     font-weight: bold;
     align-items: center;
@@ -86,7 +86,7 @@
 
 .myPageMain_videoBox1 > span:nth-child(2) {
     font-size: 1.4vh;
-    color: white;
+    color: black;
     cursor: pointer;
 }
 

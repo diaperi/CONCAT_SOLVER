@@ -7,13 +7,13 @@
 body {
     width: 100%;
     font-family: Arial, sans-serif;
-    background: linear-gradient(137.29deg,
-    #03BED6 20.13%,
-    #10B3DA 33.05%,
-    #1DA4E1 45.02%,
-    #249CE5 58.56%,
-    #2D8EED 72.11%,
-    #3084F4 83.13%);
+    /*background: linear-gradient(137.29deg,*/
+    /*#03BED6 20.13%,*/
+    /*#10B3DA 33.05%,*/
+    /*#1DA4E1 45.02%,*/
+    /*#249CE5 58.56%,*/
+    /*#2D8EED 72.11%,*/
+    /*#3084F4 83.13%);*/
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -24,6 +24,7 @@ main {
     flex-direction: column;
     align-items: center;
     padding: 3vh 0;
+    margin-top: 10vh;
 }
 
 .trash_notice {
@@ -66,7 +67,7 @@ section {
     margin-bottom: 1vh;
 }
 
-.trash_itemContainer{
+.trash_itemContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 3vh;

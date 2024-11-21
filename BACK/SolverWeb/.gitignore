@@ -6,9 +6,19 @@ build/
 !**/src/test/**/build/
 #/BACK/SolverWeb/build/
 /BACK/SolverWeb/build/
+/BACK/SolverWeb/target/
+
 /.git/
 .env
 *.jar
+# Python 가상환경 관련
+venv/
+venv/Lib/
+venv/bin/
+venv/Include/
+
+/scripts/user_data/
+
 
 ### STS ###
 .apt_generated
@@ -21,6 +31,15 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+
+# __pycache__ 무시
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS별 임시 파일
+.DS_Store
+Thumbs.db
 
 ### IntelliJ IDEA ###
 .idea
