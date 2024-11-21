@@ -22,17 +22,18 @@
         <div class="box" id="conflictScenario"></div>
         <div class="scroll-box">
             <div class="bubble" id="gptConversation"></div>
-            <div class="bubble2" id="userResponse">
+            <div class="bubble2" id="userResponse" style="display:none;">
                 <div id="sttResult"></div>
-                <img id="melSpectrogram" alt="FFT 스펙트로그램" style="display: none;">
             </div>
-            <div class="bubble" id="feedback"></div>
+            <div class="bubble3" id="feedback" style="display:none;"></div>
+            <div class="bubble" id="nextConversation" style="display:none;"></div>
         </div>
 
         <div class="send-container">
             <div id="recordBtn" class="icon-container">
                 <img src="/hyeeun/img/record-icon.png" alt="녹음 아이콘" class="icon">
             </div>
+            <p>솔버와 대화를 시작해보세요</p>
             <div id="sendBtn" class="icon-container">
                 <img src="/hyeeun/img/send-icon.png" alt="전송 아이콘" class="icon">
             </div>
