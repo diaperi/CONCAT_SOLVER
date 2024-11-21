@@ -1,87 +1,119 @@
-// document.getElementById('email').addEventListener('input', function() {
-//     var email = document.getElementById('email').value;
-//     var emailCheckIcon = document.getElementById('email_check_icon');
-//     var emailCheckMessage = document.getElementById('email_check_message');
-//
-//     // AJAX를 사용하여 서버에 이메일 중복 검사 요청을 보냅니다.
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", "js/check_email.php", true);
-//     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-//     xhr.onreadystatechange = function() {
-//         if (xhr.readyState === XMLHttpRequest.DONE) {
-//             if (xhr.status === 200) {
-//                 var response = JSON.parse(xhr.responseText);
-//                 if (response.exists) {
-//                     emailCheckIcon.style.visibility = 'hidden'; // 이메일이 중복이면 체크박스 아이콘 숨김
-//                     emailCheckMessage.style.display = 'block'; // 경고 메시지 표시
-//                 } else {
-//                     emailCheckIcon.style.borderColor = 'limegreen'; // 이메일이 중복이 아니면 네모의 색깔을 연두색으로 설정
-//                     emailCheckIcon.style.backgroundColor = 'limegreen'; // 배경색을 연두색으로 설정
-//                     emailCheckIcon.style.visibility = 'visible'; // 체크박스 아이콘 표시
-//                     emailCheckMessage.style.display = 'none'; // 경고 메시지 숨김
-//                 }
-//             }
-//         }
-//     };
-//     xhr.send(JSON.stringify({ email: email }));
-// });
-//
-// document.getElementById('confirm_password').addEventListener('input', function() {
-//     var password = document.getElementById('password').value;
-//     var confirmPassword = document.getElementById('confirm_password').value;
-//     var passwordCheckIcon = document.getElementById('password_check_icon');
-//     var passwordCheckMessage = document.getElementById('password_check_message');
-//
-//     if (password === confirmPassword) {
-//         passwordCheckIcon.style.borderColor = 'limegreen'; // 비밀번호가 일치하면 네모의 색깔을 연두색으로 설정
-//         passwordCheckIcon.style.backgroundColor = 'limegreen'; // 배경색을 연두색으로 설정
-//         passwordCheckIcon.style.visibility = 'visible'; // 체크박스 아이콘 표시
-//         passwordCheckMessage.style.display = 'none'; // 경고 메시지 숨김
-//     } else {
-//         passwordCheckIcon.style.visibility = 'hidden'; // 비밀번호가 일치하지 않으면 체크박스 아이콘 숨김
-//         passwordCheckMessage.style.display = 'block'; // 경고 메시지 표시
-//     }
-// });
-//
-// function cancelUpdate() {
-//     // 모든 입력 필드를 초기화
-//     document.getElementById('mypage_change_updateForm').reset();
-//     var emailCheckIcon = document.getElementById('email_check_icon');
-//     var emailCheckMessage = document.getElementById('email_check_message');
-//     var passwordCheckIcon = document.getElementById('password_check_icon');
-//     var passwordCheckMessage = document.getElementById('password_check_message');
-//     emailCheckIcon.style.visibility = 'hidden'; // 초기화 시 체크박스 아이콘 숨김
-//     emailCheckMessage.style.display = 'none'; // 경고 메시지 숨김
-//     passwordCheckIcon.style.visibility = 'hidden'; // 초기화 시 체크박스 아이콘 숨김
-//     passwordCheckMessage.style.display = 'none'; // 경고 메시지 숨김
-// }
-//
-// function saveUpdate() {
-//     // 데이터 저장 로직 구현
-//     alert('회원정보가 저장되었습니다.');
-// }
-//
-// function openConfirmationPopup() {
-//     var popup = document.getElementById("confirmationPopup");
-//     popup.style.display = "flex"; // 팝업 창을 보이게 설정
-// }
-//
-// function closeConfirmationPopup() {
-//     var popup = document.getElementById("confirmationPopup");
-//     popup.style.display = "none"; // 팝업 창을 숨김
-// }
-//
-// function confirmDelete() {
-//     alert("회원 탈퇴가 완료되었습니다.");
-//     // 실제 회원 탈퇴 처리 로직을 여기에 추가할 수 있습니다.
-//     closeConfirmationPopup(); // 팝업을 닫습니다.
-// }
+document.addEventListener('DOMContentLoaded', function() {
+    const sendBtn = document.getElementById('sendCertificationCodeBtn');
+    const verifyBtn = document.getElementById('verifyCodeBtn');
 
+    // 알림 메시지를 처리하는 함수
+    function showAlert(message) {
+        alert(message);
+    }
 
+    // 인증 코드 전송 버튼
+    if (sendBtn) {
+        sendBtn.addEventListener('click', function () {
+            const phoneNumber = document.getElementById('userPhone').value;
+            const userId = document.getElementById('userId').value;
 
+            if (!phoneNumber) {
+                showAlert('전화번호를 입력해주세요.');
+                return;
+            }
 
+            if (!userId) {
+                showAlert('userId를 입력해주세요.');
+                return;
+            }
 
+            // 전화번호 형식 검사
+            let regex = /^(010)(\d{4})(\d{4})$/;
+            if (!regex.test(phoneNumber)) {
+                showAlert("잘못된 전화번호 형식입니다.");
+                return;
+            }
 
+            // 인증 코드 전송 요청
+            fetch('/sms/sendVerificationCode', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    userId: userId,
+                    phoneNumber: phoneNumber
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "인증 코드 전송, 전화번호 저장 성공") {
+                        showAlert("인증 코드가 전송되었습니다.");
 
+                        // 인증 코드 전송 성공 후, 전화번호 저장 요청
+                        savePhoneNumber(phoneNumber);
+                    } else {
+                        showAlert(data.message || "인증 코드 전송에 실패했습니다.");
+                    }
+                })
+                // .catch(error => {
+                //     console.error('Error:', error.message || error);
+                //     showAlert('인증 코드 전송 중 오류가 발생했습니다.');
+                // });
 
+        });
+    }
 
+    // 인증 코드 확인 버튼
+    if (verifyBtn) {
+        verifyBtn.addEventListener('click', function () {
+            const phoneNumber = document.getElementById('userPhone').value;
+            const verificationCode = document.getElementById('verificationCode').value;
+
+            if (!phoneNumber) {
+                showAlert('전화번호를 입력해주세요.');
+                return;
+            }
+
+            if (!verificationCode) {
+                showAlert('인증번호를 입력해주세요.');
+                return;
+            }
+
+            // 인증 코드 검증 요청
+            fetch('/sms/verifyCode', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    phoneNumber: phoneNumber,
+                    verificationCode: verificationCode  // 입력한 인증 코드 전송
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        sessionStorage.setItem('isVerified', 'Y');
+                        showAlert('인증이 성공했습니다.');
+                    } else {
+                        showAlert('인증 코드가 일치하지 않습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showAlert('인증 코드 검증에 실패했습니다.');
+                });
+        })
+    }
+
+    const verifyCodeInput = document.getElementById('verificationCode');
+    const userId = document.getElementById('userId').value;
+
+    // 서버에서 인증 상태를 조회
+    fetch(`/sms/checkVerificationStatus?userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "Y") {
+                verifyCodeInput.placeholder = '인증이 완료된 사용자입니다.';
+            } else {
+                verifyCodeInput.placeholder = '인증번호를 입력하세요';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching verification status:', error);
+            verifyCodeInput.placeholder = '인증번호를 입력하세요';
+        });
+});

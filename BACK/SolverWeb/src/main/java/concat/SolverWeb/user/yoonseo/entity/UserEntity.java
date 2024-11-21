@@ -43,6 +43,9 @@ public class UserEntity {
     @Column(name = "IS_SECESSION", columnDefinition = "CHAR")
     private Character isSecession; // 탈퇴여부// 지금은null값으로 되어있지만Y or N으로 되어야함.
 
+    @Column(name = "IS_Verified")
+    private String isVerified;
+
     public static UserEntity toUserEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setUserNo(userDTO.getUserNo()); // 필요에 따라 설정
@@ -54,6 +57,7 @@ public class UserEntity {
         userEntity.setEnrollDate(userDTO.getEnrollDate());
         userEntity.setUpdateDate(userDTO.getUpdateDate());
         userEntity.setIsSecession(userDTO.getIsSecession());
+        userEntity.setIsVerified(userDTO.getIsVerified());
         return userEntity;
     }
 

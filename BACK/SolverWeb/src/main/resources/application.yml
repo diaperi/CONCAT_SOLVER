@@ -51,6 +51,11 @@ email:
     address: concatsolver@naver.com
     name: CONCAT
 
+coolsms:
+  api:
+    key: ${COOLSMS_ACCESS_KEY}
+    secret: ${COOLSMS_SECRET_ACCESS_KEY}
+    number: ${COOLSMS_NUMBER}
 
 cloud:
   aws:

@@ -83,7 +83,7 @@ html, body {
     margin-bottom: 0.8vh;
 }
 
-.mypage_change_form-container input {
+.mypage_change_inputBox input {
     width: 80vh;
     padding: 1vh;
     margin-bottom: 1vh;
@@ -276,3 +276,31 @@ html, body {
     padding: 0 50vh;
 }
 
+
+.input-button-group {
+    display: flex;
+}
+
+.input-button-group input{
+    width: 70vh;
+    padding: 1vh;
+    border: 0.1vh solid #ccc;
+    border-radius: 0.5vh;
+    box-sizing: border-box;
+    height: 5vh;
+    font-size: 15px;
+    margin-right: 1vh;
+    outline: none;
+}
+
+.input-button-group button {
+    width: 9vh;
+    height: 5vh;
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+    line-height: 5vh;
+    vertical-align: middle;
+    background-color: white;
+    color: #007BFF;
+}
