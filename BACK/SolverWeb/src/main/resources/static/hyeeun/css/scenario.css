@@ -17,8 +17,7 @@ body {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    padding-top: 20px;
-    margin-top: 15vh;
+    /*padding: 2px 0; !* 위아래 간격 추가 *!*/
 }
 
 .container .click {
@@ -45,6 +44,11 @@ h2 {
     font-size: 1.4rem;
     margin-bottom: 20px;
     color: black;
+}
+
+#scenario {
+    margin-top: 0; /* 헤더 바로 아래에 배치 */
+    /*padding: 2px; !* 전체적인 간격 추가 *!*/
 }
 
 p {
