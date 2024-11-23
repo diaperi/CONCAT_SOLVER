@@ -53,7 +53,9 @@ dependencies {
     implementation 'org.mindrot:jbcrypt:0.4' // Bcrpyt
     implementation 'org.postgresql:postgresql:42.6.0' // PostgreSQL
     implementation 'io.github.cdimascio:dotenv-java:2.2.0'
-    implementation 'net.nurigo:sdk:4.2.7' // CoolSMS
+    implementation 'net.nurigo:sdk:4.2.7'
+    implementation 'org.jetbrains:annotations:24.0.0'
+    implementation 'org.jetbrains:annotations:24.0.0'// CoolSMS
 //    runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.80.Final'
 
 

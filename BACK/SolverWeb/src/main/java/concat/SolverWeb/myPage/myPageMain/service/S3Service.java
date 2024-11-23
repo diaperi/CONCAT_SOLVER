@@ -1166,4 +1166,31 @@ public class S3Service {
     }
 
 
+    // 메인페이지 갈등 아닐 시 S3에서 이미지, 영상 삭제
+    public void deleteFiles(String timestamp) {
+        try {
+            String videoFileKey = "sd/videos/negative_emotion_" + timestamp + "_converted.mp4";
+            String imageFileKey = "sd/videos/first_frame_" + timestamp + ".jpg";
+
+            // S3에서 동영상 파일 삭제
+            DeleteObjectRequest deleteVideoRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(videoFileKey)
+                    .build();
+            s3Client.deleteObject(deleteVideoRequest);
+            logger.info("S3에서 동영상 파일 삭제: {}", videoFileKey);
+
+            // S3에서 이미지 파일 삭제
+            DeleteObjectRequest deleteImageRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(imageFileKey)
+                    .build();
+            s3Client.deleteObject(deleteImageRequest);
+            logger.info("S3에서 이미지 파일 삭제: {}", imageFileKey);
+        } catch (Exception e) {
+            logger.error("S3 파일 삭제 중 오류 발생: ", e);
+        }
+    }
+
+
 }
