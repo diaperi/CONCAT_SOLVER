@@ -29,6 +29,8 @@ import java.io.InputStreamReader;
 
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/main")
@@ -39,68 +41,47 @@ public class MainController {
     @Autowired
     private S3Service s3Service;
 
-    //    @CrossOrigin(origins = "http://192.168.137.107:5000")
+//    @CrossOrigin(origins = "http://192.168.137.63:5000")
 //    @GetMapping("/mainPage")
 //    public String mainPage(HttpSession session, Model model) {
-//
 //        logger.info("메인 페이지 호출됨");
 //
 //        // 세션에서 로그인된 사용자 정보를 가져옴
 //        Object loggedInUser = session.getAttribute("loggedInUser");
-//
 //        logger.info("세션에서 가져온 사용자 정보: {}", loggedInUser);
 //
 //        if (loggedInUser == null) {
 //            logger.info("세션에 로그인된 사용자 정보가 없습니다. 리다이렉트: /user/login");
 //            return "redirect:/user/login";
-//        } else {
-//            logger.info("세션에 로그인된 사용자 정보가 확인되었습니다: {}", loggedInUser);
 //        }
 //
-//
-//        // 세션에 저장된 객체의 타입을 확인
 //        String userId;
-//        String userName; // 사용자 이름을 추가로 가져옵니다.
+//        String userName;
+//
 //        if (loggedInUser instanceof UserDTO) {
-//            // 일반 로그인 사용자 처리
 //            UserDTO user = (UserDTO) loggedInUser;
 //            userId = user.getUserId();
-//            userName = user.getUserName(); // 사용자 이름
+//            userName = user.getUserName();
 //            model.addAttribute("userId", userId);
-//            model.addAttribute("userName", userName); // 사용자 이름을 모델에 추가
+//            model.addAttribute("userName", userName);
 //        } else if (loggedInUser instanceof SnsUserDTO) {
-//            // SNS 로그인 사용자 처리
 //            SnsUserDTO snsUser = (SnsUserDTO) loggedInUser;
 //            userId = snsUser.getProviderId();
-//            userName = snsUser.getName(); // SNS 사용자의 이름
+//            userName = snsUser.getName();
 //            model.addAttribute("userId", userId);
-//            model.addAttribute("userName", userName); // 사용자 이름을 모델에 추가
+//            model.addAttribute("userName", userName);
 //            model.addAttribute("email", snsUser.getEmail());
 //        } else {
-//            // 예상치 못한 타입의 객체가 세션에 있는 경우
 //            logger.warn("세션에 예상치 못한 타입의 객체가 저장되어 있습니다: {}", loggedInUser.getClass());
 //            return "redirect:/user/login";
 //        }
 //
-//        // 사용자 ID를 로그에 출력
 //        logger.info("로그인된 사용자 ID: {}", userId);
 //
-//        // Flask 서버의 URL에 사용자 ID를 포함하여 전달
-//        String videoFeedUrl = "http://192.168.137.107:5000/video_feed?user_id=" + userId;
+//        model.addAttribute("videoFeedUrl", "http://192.168.137.63:5000/video_feed");
 //
-//        // 모델에 데이터 추가
-//        model.addAttribute("videoFeedUrl", videoFeedUrl); // Flask 영상 URL 추가
-//
-//        // 타임아웃 설정을 위한 SimpleClientHttpRequestFactory 사용
-//        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-//        requestFactory.setConnectTimeout(2000);  // 연결 타임아웃 2초
-//        requestFactory.setReadTimeout(2000);  // 읽기 타임아웃 2초
-//
-//        RestTemplate restTemplate = new RestTemplate(requestFactory);
-//
-//        // Flask 서버로 유저 ID 전송
-//        String flaskUrl = "http://192.168.137.107:5000/receive_user_id";
-//
+//        // Flask 서버 호출
+//        String flaskUrl = "http://192.168.137.63:5000/receive_user_id";
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.setContentType(MediaType.APPLICATION_JSON);
 //
@@ -109,24 +90,33 @@ public class MainController {
 //
 //        HttpEntity<Map<String, String>> request = new HttpEntity<>(userIdMap, headers);
 //
+//        boolean flaskSuccess = true;
 //        try {
-//            // Flask 서버에 유저 ID 전송 시도
+//            RestTemplate restTemplate = new RestTemplate();
 //            ResponseEntity<String> response = restTemplate.exchange(flaskUrl, HttpMethod.POST, request, String.class);
 //            logger.info("Flask 응답: {}", response.getBody());
-//
 //        } catch (Exception e) {
-//            // Flask 서버로의 요청 실패 시 예외 처리
 //            logger.error("Flask 서버로의 요청 실패: ", e);
-//            // 라즈베리파이 기기와의 통신에 실패하면 다른 페이지로 리다이렉트
-//            return "hyeeun/mainPageNotLogin";
+//            flaskSuccess = false;
 //        }
 //
-//        // Python 스크립트 실행
-//        runPythonScript(userId);
+//        // Flask 요청 성공 여부에 따라 반환 페이지 설정
+//        String returnPage = flaskSuccess ? "hyeeun/mainPage" : "hyeeun/mainPageNotLogin";
 //
-//        return "hyeeun/mainPage";
+//        // 페이지 반환 후 Python 스크립트 실행
+//        new Thread(() -> {
+//            boolean pythonSuccess = runPythonScript(userId);
+//            if (pythonSuccess) {
+//                logger.info("Python 스크립트 실행 성공");
+//            } else {
+//                logger.warn("Python 스크립트 실행 실패");
+//            }
+//        }).start();
+//
+//        return returnPage;
 //    }
-    @CrossOrigin(origins = "http://192.168.137.107:5000")
+
+    @CrossOrigin(origins = "http://192.168.137.63:5000")
     @GetMapping("/mainPage")
     public String mainPage(HttpSession session, Model model) {
         logger.info("메인 페이지 호출됨");
@@ -163,8 +153,10 @@ public class MainController {
 
         logger.info("로그인된 사용자 ID: {}", userId);
 
+        model.addAttribute("videoFeedUrl", "http://192.168.137.63:5000/video_feed");
+
         // Flask 서버 호출
-        String flaskUrl = "http://192.168.137.107:5000/receive_user_id";
+        String flaskUrl = "http://192.168.137.63:5000/receive_user_id";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -188,20 +180,32 @@ public class MainController {
 
         // 페이지 반환 후 Python 스크립트 실행
         new Thread(() -> {
-            boolean pythonSuccess = runPythonScript(userId);
-            if (pythonSuccess) {
-                logger.info("Python 스크립트 실행 성공");
+            boolean detectConflictSuccess = runPythonScript(userId, "src/main/resources/scripts/detectConflict.py");
+            if (detectConflictSuccess) {
+                logger.info("detectConflict Python 스크립트 실행 성공");
+                boolean aiVideoMakerSuccess = runPythonScript(userId, "src/main/resources/scripts/aiVideoMaker.py");
+                if (aiVideoMakerSuccess) {
+                    logger.info("aiVideoMaker Python 스크립트 실행 성공");
+                } else {
+                    logger.warn("aiVideoMaker Python 스크립트 실행 실패");
+                }
             } else {
-                logger.warn("Python 스크립트 실행 실패");
+                logger.info("detectConflict 결과: 갈등 상황 아님. 파일 삭제 시작");
+                String timestamp = extractTimestampFromLogs();
+                if (timestamp != null) {
+                    logger.info("삭제할 파일의 타임스탬프: {}", timestamp);
+                    s3Service.deleteFiles(timestamp); // S3 파일 삭제 호출
+                } else {
+                    logger.warn("타임스탬프를 추출할 수 없습니다. 파일 삭제를 건너뜁니다.");
+                }
             }
         }).start();
 
         return returnPage;
     }
 
-    private boolean runPythonScript(String userId) {
+    private boolean runPythonScript(String userId, String scriptPath) {
         String pythonPath = "venv/Scripts/python.exe"; // Windows 경로
-        String scriptPath = "src/main/resources/scripts/aiVideoMaker.py";
 
         try {
             logger.info("Python 스크립트를 실행합니다. Python 경로: {}, 스크립트 경로: {}, 사용자 ID: {}", pythonPath, scriptPath, userId);
@@ -210,28 +214,92 @@ public class MainController {
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
-            new Thread(() -> {
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+            // Python 스크립트의 출력 로그 읽기
+            StringBuilder outputLogs = new StringBuilder();
+            Thread logReader = new Thread(() -> {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) { // UTF-8 설정
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        logger.info("[Python Script] {}", line);
+                        logger.info("[Python Script: {}] {}", scriptPath, line);
+                        outputLogs.append(line).append("\n");
                     }
                 } catch (IOException e) {
                     logger.error("Python 스크립트 stdout 읽기 중 오류 발생: ", e);
                 }
-            }).start();
+            });
+            logReader.start();
 
             int exitCode = process.waitFor();
-            logger.info("Python 스크립트 종료. 종료 코드: {}", exitCode);
+            logReader.join(); // 로그 읽기 스레드가 종료될 때까지 대기
+
+            logger.info("Python 스크립트 종료. 스크립트 경로: {}, 종료 코드: {}", scriptPath, exitCode);
+
+            // detectConflict.py에서 "갈등 상황 아님" 확인 후 종료 조건 추가
+            if (scriptPath.contains("detectConflict.py") && !outputLogs.toString().contains("갈등 상황입니다")) {
+                logger.info("detectConflict 결과: 갈등 상황 아님. 다음 스크립트 실행 중단.");
+                return false;
+            }
 
             return exitCode == 0; // 성공 여부 반환
         } catch (Exception e) {
-            logger.error("Python 스크립트 실행 실패: ", e);
+            logger.error("Python 스크립트 실행 실패. 스크립트 경로: {}", scriptPath, e);
         }
         return false;
     }
 
+
+    private String extractTimestampFromLogs() {
+        try {
+            // 로그 파일을 읽고 특정 패턴에서 타임스탬프 추출 (예: 20241123_072509)
+            String exampleLog = "[Python Script: src/main/resources/scripts/detectConflict.py] 새로운 emotion_log: sd/done/emotion_log_20241123_072509.txt";
+            String timestampPattern = "emotion_log_(\\d{8}_\\d{6})";
+
+            // 정규식 패턴 매칭
+            Pattern pattern = Pattern.compile(timestampPattern);
+            Matcher matcher = pattern.matcher(exampleLog);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        } catch (Exception e) {
+            logger.error("로그에서 타임스탬프 추출 실패: ", e);
+        }
+        return null;
+    }
+
 }
+
+
+//    private boolean runPythonScript(String userId) {
+//        String pythonPath = "venv/Scripts/python.exe"; // Windows 경로
+//        String scriptPath = "src/main/resources/scripts/aiVideoMaker.py";
+//
+//        try {
+//            logger.info("Python 스크립트를 실행합니다. Python 경로: {}, 스크립트 경로: {}, 사용자 ID: {}", pythonPath, scriptPath, userId);
+//
+//            ProcessBuilder processBuilder = new ProcessBuilder(pythonPath, scriptPath, userId);
+//            processBuilder.redirectErrorStream(true);
+//            Process process = processBuilder.start();
+//
+//            new Thread(() -> {
+//                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+//                    String line;
+//                    while ((line = reader.readLine()) != null) {
+//                        logger.info("[Python Script] {}", line);
+//                    }
+//                } catch (IOException e) {
+//                    logger.error("Python 스크립트 stdout 읽기 중 오류 발생: ", e);
+//                }
+//            }).start();
+//
+//            int exitCode = process.waitFor();
+//            logger.info("Python 스크립트 종료. 종료 코드: {}", exitCode);
+//
+//            return exitCode == 0; // 성공 여부 반환
+//        } catch (Exception e) {
+//            logger.error("Python 스크립트 실행 실패: ", e);
+//        }
+//        return false;
+//    }
 
 
 @RestController

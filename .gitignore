@@ -22,6 +22,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+/BACK/SolverWeb/src/main/resources/scripts/user_data/
 ### IntelliJ IDEA ###
 .idea
 *.iws

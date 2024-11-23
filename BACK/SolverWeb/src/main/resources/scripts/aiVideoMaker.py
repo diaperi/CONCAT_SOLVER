@@ -259,32 +259,25 @@ def process_new_file(latest_text_key, content):
             browser.close()
 
 
-def check_for_new_files():
+def process_latest_file():
     """
-    10초마다 S3에서 새 파일이 있는지 확인
+    최신 파일을 가져와 처리하는 함수
     """
-    global last_processed_file, last_processed_time
+    print(f"[{datetime.now()}] 최신 파일을 가져오는 중...", flush=True)
+    latest_text_key, last_modified, content = get_latest_text_from_s3(s3_client, bucket_name, id_value)
 
-    while True:
-        print(f"[{datetime.now()}] 새 파일을 확인 중...", flush=True)  # 즉시 출력
-        latest_text_key, last_modified, content = get_latest_text_from_s3(s3_client, bucket_name, id_value)
-
-        if latest_text_key and (last_processed_time is None or last_modified > last_processed_time):
-            last_processed_file = latest_text_key  # 마지막 처리한 파일 갱신
-            last_processed_time = last_modified  # 마지막 처리한 시간 갱신
-            print(f"[{datetime.now()}] 새 파일이 감지되었습니다: {latest_text_key}", flush=True)
-            process_new_file(latest_text_key, content)  # 새 파일 처리
-        else:
-            print(f"[{datetime.now()}] 새 파일이 없습니다.", flush=True)
-
-        time.sleep(10)  # 10초 대기
+    if latest_text_key and content:
+        print(f"[{datetime.now()}] 최신 파일을 처리 중: {latest_text_key}", flush=True)
+        process_new_file(latest_text_key, content)  # 최신 파일 처리
+    else:
+        print(f"[{datetime.now()}] 최신 파일을 가져오지 못했습니다.", flush=True)
 
 
 if __name__ == "__main__":
-    print("S3 새 파일 감지 시스템 초기화 중...")
-    initialize_last_processed_state()  # 시작 시 S3의 가장 최신 파일 정보를 기록
-    print("감지 시스템 실행 중...")
+    print("S3 최신 파일 처리 시스템 초기화 중...")
+    initialize_last_processed_state()  # 시작 시 최신 파일 정보 기록
+    print("최신 파일 처리 시스템 실행 중...")
     try:
-        check_for_new_files()  # 새 파일 감지 시작
+        process_latest_file()  # 최신 파일 한 번만 처리
     except KeyboardInterrupt:
         print("프로그램 종료 중...")

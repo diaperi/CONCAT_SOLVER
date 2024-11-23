@@ -18,6 +18,7 @@ venv/bin/
 venv/Include/
 
 /scripts/user_data/
+/BACK/SolverWeb/src/main/resources/scripts/user_data/
 
 
 ### STS ###
