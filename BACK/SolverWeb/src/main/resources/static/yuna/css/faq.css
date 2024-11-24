@@ -32,8 +32,14 @@ body {
 
 .faqHeader hr {
     margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
     border: none;
     border-top: 2px solid #6e6e6e;
+}
+
+.faqContent {
+    padding-bottom: 2.5vh;
+    align-items: center;
 }
 
 .faqAnswer {
@@ -83,6 +89,7 @@ body {
 .faqContent p {
     white-space: normal;
     overflow-wrap: break-word;
+    margin-bottom: 2vh;
 }
 
 .faqAnswer p {

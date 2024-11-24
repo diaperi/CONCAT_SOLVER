@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.Optional;
@@ -58,6 +59,7 @@ public class PhoneVerificationService {
         }
     }
 
+    @Transactional
     public boolean saveOrUpdateUserPhone(String userId, String userPhone) {
         // userId를 기반 사용자 검색
         Optional<UserEntity> userOptional = userRepository.findByUserId(userId);
