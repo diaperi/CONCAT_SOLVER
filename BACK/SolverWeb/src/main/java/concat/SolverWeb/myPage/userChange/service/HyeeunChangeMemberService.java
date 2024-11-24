@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class HyeeunChangeMemberService {
     }
 
     // bcrypt 암호화
+    @Transactional
     public void update(UserDTO userDTO) {
         // DB에서 기존 UserEntity 가져오기
         UserEntity existingUserEntity = userRepository.findByUserId(userDTO.getUserId())
@@ -95,6 +97,7 @@ public class HyeeunChangeMemberService {
 
 
     // 사용자 삭제
+    @Transactional
     public void deleteById(Integer id) {
         userRepository.deleteById(id);  // DB에서 해당 ID를 가진 사용자 삭제
     }

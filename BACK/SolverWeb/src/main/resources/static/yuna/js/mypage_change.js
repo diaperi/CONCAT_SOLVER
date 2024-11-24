@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 //     console.error('Error:', error.message || error);
                 //     showAlert('인증 코드 전송 중 오류가 발생했습니다.');
                 // });
-
         });
     }
 
