@@ -84,7 +84,7 @@ const rightMains = document.querySelectorAll('.myPageDetail_rightMain');
 
 // 휴지통 버튼 클릭 시
 document.getElementById('trashBtn').addEventListener('click', function () {
-    const videoElement = document.getElementById('popup-video');
+    const videoElement = document.getElementById('myVideo');
     const videoUrl = videoElement.querySelector('source').src;
     const queryParams = new URLSearchParams({videoUrl}).toString();
 

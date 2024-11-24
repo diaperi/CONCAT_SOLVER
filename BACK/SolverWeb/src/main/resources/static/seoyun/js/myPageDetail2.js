@@ -101,7 +101,10 @@ async function fetchAllVideos() {
         const randomVideoId = getRandomVideo(); // 랜덤 동영상 ID 선택
         loadYouTubePlayer(randomVideoId); // YouTube 플레이어에 로드
     } else {
-        document.body.innerHTML = "<h1>동영상을 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</h1>";
+        // myVideo 변수가 유효한지 확인
+        if (!myVideo || myVideo === "") {
+            document.body.innerHTML = "<h1>동영상을 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</h1>";
+        }
     }
 }
 
