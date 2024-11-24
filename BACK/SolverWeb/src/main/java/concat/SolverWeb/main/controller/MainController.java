@@ -181,7 +181,7 @@ public class MainController {
         // 페이지 반환 후 Python 스크립트 실행
         new Thread(() -> {
             boolean detectConflictSuccess = runPythonScript(userId, "src/main/resources/scripts/detectConflict.py");
-            if (detectConflictSuccess) {
+            if (detectConflictSuccess) { // 갈등 상황인 경우에만 다음 스크립트 실행
                 logger.info("detectConflict Python 스크립트 실행 성공");
                 boolean aiVideoMakerSuccess = runPythonScript(userId, "src/main/resources/scripts/aiVideoMaker.py");
                 if (aiVideoMakerSuccess) {
@@ -217,7 +217,8 @@ public class MainController {
             // Python 스크립트의 출력 로그 읽기
             StringBuilder outputLogs = new StringBuilder();
             Thread logReader = new Thread(() -> {
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) { // UTF-8 설정
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) { // UTF-8로 강제 설정
                     String line;
                     while ((line = reader.readLine()) != null) {
                         logger.info("[Python Script: {}] {}", scriptPath, line);
@@ -227,6 +228,7 @@ public class MainController {
                     logger.error("Python 스크립트 stdout 읽기 중 오류 발생: ", e);
                 }
             });
+
             logReader.start();
 
             int exitCode = process.waitFor();
@@ -237,7 +239,7 @@ public class MainController {
             // detectConflict.py에서 "갈등 상황 아님" 확인 후 종료 조건 추가
             if (scriptPath.contains("detectConflict.py") && !outputLogs.toString().contains("갈등 상황입니다")) {
                 logger.info("detectConflict 결과: 갈등 상황 아님. 다음 스크립트 실행 중단.");
-                return false;
+                return false; // 갈등 상황 아님을 명확히 반환
             }
 
             return exitCode == 0; // 성공 여부 반환
