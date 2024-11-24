@@ -12,7 +12,6 @@ body {
 }
 
 .header_logo {
-
     z-index: 999;
     cursor: pointer;
     transition: opacity 0.3s ease; /* 이미지 사라짐 애니메이션 */
@@ -47,7 +46,7 @@ body {
 
 .header_navbar {
     display: flex;
-    height: 6vh;
+    /*height: 6vh;*/
     padding-top: 1vh;
     justify-content: space-between;
     align-items: center;

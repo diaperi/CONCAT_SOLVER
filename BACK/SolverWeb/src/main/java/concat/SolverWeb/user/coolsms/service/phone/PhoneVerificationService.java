@@ -59,7 +59,7 @@ public class PhoneVerificationService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean saveOrUpdateUserPhone(String userId, String userPhone) {
         // userId를 기반 사용자 검색
         Optional<UserEntity> userOptional = userRepository.findByUserId(userId);
@@ -88,23 +88,24 @@ public class PhoneVerificationService {
     }
 
     // 인증 코드 검증
-    public boolean verifyCode(String phoneNumber, String inputCode) {
+    public boolean verifyCode(String userPhone, String inputCode) {
         // 세션에서 인증 코드 가져오기
-        String storedCode = (String) session.getAttribute(phoneNumber);
+        String storedCode = (String) session.getAttribute(userPhone);
 
         if (storedCode != null && storedCode.equals(inputCode)) {
             // 인증 성공 시 사용자 상태 업데이트
-            Optional<UserEntity> userOptional = userRepository.findByUserPhone(phoneNumber);
+            Optional<UserEntity> userOptional = userRepository.findByUserPhone(userPhone);
 
             if (userOptional.isPresent()) {
                 UserEntity user = userOptional.get();
+                user.setUserPhone(userPhone);  // 전화번호 업데이트
                 user.setIsVerified("Y");  // 인증 상태 업데이트
                 userRepository.save(user); // 사용자 정보 저장
                 logger.info("인증이 완료되었습니다.");
                 return true;
             } else {
                 // 사용자가 존재하지 않으면 실패
-                logger.warn("인증된 전화번호와 일치하는 사용자를 찾을 수 없음: {}", phoneNumber);
+                logger.warn("인증된 전화번호와 일치하는 사용자를 찾을 수 없음: {}", userPhone);
                 return false;
             }
         } else {
