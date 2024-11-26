@@ -161,6 +161,7 @@ public class MoreDashBoardController2 {
             Map<String, String> result = s3Service.processDialogue(userId, date);
 
             if (result != null && !result.isEmpty()) {
+                logger.info("Dialogue processing completed successfully.");
                 return ResponseEntity.ok(result);
             } else {
                 logger.error("Error: Received null or empty result from processDialogue method.");

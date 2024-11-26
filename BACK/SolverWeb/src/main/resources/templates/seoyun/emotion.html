@@ -37,37 +37,39 @@
             <div class="moreDashBoard_top2">
                 <div class="moreDashBoard_top_right_box">
                     <div class="moreDashBoard_top_right_box2">
-                        <div class="moreDashBoard_top_right1">
-                            <hr>
-                            <span id="formattedDate" th:text="${extractedTimestamp}"></span>
-                        </div>
-                        <div class="moreDashBoard_top_right2">
-                            <span>😀</span>
-                            <span>😮</span>
-                            <span>😭</span>
-                            <span>😠</span>
-                            <span>😱</span>
-                            <span>😑</span>
-                        </div>
-                        <div class="moreDashBoard_top_right3">
-                            <!-- 참여자1 영역 -->
-                            <div class="moreDashBoard_top_right3_circle1">
-                                <div>
-                                    <!-- 참여자1의 감정 분석 결과 이미지 -->
-                                    <img th:src="@{|/images/${userId}_participant1_${timestamp}_emotion_chart.png|}"
-                                         alt="참여자1 감정 분석 결과" class="circle" id="participant1EmotionChart">
-                                </div>
-                                <span>참여자1</span>
+                        <div class="flex_box">
+                            <div class="moreDashBoard_top_right1">
+                                <hr>
+                                <span id="formattedDate" th:text="${extractedTimestamp}"></span>
                             </div>
-
-                            <!-- 참여자2 영역 -->
-                            <div class="moreDashBoard_top_right3_circle2">
-                                <div>
-                                    <!-- 참여자2의 감정 분석 결과 이미지 -->
-                                    <img th:src="@{|/images/${userId}_participant2_${timestamp}_emotion_chart.png|}"
-                                         alt="참여자2 감정 분석 결과" class="circle" id="participant2EmotionChart">
+                            <div class="moreDashBoard_top_right2">
+                                <span>😀</span>
+                                <span>😮</span>
+                                <span>😭</span>
+                                <span>😠</span>
+                                <span>😱</span>
+                                <span>😑</span>
+                            </div>
+                            <div class="moreDashBoard_top_right3">
+                                <!-- 참여자1 영역 -->
+                                <div class="moreDashBoard_top_right3_circle1">
+                                    <div>
+                                        <!-- 참여자1의 감정 분석 결과 이미지 -->
+                                        <img th:src="@{|/images/${userId}_participant1_${timestamp}_emotion_chart.png|}"
+                                             alt="참여자1 감정 분석 결과" class="circle" id="participant1EmotionChart">
+                                    </div>
+                                    <span>참여자1</span>
                                 </div>
-                                <span>참여자2</span>
+
+                                <!-- 참여자2 영역 -->
+                                <div class="moreDashBoard_top_right3_circle2">
+                                    <div>
+                                        <!-- 참여자2의 감정 분석 결과 이미지 -->
+                                        <img th:src="@{|/images/${userId}_participant2_${timestamp}_emotion_chart.png|}"
+                                             alt="참여자2 감정 분석 결과" class="circle" id="participant2EmotionChart">
+                                    </div>
+                                    <span>참여자2</span>
+                                </div>
                             </div>
                         </div>
                         <div class="moreDashBoard_top_right4">
@@ -79,28 +81,28 @@
                 </div>
             </div>
             <!-- 위쪽 오른쪽 상자 -->
-            <div class="moreDashBoard_top_right">
-                <div class="moreDashBoard_top_right5">
-                    <div class="moreDashBoard_top_right5_date">
-                        <i id="prev-date-range" class="fa-solid fa-angles-left"></i>
-                        <span id="date-range-display">2024.08.25 ~ 2024.08.25</span>
-                        <i id="next-date-range" class="fa-solid fa-angles-right"></i>
-                    </div>
-                    <div class="moreDashBoard_top_right5_dateList" id="date-list-container">
-                        <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
-                             data-gpt-file-key="gpt_response_20240824_144249.txt"> <!-- GPT 파일 키 사용 -->
-                            <span>-</span>
-                            <span>${date} ${time}</span>
-                            <span>${title}</span>
-                        </div>
-                    </div>
-                </div>
+<!--            <div class="moreDashBoard_top_right">-->
+<!--                <div class="moreDashBoard_top_right5">-->
+<!--                    <div class="moreDashBoard_top_right5_date">-->
+<!--                        <i id="prev-date-range" class="fa-solid fa-angles-left"></i>-->
+<!--                        <span id="date-range-display">2024.08.25 ~ 2024.08.25</span>-->
+<!--                        <i id="next-date-range" class="fa-solid fa-angles-right"></i>-->
+<!--                    </div>-->
+<!--                    <div class="moreDashBoard_top_right5_dateList" id="date-list-container">-->
+<!--                        <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"-->
+<!--                             data-gpt-file-key="gpt_response_20240824_144249.txt"> &lt;!&ndash; GPT 파일 키 사용 &ndash;&gt;-->
+<!--                            <span>-</span>-->
+<!--                            <span class="gpt-date">${date} ${time}</span>-->
+<!--                            <span class="gpt-title">${title}</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
-    <div class="scroll-arrow">
-        <i class="fa-solid fa-angles-down"></i>
-    </div>
+    <!--    <div class="scroll-arrow">-->
+    <!--        <i class="fa-solid fa-angles-down"></i>-->
+    <!--    </div>-->
 </div>
 
 <script src="/hyeeun/js/header.js"></script>

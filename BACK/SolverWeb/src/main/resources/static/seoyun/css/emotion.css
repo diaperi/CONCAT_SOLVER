@@ -41,8 +41,8 @@
     /* background-color: yellowgreen; */
     display: flex;
     /* align-items: center; */
-    justify-content: space-between;
-    width: 110vh;
+    justify-content: center;
+    /*width: 110vh;*/
 }
 
 .glowing-text {
@@ -92,8 +92,8 @@
     flex-direction: column;
     color: white;
     font-weight: bold;
-    margin-top: 20vh;
-    width: 55vh;
+    /*margin-top: 20vh;*/
+    /*width: 55vh;*/
 }
 
 .moreDashBoard_top2_text1 {
@@ -279,12 +279,12 @@
 
 .moreDashBoard_top_right_box2 {
     /* background-color: slateblue; */
-    width: 90%;
+    /*width: 90%;*/
     margin-top: 2vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    /*flex-direction: column;*/
 }
 
 .moreDashBoard_top_right1 {
@@ -410,12 +410,11 @@
 .moreDashBoard_top_right4 {
     /* background-color: rgb(0, 101, 141); */
     width: 100%;
-    padding-left: 2vh;
-    padding-right: 2vh;
     margin-bottom: 10vh;
     font-size: 2vh;
     font-weight: 100;
     margin-top: 4vh;
+    margin-left: 10vh;
 }
 
 .moreDashBoard_top_right5 {
@@ -716,3 +715,10 @@
     transform: translateY(0); /* 애니메이션이 끝난 후에는 원래 위치로 복귀 */
 }
 
+
+.flex_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

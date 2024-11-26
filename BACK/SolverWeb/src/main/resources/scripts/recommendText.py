@@ -1,5 +1,4 @@
 import sys
-import logging
 import requests
 import json
 import os
@@ -12,24 +11,16 @@ load_dotenv()
 sys.stdin = open(sys.stdin.fileno(), mode='r', encoding='utf-8', buffering=1)
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', buffering=1)
 
-# 로그 설정 (레벨을 WARNING으로 변경하고 출력 스트림을 stderr로 설정)
-logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stderr)
-
 # OpenAI API Key 설정 (환경 변수에서 가져오기)
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
 if openai_api_key is None:
-    logging.error("OPENAI_API_KEY is not set in the environment variables.")
     sys.exit(1)
 
 # 표준 입력으로부터 대화 내용 읽기
 try:
     dialogue = sys.stdin.read().strip()
-    # Java로부터 전달된 대화 내용을 로그로 출력 (INFO 레벨이므로 출력되지 않음)
-    logging.info(f"Original dialogue received:\n{dialogue}")
-
-except Exception as e:
-    logging.error(f"Error reading input: {e}")
+except Exception:
     sys.exit(1)
 
 
@@ -42,7 +33,7 @@ def process_dialogue(dialogue):
 
     # OpenAI API에 전달할 payload
     payload = {
-        'model': 'gpt-4o',
+        'model': 'gpt-4',
         'messages': [
             {
                 'role': 'system',
@@ -60,34 +51,29 @@ def process_dialogue(dialogue):
                 """
             }
         ],
-        'max_tokens': 1500,
+        'max_tokens': 1000,
         'temperature': 0.5
     }
 
     try:
-        # OpenAI API에 요청 보내기
         response = requests.post('https://api.openai.com/v1/chat/completions', headers=headers, json=payload)
         response.raise_for_status()
 
-        # 응답 처리
+        # 재구성된 대화만 반환
         response_data = response.json()
-        # OpenAI 응답에서 결과 추출
         return response_data['choices'][0]['message']['content'].strip()
 
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Error processing dialogue with OpenAI: {e}")
+    except requests.exceptions.RequestException:
         sys.exit(1)
 
 
 # 메인 실행 부분
 if __name__ == '__main__':
     try:
-        # 받은 대화를 처리
+        # 대화 내용을 처리
         result = process_dialogue(dialogue)
 
-        # 최종 결과 출력
+        # 처리된 결과만 출력
         print(result)
-
-    except Exception as e:
-        logging.error(f"Error in main execution: {e}")
+    except Exception:
         sys.exit(1)

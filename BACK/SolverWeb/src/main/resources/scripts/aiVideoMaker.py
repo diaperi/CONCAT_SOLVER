@@ -127,7 +127,7 @@ def extract_relevant_text(full_text):
     전체 텍스트에서 > 뒤와 특정 문구 앞 내용을 추출하는 함수
     """
     start_marker = ">"  # 시작 지점
-    end_marker = "참여자 1에 대한 솔루션 입니다."  # 종료 지점
+    end_marker = "참여자1에 대한 솔루션 입니다."  # 종료 지점
 
     start_index = full_text.find(start_marker)
     end_index = full_text.find(end_marker)

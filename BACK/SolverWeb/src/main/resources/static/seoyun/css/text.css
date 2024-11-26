@@ -425,10 +425,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 10vh;
+    /*margin-bottom: 10vh;*/
 }
 
-.moreDashBoard_down3_openBox_top>span:nth-child(1){
+.moreDashBoard_down3_openBox_top > span:nth-child(1) {
     position: absolute;
     background-color: #000000;
     width: 100%;
@@ -439,78 +439,75 @@
 
 /* 기본 상태에서는 스크롤바를 숨김 */
 .moreDashBoard_down3_openBox_top_span {
-    overflow: hidden;  /* 스크롤바 숨김 */
+    overflow: hidden; /* 스크롤바 숨김 */
     margin-top: 4vh;
     padding-right: 1vh;
 }
 
 /* 마우스를 올렸을 때 스크롤바가 나타남 */
 .moreDashBoard_down3_openBox_top_span:hover {
-    overflow: auto;  /* 스크롤바가 필요할 때 나타나게 함 */
+    overflow: auto; /* 스크롤바가 필요할 때 나타나게 함 */
 }
 
 /* 스크롤바 기본 상태 (처음에는 보이지 않음) */
 .moreDashBoard_down3_openBox_top_span::-webkit-scrollbar {
-    width: 0px;  /* 기본적으로 스크롤바 너비 0으로 숨김 */
+    width: 0px; /* 기본적으로 스크롤바 너비 0으로 숨김 */
 }
 
 /* 마우스를 올렸을 때 스크롤바 서서히 나타남 */
 .moreDashBoard_down3_openBox_top_span:hover::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바 너비가 10px로 확대되며 나타남 */
+    width: 10px; /* 스크롤바 너비가 10px로 확대되며 나타남 */
 }
 
 /* 스크롤바 손잡이 */
 .moreDashBoard_down3_openBox_top_span::-webkit-scrollbar-thumb {
-    background-color: #035ed6;  /* 손잡이 색상 */
-    border-radius: 10px;  /* 둥근 모서리 */
-    border: 2px solid #bdbdbd;  /* 손잡이의 경계 */
-    transition: background-color 0.3s ease;  /* 손잡이 색상도 서서히 변화 */
+    background-color: #035ed6; /* 손잡이 색상 */
+    border-radius: 10px; /* 둥근 모서리 */
+    border: 2px solid #bdbdbd; /* 손잡이의 경계 */
+    transition: background-color 0.3s ease; /* 손잡이 색상도 서서히 변화 */
 }
 
 /* 마우스를 올렸을 때 손잡이 색상 변경 */
 .moreDashBoard_down3_openBox_top_span:hover::-webkit-scrollbar-thumb {
-    background-color: #1a02a3;  /* 마우스를 올렸을 때 색상 변화 */
+    background-color: #1a02a3; /* 마우스를 올렸을 때 색상 변화 */
 }
-
 
 
 /* ******************* */
 /* 기본 상태에서는 스크롤바를 숨김 */
 .moreDashBoard_down3_openBox_down_span {
-    overflow: hidden;  /* 스크롤바 숨김 */
+    overflow: hidden; /* 스크롤바 숨김 */
     margin-top: 4vh;
     padding-right: 1vh;
 }
 
 /* 마우스를 올렸을 때 스크롤바가 나타남 */
 .moreDashBoard_down3_openBox_down_span:hover {
-    overflow: auto;  /* 스크롤바가 필요할 때 나타나게 함 */
+    overflow: auto; /* 스크롤바가 필요할 때 나타나게 함 */
 }
 
 /* 스크롤바 기본 상태 (처음에는 보이지 않음) */
 .moreDashBoard_down3_openBox_down_span::-webkit-scrollbar {
-    width: 0px;  /* 기본적으로 스크롤바 너비 0으로 숨김 */
+    width: 0px; /* 기본적으로 스크롤바 너비 0으로 숨김 */
 }
 
 /* 마우스를 올렸을 때 스크롤바 서서히 나타남 */
 .moreDashBoard_down3_openBox_down_span:hover::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바 너비가 10px로 확대되며 나타남 */
+    width: 10px; /* 스크롤바 너비가 10px로 확대되며 나타남 */
 }
 
 /* 스크롤바 손잡이 */
 .moreDashBoard_down3_openBox_down_span::-webkit-scrollbar-thumb {
-    background-color: #035ed6;  /* 손잡이 색상 */
-    border-radius: 10px;  /* 둥근 모서리 */
-    border: 2px solid #bdbdbd;  /* 손잡이의 경계 */
-    transition: background-color 0.3s ease;  /* 손잡이 색상도 서서히 변화 */
+    background-color: #035ed6; /* 손잡이 색상 */
+    border-radius: 10px; /* 둥근 모서리 */
+    border: 2px solid #bdbdbd; /* 손잡이의 경계 */
+    transition: background-color 0.3s ease; /* 손잡이 색상도 서서히 변화 */
 }
 
 /* 마우스를 올렸을 때 손잡이 색상 변경 */
 .moreDashBoard_down3_openBox_down_span:hover::-webkit-scrollbar-thumb {
-    background-color: #1a02a3;  /* 마우스를 올렸을 때 색상 변화 */
+    background-color: #1a02a3; /* 마우스를 올렸을 때 색상 변화 */
 }
-
-
 
 
 .moreDashBoard_down3_openBox_down {
@@ -531,7 +528,7 @@
     margin-top: 10vh;
 }
 
-.moreDashBoard_down3_openBox_down>span:nth-child(1){
+.moreDashBoard_down3_openBox_down > span:nth-child(1) {
     position: absolute;
     background-color: #000000;
     width: 100%;
@@ -539,7 +536,6 @@
     justify-content: center;
     padding-bottom: 3vh;
 }
-
 
 
 /* *******************************달력 ******************** */

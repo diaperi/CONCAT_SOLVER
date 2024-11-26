@@ -58,10 +58,14 @@ body {
     font-size: 2.5vh;
     margin-top: 5vh;
     margin-left: 7vh;
+    justify-content: center;
 }
 
 .login_intro1 {
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-body-img {

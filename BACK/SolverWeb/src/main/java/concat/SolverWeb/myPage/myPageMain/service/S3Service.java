@@ -950,43 +950,49 @@ public class S3Service {
             ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsRequest);
             List<S3Object> files = response.contents();
 
-            logger.info("S3 Path Prefix: " + s3PathPrefix);
-            logger.info("Number of files found: " + files.size());
-            files.forEach(file -> logger.info("Found file: " + file.key()));
+            logger.info("S3 Path Prefix: {}", s3PathPrefix);
+            logger.info("Number of files found: {}", files.size());
+            files.forEach(file -> logger.info("Found file: {}", file.key()));
 
             if (files.isEmpty()) {
-                logger.warn("No files found for the specified date: " + date);
+                logger.warn("No files found for the specified date: {}", date);
                 return Map.of("original", "No matching files found.", "result", "");
             }
 
-            // 파일 목록 중 가장 최신의 파일을 선택
+            // 파일 목록 중 가장 최신의 파일 선택
             S3Object latestFile = Collections.max(files, Comparator.comparing(S3Object::lastModified));
             String latestFileKey = latestFile.key();
 
-            logger.info("Latest file selected: " + latestFileKey);
+            logger.info("Latest file selected: {}", latestFileKey);
 
             // S3에서 원본 텍스트 가져오기
             String originalContent = getFileFromS3(bucketName, latestFileKey);
+            logger.info("Original content to send to Python script:\n{}", originalContent);
 
             // Python 스크립트 실행 명령어 구성
             List<String> commands = new ArrayList<>();
-            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
-            commands.add("src/main/resources/scripts/recommendText.py"); // Python 스크립트의 경로
+            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe");
+            commands.add("src/main/resources/scripts/recommendText.py");
 
-            // ProcessBuilder를 사용하여 Python 스크립트를 실행
+            logger.info("Starting Python script process...");
+            commands.forEach(command -> logger.info("Command: {}", command));
+
+            // ProcessBuilder를 사용하여 Python 스크립트 실행
             ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            processBuilder.redirectErrorStream(true);
 
-            // 환경 변수 설정
             Map<String, String> env = processBuilder.environment();
             env.put("PYTHONIOENCODING", "UTF-8");
-            env.put("AWS_ACCESS_KEY_ID", accessKey);  // 자격 증명 전달
-            env.put("AWS_SECRET_ACCESS_KEY", secretKey);
-            env.put("AWS_REGION", region);
-            env.put("OPENAI_API_KEY", openaiApiKey);  // GPT API 키 전달 (openaiApiKey 변수가 미리 설정되어 있어야 함)
+            env.put("OPENAI_API_KEY", openaiApiKey);
 
-            // UTF-8 인코딩을 지정하여 출력을 읽음
-            processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
+            logger.info("Python script process started successfully.");
+
+            // Python 스크립트에 대화 내용 전달
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8))) {
+                writer.write(originalContent); // 대화 내용 전달
+                writer.flush();
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
             BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
@@ -996,37 +1002,30 @@ public class S3Service {
 
             String line;
             while ((line = reader.readLine()) != null) {
+                logger.info("Python script stdout: {}", line);
                 output.append(line).append("\n");
-                logger.info("Python stdout: {}", line);  // Python 스크립트 출력 로그
             }
 
             while ((line = errorReader.readLine()) != null) {
+                logger.error("Python script stderr: {}", line);
                 errorOutput.append(line).append("\n");
-                logger.error("Python stderr: {}", line);  // Python 스크립트 에러 로그
             }
 
-            // 파이썬 스크립트 실행 결과 처리
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-                logger.info("Python script executed successfully.");
-                String finalResult = output.toString().trim();
-
-                // 결과를 반환할 Map 구성
-                Map<String, String> responseMap = new HashMap<>();
-                responseMap.put("original", originalContent);
-                responseMap.put("result", finalResult);
-
-                return responseMap;
+                logger.info("Python script executed successfully with exit code: {}", exitCode);
+                logger.info("Processed result from Python:\n{}", output.toString().trim());
+                return Map.of("original", originalContent, "result", output.toString().trim());
             } else {
-                logger.error("Python script execution failed with exit code: " + exitCode);
+                logger.error("Python script failed with exit code: {}", exitCode);
                 return Map.of("original", "Error occurred", "result", "");
             }
-
         } catch (Exception e) {
             logger.error("Error during processing dialogue", e);
             return Map.of("original", "Error occurred", "result", "");
         }
     }
+
 
 //    public Map<String, String> processDialogue(String userId, String date) {
 //        try {

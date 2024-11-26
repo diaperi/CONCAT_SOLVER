@@ -13,66 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevButton = document.getElementById("prev");
     const nextButton = document.getElementById("next");
 
-// 로딩 컨테이너 요소 생성
-    const loadingContainer = document.createElement('div');
-    loadingContainer.id = 'loading-container';
-    loadingContainer.style.position = 'fixed';
-    loadingContainer.style.top = '50%';
-    loadingContainer.style.left = '50%';
-    loadingContainer.style.transform = 'translate(-50%, -50%)';
-    loadingContainer.style.zIndex = '1000';
-    loadingContainer.style.display = 'none'; // 초기에는 숨김
-    loadingContainer.style.textAlign = 'center';
-
-    // 로딩 원 생성
-    const loadingCircle = document.createElement('div');
-    loadingCircle.id = 'loading-circle';
-    loadingCircle.style.width = '50px';
-    loadingCircle.style.height = '50px';
-    loadingCircle.style.border = '5px solid #f3f3f3';
-    loadingCircle.style.borderTop = '5px solid #3498db';
-    loadingCircle.style.borderRadius = '50%';
-    loadingCircle.style.animation = 'spin 1s linear infinite';
-    loadingCircle.style.margin = '0 auto';
-
-    // 로딩 메시지 생성
-    const loadingMessage = document.createElement('div');
-    loadingMessage.id = 'loading-message';
-    loadingMessage.style.marginTop = '15px';
-    loadingMessage.style.color = 'white';
-    loadingMessage.style.fontSize = '2vh';
-    loadingMessage.innerHTML = "솔버가 대화를 더 나은 방향으로 재구성 중 입니다...<br>조금만 기다려 주세요🥰";
-
-    // 로딩 컨테이너에 로딩 원과 메시지 추가
-    loadingContainer.appendChild(loadingCircle);
-    loadingContainer.appendChild(loadingMessage);
-
-    document.body.appendChild(loadingContainer);
-
-    // 로딩 애니메이션 정의 (JavaScript로 구현)
-    const style = document.createElement('style');
-    style.type = 'text/css';
-    style.innerHTML = `
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }`;
-    document.head.appendChild(style);
-
-    function showLoading() {
-        loadingContainer.style.display = 'block';
-    }
-
-    function hideLoading() {
-        loadingContainer.style.display = 'none';
-    }
-
+    // 날짜 클릭 이벤트 리스너 추가
     function addDayClickListeners() {
         document.querySelectorAll('#calendar-body td').forEach(day => {
             day.addEventListener('click', function () {
                 const selectedDate = this.getAttribute('data-date').replace(/-/g, ''); // YYYYMMDD 형식으로 변환
 
-                showLoading(); // 로딩 화면 표시
+                console.log(`Selected date: ${selectedDate}`);
 
                 // Ajax 요청을 통해 서버에 데이터 전송
                 $.ajax({
@@ -81,27 +28,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     data       : {date: selectedDate},
                     contentType: "application/json",
                     success    : function (response) {
+                        console.log('Server response received:', response);
+
                         // 원본 텍스트 파일의 내용을 표시
-                        document.querySelector('.moreDashBoard_down3_openBox_top_span').innerHTML = response.original.replace(/\n/g, "<br>");
+                        const topSpan = document.querySelector('.moreDashBoard_down3_openBox_top_span');
+                        const downSpan = document.querySelector('.moreDashBoard_down3_openBox_down_span');
 
-                        // 파이썬 처리 결과를 표시
-                        document.querySelector('.moreDashBoard_down3_openBox_down_span').innerHTML = response.result.replace(/\n/g, "<br>");
+                        if (response.original) {
+                            topSpan.innerHTML = response.original.replace(/\n/g, "<br>");
+                        } else {
+                            topSpan.innerHTML = "원본 텍스트가 없습니다.";
+                        }
 
-                        hideLoading(); // 로딩 화면 숨김
+                        if (response.result) {
+                            downSpan.innerHTML = response.result.replace(/\n/g, "<br>");
+                        } else {
+                            downSpan.innerHTML = "결과를 처리하는 중 오류가 발생했습니다.";
+                        }
                     },
                     error      : function (error) {
-                        console.error('Error:', error);
+                        console.error('Error during Ajax request:', error);
                         alert('대화 재구성 중 오류가 발생했습니다.');
-                        hideLoading(); // 로딩 화면 숨김
                     }
                 });
-
             });
         });
     }
-
-    addDayClickListeners();
-
 
     function showCalendar(month, year) {
         let firstDay = (new Date(year, month)).getDay();
@@ -204,20 +156,21 @@ $(document).ready(function () {
     let currentPage = 1; // 현재 페이지
     const pageSize = 5; // 한 페이지에 표시할 항목 수
 
+    // 현재 날짜를 기본 값으로 설정
+    function getDefaultDate() {
+        const today = new Date();
+        return today.toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD 형식
+    }
+
     // 페이지 로드 시 초기 GPT 제목 데이터를 가져옴
     loadGptTitles(currentPage, pageSize);
 
     function loadGptTitles(page, size) {
-        // startDate와 endDate가 빈 값일 때 기본 값 설정 (예: 오늘 날짜)
-        if (!startDate) {
-            startDate = "20240801"; // 기본 시작 날짜 (예시)
-        }
-        if (!endDate) {
-            endDate = "20240831"; // 기본 종료 날짜 (예시)
-        }
+        if (!startDate) startDate = getDefaultDate(); // 동적 기본 시작 날짜
+        if (!endDate) endDate = getDefaultDate(); // 동적 기본 종료 날짜
 
         $.ajax({
-            url    : `/api/moreDashBoard/gpt-titles-by-date`,
+            url    : getApiUrl(),
             type   : 'GET',
             data   : {
                 startDate: startDate,
@@ -244,7 +197,7 @@ $(document).ready(function () {
 
                         const dateItemHtml = `
                             <div class="moreDashBoard_top_right5_dateList1 gpt-title-item"
-                                 data-gpt-file-key="gpt_response_${date}_${time}.txt"> <!-- 이 부분을 올바르게 설정 -->
+                                 data-gpt-file-key="gpt_response_${date}_${time}.txt">
                                 <span>-</span>
                                 <span>${date} ${time}</span>
                                 <span>${title}</span>
@@ -257,35 +210,42 @@ $(document).ready(function () {
                     // 상단의 날짜 범위 갱신
                     $("#date-range-display").text(formatDate(minDate) + " ~ " + formatDate(maxDate));
                 } else {
-                    dateListContainer.append("<div>데이터가 없습니다.</div>");
+                    dateListContainer.append("<div>해당 날짜 범위에 데이터가 없습니다. 다른 날짜를 선택하세요.</div>");
                 }
             },
             error  : function (xhr, status, error) {
-                console.error("GPT 제목 데이터를 가져오는 중 오류 발생: ", error);
-                $("#date-list-container").append("<div>데이터를 가져오는 중 오류가 발생했습니다.</div>");
+                console.error(`Error fetching GPT titles. Status: ${xhr.status}, Error: ${error}`);
+                $("#date-list-container").append("<div>데이터를 가져오는 중 오류가 발생했습니다. 다시 시도해주세요.</div>");
             }
         });
     }
 
-    // 왼쪽 화살표 클릭 핸들러
-    $("#next-date-range").on("click", function () {
+    // 화살표 클릭 핸들러
+    $("#prev-date-range").on("click", function () {
         if (currentPage > 1) {
             currentPage--;
             loadGptTitles(currentPage, pageSize);
+        } else {
+            console.warn("Already at the first page.");
         }
     });
 
-    // 오른쪽 화살표 클릭 핸들러
-    $("#prev-date-range").on("click", function () {
+    $("#next-date-range").on("click", function () {
         currentPage++;
         loadGptTitles(currentPage, pageSize);
     });
 
     function formatDate(dateString) {
-        if (dateString.length === 8) {
+        if (dateString && dateString.length === 8) {
             return dateString.substring(0, 4) + "." + dateString.substring(4, 6) + "." + dateString.substring(6, 8);
+        } else {
+            console.error("Invalid date format:", dateString);
+            return "날짜 없음";
         }
-        return dateString;
+    }
+
+    function getApiUrl() {
+        return `/api/moreDashBoard/gpt-titles-by-date`;
     }
 });
 
@@ -293,17 +253,41 @@ $(document).ready(function () {
 // ********* 제목에 따른 감정 분석 결과 **************
 $(document).ready(function () {
     $(document).on('click', '.gpt-title-item', function () {
-        const gptFileKey = $(this).data('gpt-file-key');
-        const date = $(this).find('span').eq(1).text(); // 두 번째 <span>에서 날짜와 시간을 가져옴
+        const gptFileKey = $(this).data('gpt-file-key'); // GPT 파일 키 가져오기
 
         if (gptFileKey) {
-            fetchEmotionAnalysis(gptFileKey);
+            // 비동기 요청으로 emotion/async 컨트롤러 호출
+            $.ajax({
+                url    : "/moreDashBoard/emotion/async", // 비동기 메서드 URL
+                type   : "GET",
+                data   : {gptFileKey: gptFileKey}, // gptFileKey 전달
+                success: function (response) {
+                    // 서버 응답 처리
+                    console.log("감정 분석이 성공적으로 수행되었습니다.");
+                    updateEmotionAnalysisResult(response);
+                },
+                error  : function (xhr, status, error) {
+                    console.error("감정 분석 요청 중 오류가 발생했습니다: ", error);
+                }
+            });
+        } else {
+            console.warn("gptFileKey가 비어 있습니다. 요청을 생략합니다.");
         }
 
-        // 날짜와 시간을 가져와서 formattedDate로 설정
-        const formattedDate = formatDateFromText(date);
-        $('#formattedDate').text(formattedDate);
+        function updateEmotionAnalysisResult(response) {
+            // 서버에서 반환된 데이터를 UI에 반영하는 로직 구현
+            if (response.participant1EmotionChartImageUrl) {
+                $('#participant1EmotionChart').attr('src', response.participant1EmotionChartImageUrl);
+            }
+            if (response.participant2EmotionChartImageUrl) {
+                $('#participant2EmotionChart').attr('src', response.participant2EmotionChartImageUrl);
+            }
+            if (response.textEmotionAnalysisResult) {
+                $('.moreDashBoard_top_right4 > span').html(response.textEmotionAnalysisResult);
+            }
+        }
     });
+
 
     function fetchEmotionAnalysis(gptFileKey) {
         $.ajax({
