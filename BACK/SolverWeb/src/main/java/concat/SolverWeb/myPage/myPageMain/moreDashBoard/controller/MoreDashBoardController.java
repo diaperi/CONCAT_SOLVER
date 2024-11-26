@@ -115,7 +115,7 @@ public class MoreDashBoardController {
         logger.info("로그인된 사용자: {}", loggedInUser.toString());
 
         // S3에서 사용자별 최신 텍스트 파일 경로 가져오기
-        Optional<String> transcriptKeyOpt = s3Service.getLatestTranscript(userId);
+//        Optional<String> transcriptKeyOpt = s3Service.getLatestTranscript(userId);
 
 
         // 사용자 이름과 ID를 모델에 추가

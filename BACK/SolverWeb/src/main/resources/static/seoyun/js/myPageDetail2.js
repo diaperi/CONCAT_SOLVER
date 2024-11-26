@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // **************************힐링 영상*****************************
 // YouTube API 키 (반드시 발급받은 키로 대체해야 함)
-const API_KEY = "AIzaSyCtNiXXND6UJg-Tmn4u1bWUaH0dP9X9jqw";
+// const API_KEY = "AIzaSyB_qrAkJaup8cKS-6HKDy4dKtiyltB-Rys";
 
 // 키워드 배열
 const SEARCH_KEYWORDS = ["힐링 음악", "명상 음악", "힐링 영상"];

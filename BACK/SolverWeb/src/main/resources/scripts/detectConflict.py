@@ -22,11 +22,11 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 # 감정 목록 정의
 emotions = ["Angry", "Disgust", "Fear", "Happiness", "Neutral", "Sadness", "Surprise"]
-negative_emotions = ["Angry", "Disgust", "Fear", "Sadness"]
+negative_emotions = ["Angry", "Disgust", "Fear", "Sadness", "Neutral"]
 positive_emotions = ["Happiness"]
 
 text_positive_emotions = ["행복"]
-text_negative_emotions = ["두려움", "슬픔", "화남", "놀람"]
+text_negative_emotions = ["두려움", "슬픔", "화남", "놀람", "보통"]
 
 
 # CNN 기반 감정 분석 모델 정의
