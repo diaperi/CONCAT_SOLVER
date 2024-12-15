@@ -150,10 +150,12 @@ https://docs.google.com/presentation/d/1QF2_HgGSUXVy5FNGshKR1xfPqBW14Zqy/edit?us
 
 
 ## 🤖 인공지능 모델 (Google COLAB 이용)
-- 표정 이미지 기반 감정 분류 모델
-- 멜 스펙트로그램 기반 감정 분류 모델
-- 텍스트 기반 감정 분류 모델
-
+- 표정 이미지 기반 감정 분류 모델<br>
+https://colab.research.google.com/drive/1vuM0N5g9EWdB9WhB8DzeilEuBk5qhQsP
+- 멜 스펙트로그램 기반 감정 분류 모델<br>
+https://colab.research.google.com/drive/1CLXTmYyTlg5mW_78R7RGM8yCgz29scq2
+- 텍스트 기반 감정 분류 모델<br>
+https://docs.google.com/document/d/1zRzcQoUG-ELiOuUhPlZOY0DNYo5wZVjzwly7XiSM7Oo/edit?usp=sharing
 
 ## solver 웹 
 http://solver.o-r.kr/
