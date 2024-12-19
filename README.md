@@ -3,10 +3,16 @@
 <br><br>
 
 ## 성과
-캡스톤 졸업작품 1위 대상
+👑 캡스톤 졸업작품 1위 대상
 <br>
 (2차심사 발표 자료)<br>
 https://docs.google.com/presentation/d/1QF2_HgGSUXVy5FNGshKR1xfPqBW14Zqy/edit?usp=drivesdk&ouid=115287319250167358701&rtpof=true&sd=true
+<br>
+
+🎓 (Women in AI) AI4HER APAC Conference 발표
+<br>
+(컨퍼런스 발표 자료)<br>
+https://docs.google.com/presentation/d/1RKoUel4Z5G0qxQvNuAo1SSfZCSM9Pj3g/edit?usp=drivesdk&ouid=115287319250167358701&rtpof=true&sd=true
 <br><br>
 
 ## 🖥️ 프로젝트 소개
