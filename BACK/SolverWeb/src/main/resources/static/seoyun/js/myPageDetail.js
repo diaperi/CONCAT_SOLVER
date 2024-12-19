@@ -1,82 +1,78 @@
-document.getElementById('expandButton').addEventListener('click', function () {
-    var videoBox = document.getElementById('videoBox');
-    var video = document.getElementById('popup-video');
-    var closeButton = document.getElementById('closeButton');
-    var myPageDetailRightBox = document.getElementById('myPageDetail_rightBox');
+// document.getElementById('expandButton').addEventListener('click', function () {
+//     var videoBox = document.getElementById('videoBox');
+//     var video = document.getElementById('popup-video');
+//     var closeButton = document.getElementById('closeButton');
+//     var myPageDetailRightBox = document.getElementById('myPageDetail_rightBox');
+//
+//     videoBox.classList.add('fullscreen-video');
+//     videoBox.classList.remove('slide-out-left');
+//     videoBox.classList.add('slide-in-right');
+//     myPageDetailRightBox.classList.remove('visible');
+//     myPageDetailRightBox.classList.add('hidden');
+//
+//     closeButton.style.display = 'block';
+//
+//     closeButton.addEventListener('click', function () {
+//         videoBox.classList.remove('fullscreen-video');
+//         videoBox.classList.remove('slide-in-right');
+//         videoBox.classList.add('slide-out-left');
+//         myPageDetailRightBox.classList.remove('hidden');
+//         myPageDetailRightBox.classList.add('visible');
+//         closeButton.style.display = 'none';
+//     });
+// });
 
-    videoBox.classList.add('fullscreen-video');
-    videoBox.classList.remove('slide-out-left');
-    videoBox.classList.add('slide-in-right');
-    myPageDetailRightBox.classList.remove('visible');
-    myPageDetailRightBox.classList.add('hidden');
+let isSpeaking = false; // 읽기 상태 추적 변수
+let utterance; // SpeechSynthesisUtterance 객체
 
-    closeButton.style.display = 'block';
-
-    closeButton.addEventListener('click', function () {
-        videoBox.classList.remove('fullscreen-video');
-        videoBox.classList.remove('slide-in-right');
-        videoBox.classList.add('slide-out-left');
-        myPageDetailRightBox.classList.remove('hidden');
-        myPageDetailRightBox.classList.add('visible');
-        closeButton.style.display = 'none';
-    });
-});
-
-// Web Speech API로 gptResponse 읽기 기능 추가
-// 숫자를 한자식으로 변환하는 함수
-function convertNumberToKorean(text) {
-    const numberMap = {
-        '0': '공',
-        '1': '일',
-        '2': '이',
-        '3': '삼',
-        '4': '사',
-        '5': '오',
-        '6': '육',
-        '7': '칠',
-        '8': '팔',
-        '9': '구'
-    };
-
-    return text.replace(/\d/g, function (match) {
-        return numberMap[match];
-    });
-}
-
-// 이모티콘을 제거하는 함수
-function removeEmojis(text) {
-    return text.replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // 얼굴 이모티콘 제거
-        .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // 기타 이모티콘 제거
-        .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // 교통, 지도 기호 이모티콘 제거
-        .replace(/[\u{2600}-\u{26FF}]/gu, '')    // 다양한 기호 이모티콘 제거
-        .replace(/[\u{2700}-\u{27BF}]/gu, '');   // 기타 이모티콘 제거
-}
-
-// 읽기 버튼 기능 추가
-document.getElementById('readBtn').addEventListener('click', function () {
-    var gptText = document.getElementById('gptResponse').innerText; // 텍스트 가져오기
-
+// 이모티콘 및 숫자 처리 함수
+function preprocessText(text) {
     // 이모티콘 제거
-    var filteredText = removeEmojis(gptText);
+    text = text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, "");
 
-    // 숫자를 한자식으로 변환
-    var convertedText = convertNumberToKorean(filteredText);
+    // 숫자를 한글로 변환
+    text = text.replace(/\b1\b/g, "일");
+    text = text.replace(/\b2\b/g, "이");
+    text = text.replace(/\b3\b/g, "삼");
+    text = text.replace(/\b4\b/g, "사");
+    text = text.replace(/\b5\b/g, "오");
+    text = text.replace(/\b6\b/g, "육");
+    text = text.replace(/\b7\b/g, "칠");
+    text = text.replace(/\b8\b/g, "팔");
+    text = text.replace(/\b9\b/g, "구");
 
-    if ('speechSynthesis' in window) {  // Web Speech API 지원 여부 확인
-        if (window.speechSynthesis.speaking) {
-            // 현재 음성 재생 중이면 중지
-            window.speechSynthesis.cancel();
-        } else {
-            // 음성 재생이 안 되고 있으면 새로 읽기 시작
-            var speech = new SpeechSynthesisUtterance(convertedText);
-            speech.lang = 'ko-KR'; // 한국어 설정
-            window.speechSynthesis.speak(speech); // 텍스트 음성으로 읽기
-        }
+    return text;
+}
+
+document.getElementById('readBtn').addEventListener('click', function () {
+    if (isSpeaking) {
+        // 이미 읽고 있으면 정지
+        speechSynthesis.cancel();
+        isSpeaking = false;
     } else {
-        alert('이 브라우저는 음성 합성을 지원하지 않습니다.');
+        // 읽기 시작
+        const textContainer = document.querySelector('.down_right_textBox');
+        let textToRead = textContainer.innerText.trim(); // 텍스트 추출
+
+        // 이모티콘 및 숫자 처리
+        textToRead = preprocessText(textToRead);
+
+        utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'ko-KR'; // 한국어로 설정
+
+        // 읽기 시작 이벤트
+        utterance.onstart = function () {
+            isSpeaking = true;
+        };
+
+        // 읽기 종료 이벤트
+        utterance.onend = function () {
+            isSpeaking = false;
+        };
+
+        speechSynthesis.speak(utterance);
     }
 });
-
 
 // 선택한 요소들에 대한 동작 추가 (기존 코드 유지)
 const spans = document.querySelectorAll('.myPageDetail_rightTop > span');
@@ -84,7 +80,7 @@ const rightMains = document.querySelectorAll('.myPageDetail_rightMain');
 
 // 휴지통 버튼 클릭 시
 document.getElementById('trashBtn').addEventListener('click', function () {
-    const videoElement = document.getElementById('popup-video');
+    const videoElement = document.getElementById('myVideo');
     const videoUrl = videoElement.querySelector('source').src;
     const queryParams = new URLSearchParams({videoUrl}).toString();
 
@@ -151,3 +147,10 @@ document.getElementById('trashBtn').addEventListener('click', function () {
 //     console.error('rightMains[1] does not exist.');
 // }
 //
+
+document.querySelectorAll('.accordion-item').forEach(button => {
+    button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    });
+});

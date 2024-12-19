@@ -6,6 +6,7 @@ import concat.SolverWeb.user.yoonseo.entity.UserEntity;
 import concat.SolverWeb.user.yoonseo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -30,6 +31,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public void save(UserDTO userDTO) {
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
         userEntity.setUserPw(PasswordUtil.encrypt(userDTO.getUserPw()));

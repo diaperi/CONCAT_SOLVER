@@ -27,7 +27,22 @@ dependencies {
 
     implementation 'io.github.cdimascio:dotenv-java:3.0.0' // spring-dotenv 라이브러리
 
-// 비밀번호 암호화 때문에 추가한거 1개 (윤서)
+    // Spring WebFlux (비동기 HTTP 통신을 위한 라이브러리)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Spring WebSocket (웹소켓 통신을 위한 라이브러리)
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // XChart (차트 그리기 위한 라이브러리)
+    implementation 'org.knowm.xchart:xchart:3.8.0'
+
+    // JTransforms (FFT 계산을 위한 라이브러리)
+    implementation 'com.github.wendykierp:JTransforms:3.1'
+
+    // JFreeChart 라이브러리 (차트 생성 및 이미지 저장용)
+    implementation 'org.jfree:jfreechart:1.5.3'
+
+    implementation 'org.springframework.boot:spring-boot-devtools'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // SNS 로그인
@@ -36,6 +51,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail' // 메일 전송
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mindrot:jbcrypt:0.4' // Bcrpyt
+    implementation 'org.postgresql:postgresql:42.6.0' // PostgreSQL
+    implementation 'io.github.cdimascio:dotenv-java:2.2.0'
+    implementation 'net.nurigo:sdk:4.2.7' // CoolSMS
+    implementation 'io.netty:netty-all:4.1.70.Final' // MacOs DNS
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

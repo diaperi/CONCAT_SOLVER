@@ -82,9 +82,9 @@ public class TrashController {
         response.put("success", success);
 
         if (success) {
-            logger.info("Moved to trash successfully");
+            logger.info("Moved to trash successfully"); // 휴지통 이동 성공
         } else {
-            logger.warn("Failed to move to trash");
+            logger.warn("Failed to move to trash"); // 휴지통 이동 실패
         }
 
         return response;

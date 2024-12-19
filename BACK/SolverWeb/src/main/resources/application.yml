@@ -9,29 +9,23 @@ server.servlet.session.tracking-modes: cookie
 
 
 # database 연동 설정
-#hyeeun
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # AWS RDS URL
-    url: jdbc:mysql://solver-db.clc60kwem0qc.ap-northeast-2.rds.amazonaws.com:3306/SOLVER-DB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    # Supabase URL
+    url: jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-  #    url: jdbc:mysql://localhost:3306/db_solver?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-  #    username: user_solver
-  #    password: solver
-  #    username: root
-  #    password: root
-  thymeleaf:
-    cache: false
-  logging:
-    level:
-      root: INFO
-      concat.SolverWeb: INFO
+
+    thymeleaf:
+      cache: false
+      logging:
+        level:
+          root: INFO
+          concat.SolverWeb: INFO
 
   # spring data jpa 설정
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: true
     hibernate:
@@ -57,7 +51,11 @@ email:
     address: concatsolver@naver.com
     name: CONCAT
 
-
+coolsms:
+  api:
+    key: ${COOLSMS_ACCESS_KEY}
+    secret: ${COOLSMS_SECRET_ACCESS_KEY}
+    number: ${COOLSMS_NUMBER}
 
 cloud:
   aws:
@@ -71,31 +69,36 @@ cloud:
 
 
 
+clova:
+  speech:
+    invoke-url: ${CLOVA_SPEECH_INVOKE_URL}
+    secret: ${CLOVA_SPEECH_SECRET}
+
 #SNS 로그인
 oauth2:
   client:
     registration:
       google:
-        client-id: 31911528315-rdtqb9sviamqv3c870fbni1sfqg80957.apps.googleusercontent.com
-        client-secret: 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
-        redirect-uri: http://localhost:8098/snslogin/oauth2/code/google
+        client-id: ${GOOGLE_CLIENT_ID}
+        client-secret: ${GOOGLE_CLIENT_SECRET}
+        redirect-uri: ${GOOGLE_REDIRECT_URI}
         scope: email, profile
         authorization-grant-type: authorization_code
         client-name: Google
 
       kakao:
-        client-id: b0b82cb476ddfaa6ad5516b1b59d82ac
-        client-secret: 0OWdNCc7o4uozTJkzSrXLGVbNr5xFQXo
-        redirect-uri: http://localhost:8098/snslogin/oauth2/code/kakao
+        client-id: ${KAKAO_CLIENT_ID}
+        client-secret: ${KAKAO_CLIENT_SECRET}
+        redirect-uri: ${KAKAO_REDIRECT_URI}
         scope: account_email, profile_nickname
         authorization-grant-type: authorization_code
         client-name: Kakao
         client-authentication-method: client_secret_post
 
       naver:
-        client-id: KeB2I8Od5D0f8tGxtz9h
-        client-secret: IbTjnCtNC7
-        redirect-uri: http://localhost:8098/snslogin/oauth2/code/naver
+        client-id: ${NAVER_CLIENT_ID}
+        client-secret: ${NAVER_CLIENT_SECRET}
+        redirect-uri: ${NAVER_REDIRECT_URI}
         scope: name, email
         authorization-grant-type: authorization_code
         client-name: Naver
@@ -118,3 +121,7 @@ oauth2:
       token-uri: https://oauth2.googleapis.com/token
       user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
       user-name-attribute: sub
+
+
+openai:
+  api-key: ${OPENAI_API_KEY}

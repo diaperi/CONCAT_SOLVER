@@ -43,18 +43,19 @@ public class S3Service {
 
     private String openaiApiKey;
 
-
     // 생성자에서 .env 파일 로드
     public S3Service() {
         try {
             // .env 파일에서 환경 변수를 로드합니다.
-            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();  // .env 파일 로드, 없으면 무시
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+
+            // .env 파일에서 값이 없으면 System.getenv()로 대체
             this.accessKey = dotenv.get("AWS_ACCESS_KEY_ID", System.getenv("AWS_ACCESS_KEY_ID"));
             this.secretKey = dotenv.get("AWS_SECRET_ACCESS_KEY", System.getenv("AWS_SECRET_ACCESS_KEY"));
             this.region = dotenv.get("AWS_REGION", System.getenv("AWS_REGION"));
             this.bucketName = dotenv.get("AWS_BUCKET_NAME", System.getenv("AWS_BUCKET_NAME"));
 
-            // 로깅으로 값 확인
+            // 로그로 환경 변수 값 출력
             logger.info("AccessKey: {}", accessKey);
             logger.info("SecretKey: {}", secretKey);
             logger.info("Region: {}", region);
@@ -74,12 +75,19 @@ public class S3Service {
                     .region(Region.of(region))
                     .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                     .build();
-            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();  // .env 파일 로드, 없으면 무시
 
-            // OpenAI API 키 환경 변수에서 설정
+            // OpenAI API 키 설정 및 로그 추가
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
             this.openaiApiKey = dotenv.get("OPENAI_API_KEY", System.getenv("OPENAI_API_KEY"));
+
+            // 추가된 로그: Dotenv와 System.getenv()에서 가져온 값 출력
+            logger.info("OPENAI_API_KEY from Dotenv: {}", dotenv.get("OPENAI_API_KEY")); // Dotenv에서 가져온 값
+            logger.info("OPENAI_API_KEY from System.getenv: {}", System.getenv("OPENAI_API_KEY")); // 시스템 환경 변수에서 가져온 값
+            logger.info("Current directory: " + System.getProperty("user.dir"));
+
+            // OpenAI API 키 검증
             if (openaiApiKey == null || openaiApiKey.isEmpty()) {
-                logger.error("OPENAI_API_KEY is not set!");
+                logger.error("OPENAI_API_KEY is not set or is empty!");
             } else {
                 logger.info("OPENAI_API_KEY: {}", openaiApiKey);
             }
@@ -312,6 +320,7 @@ public class S3Service {
                 .findFirst();
     }
 
+
     // 특정 영상 파일의 타임스탬프에 해당하는 텍스트 파일 가져오기
     public Optional<String> getTranscriptByVideoTimestamp(String userId, String timestamp) {
         try {
@@ -348,7 +357,8 @@ public class S3Service {
     }
 
     // 특정 영상 파일의 타임스탬프에 해당하는 GPT 응답 파일 가져오기
-    public Optional<String> getGptResponseByVideoTimestamp(String userId, String timestamp) {
+    public Map<String, Object> getGptResponseByVideoTimestamp(String userId, String timestamp) {
+        Map<String, Object> responseMap = new HashMap<>();
         try {
             String userFolderPrefix = userId + "/gpt/";
             ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
@@ -372,22 +382,120 @@ public class S3Service {
                         .lines()
                         .collect(Collectors.joining("\n"));
 
-                // 제목 끝의 '>' 뒤에 <br> 태그 추가
-                String formattedContent = content.replaceAll(">([^\\s])", "><br><br>$1");
+                // . 뒤에 <br><br> 추가
+                content = content.replaceAll("\\.(?!\\s*$)", ".<br><br>");
 
-                // .을 기준으로 <br> 태그 추가
-                formattedContent = formattedContent.replaceAll("\\.", ".<br><br>");
+                // 제목, 요약, 참여자 솔루션 파싱
+                String[] sections = content.split("\n\n");
 
-                // formattedContent를 반환합니다.
-                return Optional.of(formattedContent);
-            } else {
-                return Optional.empty();
+                // 첫 번째 줄은 제목
+                responseMap.put("gptTitle", sections.length > 0 ? sections[0].trim() : "제목 없음");
+
+                // 두 번째 섹션은 요약
+                responseMap.put("gptSummary", sections.length > 1 ? sections[1].trim() : "요약 없음");
+
+                // 참여자별 솔루션 파싱
+                Map<String, String> participantSolutions = new LinkedHashMap<>();
+                for (int i = 2; i < sections.length; i++) {
+                    String section = sections[i].trim();
+                    if (section.startsWith("참여자")) {
+                        String participantKey = "🧑 참여자" + (participantSolutions.size() + 1);
+                        participantSolutions.put(participantKey, section);
+                    }
+                }
+                responseMap.put("participants", participantSolutions);
+
+                return responseMap;
             }
         } catch (Exception e) {
             logger.error("Failed to retrieve the GPT response content from S3.", e);
+        }
+        return responseMap;
+    }
+
+    // 특정 영상 파일의 타임스탬프에 해당하는 동영상 파일 가져오기(AIVIDEO)
+    public Optional<ImageInfo> getAIVideoByTimestamp(String userId, String timestamp) {
+        try {
+            // S3 버킷 내 사용자 폴더 경로 설정
+            String userFolderPrefix = userId + "/aiVideo/";
+
+            // S3에서 파일 목록 가져오기
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(userFolderPrefix)
+                    .build();
+            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+
+            // 타임스탬프와 확장자(.mp4)에 해당하는 파일 필터링
+            Optional<S3Object> matchingVideo = response.contents().stream()
+                    .filter(s -> s.key().contains(timestamp) && s.key().endsWith(".mp4"))
+                    .findFirst();
+
+            if (matchingVideo.isPresent()) {
+                // 매칭된 파일이 존재하면 S3 객체 키 가져오기
+                S3Object videoObject = matchingVideo.get();
+                String key = videoObject.key();
+                long size = videoObject.size(); // 파일 크기
+                String lastModifiedDate = videoObject.lastModified().toString(); // 마지막 수정 시간
+
+                // 동영상 URL 생성
+                String videoUrl = s3Client.utilities().getUrl(GetUrlRequest.builder()
+                        .bucket(bucketName)
+                        .key(key)
+                        .build()).toExternalForm();
+
+                // 결과 객체 생성 및 반환
+                return Optional.of(new ImageInfo(videoUrl, lastModifiedDate, size, key, "AI 동영상")); // gptTitle은 "AI 동영상"으로 설정
+            } else {
+                return Optional.empty(); // 매칭되는 동영상이 없을 경우
+            }
+        } catch (Exception e) {
+            logger.error("Failed to retrieve the video content from S3.", e);
             return Optional.empty();
         }
     }
+
+
+//    public Optional<String> getGptResponseByVideoTimestamp(String userId, String timestamp) {
+//        try {
+//            String userFolderPrefix = userId + "/gpt/";
+//            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+//                    .bucket(bucketName)
+//                    .prefix(userFolderPrefix)
+//                    .build();
+//            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsV2Request);
+//            Optional<S3Object> matchingGptResponse = response.contents().stream()
+//                    .filter(s -> s.key().contains(timestamp) && s.key().endsWith(".txt"))
+//                    .findFirst();
+//
+//            if (matchingGptResponse.isPresent()) {
+//                String key = matchingGptResponse.get().key();
+//                GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+//                        .bucket(bucketName)
+//                        .key(key)
+//                        .build();
+//
+//                ResponseInputStream<GetObjectResponse> s3ObjectInputStream = s3Client.getObject(getObjectRequest);
+//                String content = new BufferedReader(new InputStreamReader(s3ObjectInputStream))
+//                        .lines()
+//                        .collect(Collectors.joining("\n"));
+//
+//                // 제목 끝의 '>' 뒤에 <br> 태그 추가
+//                String formattedContent = content.replaceAll(">([^\\s])", "><br><br>$1");
+//
+//                // .을 기준으로 <br> 태그 추가
+//                formattedContent = formattedContent.replaceAll("\\.", ".<br><br>");
+//
+//                // formattedContent를 반환합니다.
+//                return Optional.of(formattedContent);
+//            } else {
+//                return Optional.empty();
+//            }
+//        } catch (Exception e) {
+//            logger.error("Failed to retrieve the GPT response content from S3.", e);
+//            return Optional.empty();
+//        }
+//    }
 
     // 최신 영상 파일을 가져오기 위한 메서드
     public Optional<ImageInfo> getLatestVideo(String userId) {
@@ -418,35 +526,35 @@ public class S3Service {
     }
 
     // S3 폴더를 10초마다 감시하는 스케줄러
-    @Scheduled(fixedDelay = 10000)  // 10초마다 실행
-    public void checkForNewFiles() {
-        String userId = "yourUserId"; // 사용자의 ID를 여기서 가져오거나 세션에서 처리
-
-        // S3에서 최신 파일을 가져옴
-        Optional<ImageInfo> latestVideo = getLatestVideo(userId);
-
-        if (latestVideo.isPresent()) {
-            String videoTimestamp = extractTimestamp(latestVideo.get().getKey());
-
-            // 기존에 처리한 파일인지 확인
-            if (!processedFiles.contains(videoTimestamp)) {
-                Optional<String> transcriptContent = getTranscriptByVideoTimestamp(userId, videoTimestamp);
-                Optional<String> gptContent = getGptResponseByVideoTimestamp(userId, videoTimestamp);
-
-                if (transcriptContent.isPresent() && !processedFiles.contains(transcriptContent.get())) {
-                    logger.info("New transcript content detected.");
-                    processedFiles.add(transcriptContent.get());
-                    // 여기서 텍스트 파일을 처리합니다 (예: 클라이언트로 전송 등)
-                }
-
-                if (gptContent.isPresent() && !processedFiles.contains(gptContent.get())) {
-                    logger.info("New GPT response content detected.");
-                    processedFiles.add(gptContent.get());
-                    // 여기서 GPT 결과를 처리합니다 (예: 클라이언트로 전송 등)
-                }
-            }
-        }
-    }
+//    @Scheduled(fixedDelay = 10000)  // 10초마다 실행
+//    public void checkForNewFiles() {
+//        String userId = "yourUserId"; // 사용자의 ID를 여기서 가져오거나 세션에서 처리
+//
+//        // S3에서 최신 파일을 가져옴
+//        Optional<ImageInfo> latestVideo = getLatestVideo(userId);
+//
+//        if (latestVideo.isPresent()) {
+//            String videoTimestamp = extractTimestamp(latestVideo.get().getKey());
+//
+//            // 기존에 처리한 파일인지 확인
+//            if (!processedFiles.contains(videoTimestamp)) {
+//                Optional<String> transcriptContent = getTranscriptByVideoTimestamp(userId, videoTimestamp);
+//                Optional<String> gptContent = getGptResponseByVideoTimestamp(userId, videoTimestamp);
+//
+//                if (transcriptContent.isPresent() && !processedFiles.contains(transcriptContent.get())) {
+//                    logger.info("New transcript content detected.");
+//                    processedFiles.add(transcriptContent.get());
+//                    // 여기서 텍스트 파일을 처리합니다 (예: 클라이언트로 전송 등)
+//                }
+//
+//                if (gptContent.isPresent() && !processedFiles.contains(gptContent.get())) {
+//                    logger.info("New GPT response content detected.");
+//                    processedFiles.add(gptContent.get());
+//                    // 여기서 GPT 결과를 처리합니다 (예: 클라이언트로 전송 등)
+//                }
+//            }
+//        }
+//    }
 
     public static class ImageInfo {
         private String url;
@@ -520,7 +628,6 @@ public class S3Service {
                 .collect(Collectors.toList());
     }
 
-    // 이미지 감정 분석 수행 메서드
     // 이미지 감정 분석 수행 메서드
     public String generateImageEmotionAnalysis(String s3Key, String participant, String outputPath) {
         try {
@@ -675,12 +782,6 @@ public class S3Service {
             env.put("AWS_REGION", region);
             env.put("OPENAI_API_KEY", openaiApiKey);  // GPT API 키 전달 (openaiApiKey 변수가 미리 설정되어 있어야 함)
 
-            // 로그로 자격 증명 출력
-            logger.info("AWS_ACCESS_KEY_ID: {}", env.get("AWS_ACCESS_KEY_ID"));
-            logger.info("AWS_SECRET_ACCESS_KEY: {}", env.get("AWS_SECRET_ACCESS_KEY"));
-            logger.info("AWS_REGION: {}", env.get("AWS_REGION"));
-            logger.info("OPENAI_API_KEY: {}", env.get("OPENAI_API_KEY")); // GPT 키도 로그로 출력
-
             // UTF-8 인코딩을 지정하여 출력을 읽음
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
@@ -694,23 +795,22 @@ public class S3Service {
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");
+                logger.info("Python stdout: {}", line);  // Python 스크립트 출력 로그
             }
 
             while ((line = errorReader.readLine()) != null) {
                 errorOutput.append(line).append("\n");
+                logger.error("Python stderr: {}", line);  // Python 스크립트 에러 로그
             }
 
-// 파이썬 스크립트 실행 결과 처리
+            // 파이썬 스크립트 실행 결과 처리
             int exitCode = process.waitFor();
             if (exitCode == 0) {
                 logger.info("Python script executed successfully.");
                 String result = output.toString().trim();
-                result = result.replace(".", ".<br>");
-                logger.info("Script output: " + result);
-                return result; // 텍스트 결과 반환
+                return result.replace(".", ".<br>");
             } else {
                 logger.error("Python script execution failed with exit code: " + exitCode);
-                logger.error("Script error output: " + errorOutput.toString());
                 return null;
             }
         } catch (Exception e) {
@@ -873,49 +973,141 @@ public class S3Service {
             commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
             commands.add("src/main/resources/scripts/recommendText.py"); // Python 스크립트의 경로
 
-            ProcessBuilder pb = new ProcessBuilder(commands);
+            // ProcessBuilder를 사용하여 Python 스크립트를 실행
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
-            // 환경 변수 설정: PYTHONIOENCODING을 UTF-8로 설정
-            Map<String, String> env = pb.environment();
+            // 환경 변수 설정
+            Map<String, String> env = processBuilder.environment();
             env.put("PYTHONIOENCODING", "UTF-8");
+            env.put("AWS_ACCESS_KEY_ID", accessKey);  // 자격 증명 전달
+            env.put("AWS_SECRET_ACCESS_KEY", secretKey);
+            env.put("AWS_REGION", region);
+            env.put("OPENAI_API_KEY", openaiApiKey);  // GPT API 키 전달 (openaiApiKey 변수가 미리 설정되어 있어야 함)
 
-            pb.redirectErrorStream(true);
+            // UTF-8 인코딩을 지정하여 출력을 읽음
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
 
-            Process process = pb.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
 
-            // 원본 텍스트를 UTF-8로 인코딩하여 파이썬 프로세스의 입력 스트림에 전달
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8))) {
-                writer.write(originalContent);
-                writer.flush();
-            } catch (IOException e) {
-                logger.error("Error writing to Python process", e);
+            StringBuilder output = new StringBuilder();
+            StringBuilder errorOutput = new StringBuilder();
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+                logger.info("Python stdout: {}", line);  // Python 스크립트 출력 로그
             }
 
-            // Python 스크립트의 출력을 UTF-8로 읽어들임
-            StringBuilder processedContent = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-                String result;
-                while ((result = reader.readLine()) != null) {
-                    processedContent.append(result).append("\n");
-                }
-            } catch (IOException e) {
-                logger.error("Error reading from Python process", e);
+            while ((line = errorReader.readLine()) != null) {
+                errorOutput.append(line).append("\n");
+                logger.error("Python stderr: {}", line);  // Python 스크립트 에러 로그
             }
 
-            String finalResult = processedContent.toString().trim();
+            // 파이썬 스크립트 실행 결과 처리
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                logger.info("Python script executed successfully.");
+                String finalResult = output.toString().trim();
 
-            // 결과를 반환할 Map 구성
-            Map<String, String> responseMap = new HashMap<>();
-            responseMap.put("original", originalContent);
-            responseMap.put("result", finalResult);
+                // 결과를 반환할 Map 구성
+                Map<String, String> responseMap = new HashMap<>();
+                responseMap.put("original", originalContent);
+                responseMap.put("result", finalResult);
 
-            return responseMap;
+                return responseMap;
+            } else {
+                logger.error("Python script execution failed with exit code: " + exitCode);
+                return Map.of("original", "Error occurred", "result", "");
+            }
 
         } catch (Exception e) {
             logger.error("Error during processing dialogue", e);
             return Map.of("original", "Error occurred", "result", "");
         }
     }
+
+//    public Map<String, String> processDialogue(String userId, String date) {
+//        try {
+//            // S3 경로 구성
+//            String s3PathPrefix = String.format("%s/done/negative_emotion_%s", userId, date);
+//
+//            // S3에서 해당 경로에 있는 파일 목록 가져오기
+//            ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder()
+//                    .bucket(bucketName)
+//                    .prefix(s3PathPrefix)
+//                    .build();
+//
+//            ListObjectsV2Response response = s3Client.listObjectsV2(listObjectsRequest);
+//            List<S3Object> files = response.contents();
+//
+//            logger.info("S3 Path Prefix: " + s3PathPrefix);
+//            logger.info("Number of files found: " + files.size());
+//            files.forEach(file -> logger.info("Found file: " + file.key()));
+//
+//            if (files.isEmpty()) {
+//                logger.warn("No files found for the specified date: " + date);
+//                return Map.of("original", "No matching files found.", "result", "");
+//            }
+//
+//            // 파일 목록 중 가장 최신의 파일을 선택
+//            S3Object latestFile = Collections.max(files, Comparator.comparing(S3Object::lastModified));
+//            String latestFileKey = latestFile.key();
+//
+//            logger.info("Latest file selected: " + latestFileKey);
+//
+//            // S3에서 원본 텍스트 가져오기
+//            String originalContent = getFileFromS3(bucketName, latestFileKey);
+//
+//            // Python 스크립트 실행 명령어 구성
+//            List<String> commands = new ArrayList<>();
+//            commands.add("D:\\pythonProject\\testProject\\venv\\Scripts\\python.exe"); // 가상환경의 Python 경로
+//            commands.add("src/main/resources/scripts/recommendText.py"); // Python 스크립트의 경로
+//
+//            ProcessBuilder pb = new ProcessBuilder(commands);
+//
+//            // 환경 변수 설정: PYTHONIOENCODING을 UTF-8로 설정
+//            Map<String, String> env = pb.environment();
+//            env.put("PYTHONIOENCODING", "UTF-8");
+//
+//            pb.redirectErrorStream(true);
+//
+//            Process process = pb.start();
+//
+//            // 원본 텍스트를 UTF-8로 인코딩하여 파이썬 프로세스의 입력 스트림에 전달
+//            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8))) {
+//                writer.write(originalContent);
+//                writer.flush();
+//            } catch (IOException e) {
+//                logger.error("Error writing to Python process", e);
+//            }
+//
+//            // Python 스크립트의 출력을 UTF-8로 읽어들임
+//            StringBuilder processedContent = new StringBuilder();
+//            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+//                String result;
+//                while ((result = reader.readLine()) != null) {
+//                    processedContent.append(result).append("\n");
+//                }
+//            } catch (IOException e) {
+//                logger.error("Error reading from Python process", e);
+//            }
+//
+//            String finalResult = processedContent.toString().trim();
+//
+//            // 결과를 반환할 Map 구성
+//            Map<String, String> responseMap = new HashMap<>();
+//            responseMap.put("original", originalContent);
+//            responseMap.put("result", finalResult);
+//
+//            return responseMap;
+//
+//        } catch (Exception e) {
+//            logger.error("Error during processing dialogue", e);
+//            return Map.of("original", "Error occurred", "result", "");
+//        }
+//    }
 
 
     // S3에서 파일 가져오기 함수
@@ -971,6 +1163,33 @@ public class S3Service {
                             null // GPT 제목을 원할 경우 추가할 수 있음
                     );
                 });
+    }
+
+
+    // 메인페이지 갈등 아닐 시 S3에서 이미지, 영상 삭제
+    public void deleteFiles(String timestamp) {
+        try {
+            String videoFileKey = "sd/videos/negative_emotion_" + timestamp + "_converted.mp4";
+            String imageFileKey = "sd/videos/first_frame_" + timestamp + ".jpg";
+
+            // S3에서 동영상 파일 삭제
+            DeleteObjectRequest deleteVideoRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(videoFileKey)
+                    .build();
+            s3Client.deleteObject(deleteVideoRequest);
+            logger.info("S3에서 동영상 파일 삭제: {}", videoFileKey);
+
+            // S3에서 이미지 파일 삭제
+            DeleteObjectRequest deleteImageRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(imageFileKey)
+                    .build();
+            s3Client.deleteObject(deleteImageRequest);
+            logger.info("S3에서 이미지 파일 삭제: {}", imageFileKey);
+        } catch (Exception e) {
+            logger.error("S3 파일 삭제 중 오류 발생: ", e);
+        }
     }
 
 

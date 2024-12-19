@@ -7,6 +7,7 @@ import concat.SolverWeb.user.yoonseo.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.Random;
@@ -42,6 +43,7 @@ public class FindPasswordService {
     }
 
     // 임시 비밀번호 업데이트
+    @Transactional
     public void updateUserPassword(UserDTO userDTO) {
         UserEntity user = findEmailRepository.findByUserEmail(userDTO.getUserEmail()).orElse(null);
         if (user != null) {
@@ -55,11 +57,9 @@ public class FindPasswordService {
 
     // 사용자 조회
     public UserDTO getUserByEmail(String userEmail) {
-        UserEntity user = findEmailRepository.findByUserEmail(userEmail).orElse(null);
-        if (user != null) {
-            return convertToDTO(user);
-        }
-        return null;
+        return findEmailRepository.findByUserEmail(userEmail)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userEmail));
     }
 
     private UserDTO convertToDTO(UserEntity user) {
