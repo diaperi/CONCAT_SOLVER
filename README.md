@@ -185,6 +185,15 @@ https://colab.research.google.com/drive/1CLXTmYyTlg5mW_78R7RGM8yCgz29scq2<br>
 - 텍스트 기반 감정 분류 모델<br>
 https://docs.google.com/document/d/1zRzcQoUG-ELiOuUhPlZOY0DNYo5wZVjzwly7XiSM7Oo/edit?usp=sharing<br>
 ![image](https://github.com/user-attachments/assets/2bf008ff-f08d-4863-b2e9-3da671343999)
+<br><br>
 
 ## solver 웹 
 http://solver.o-r.kr/
+
+<br><br>
+
+## ✍️ 회고
+- 1년을 갈아넣은 캡스톤 졸업작품 회고<br>
+https://seoyun-jung.tistory.com/118
+- (Women in AI) AI4HER APAC Conference 에서 발표한 회고<br>
+https://seoyun-jung.tistory.com/119
